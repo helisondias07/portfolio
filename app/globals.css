@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f2ee;
+  --foreground: #191919;
+  --linkedin-blue: #0a66c2;
+  --linkedin-blue-dark: #004182;
+  --linkedin-blue-soft: #e8f3ff;
+  --linkedin-border: #dfdeda;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-linkedin: var(--linkedin-blue);
+  --color-linkedin-dark: var(--linkedin-blue-dark);
+  --color-linkedin-soft: var(--linkedin-blue-soft);
+  --color-linkedin-border: var(--linkedin-border);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+  --font-project: var(--font-project-heading);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}
+
+.dark body {
+  background: #09090b;
+}
+
+::selection {
+  background: var(--linkedin-blue);
+  color: #ffffff;
+}
+
+section {
+  scroll-margin-top: 5rem;
+}
+
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.intro-bg {
+  background-color: #f4f2ee;
+  background-image: radial-gradient(#d9e7f5 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .intro-bg {
+  background-color: #09090b;
+  background-image: radial-gradient(#16395d 1px, transparent 1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

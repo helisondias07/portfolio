@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Helison Dias portfolio</title>
+  <desc id="desc">Open graph image for Helison Dias portfolio</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1200" y1="0" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F2EE"/>
+      <stop offset=".48" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#F4F2EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="74" y="74" width="1052" height="482" rx="42" fill="#fff" stroke="#d4d4d8" stroke-width="3"/>
+  <text x="126" y="220" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="800">Helison Dias</text>
+  <text x="130" y="292" fill="#3f3f46" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Fullstack Developer</text>
+  <text x="130" y="363" fill="#52525b" font-family="Arial, Helvetica, sans-serif" font-size="28">React · Next.js · TypeScript · Node.js · Wake</text>
+  <rect x="130" y="426" width="226" height="58" rx="12" fill="#111827"/>
+  <text x="162" y="464" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Open to work</text>
+  <circle cx="926" cy="314" r="128" fill="#0A66C2" opacity=".16"/>
+  <rect x="828" y="234" width="246" height="168" rx="24" fill="#111827"/>
+  <rect x="862" y="274" width="118" height="16" rx="8" fill="#70B5F9"/>
+  <rect x="862" y="318" width="168" height="16" rx="8" fill="#E8F3FF"/>
+  <rect x="862" y="362" width="132" height="16" rx="8" fill="#004182"/>
+</svg>
