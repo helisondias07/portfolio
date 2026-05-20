@@ -69,6 +69,12 @@ const projectMeta = [
     screenshot: "/thumbnails/webcine-screenshot-card.jpg",
     mobileScreenshot: "/thumbnails/webcine-screenshot-mobile.jpg",
   },
+  {
+    id: "rickmorty",
+    url: "https://rick-morty-wiki-steel-delta.vercel.app/",
+    screenshot: "/thumbnails/rickmorty-wiki-preview2.png",
+    mobileScreenshot: "/thumbnails/rickmorty-wiki-preview-mobile2.png",
+  },
 ] as const;
 
 function getCarouselLayout(viewportWidth: number) {

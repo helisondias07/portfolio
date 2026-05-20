@@ -401,6 +401,36 @@ export const dictionary = {
             "Git",
           ],
         },
+        rickmorty: {
+          eyebrow: "Desafio técnico",
+          title: "Rick & Morty Wiki - Aplicação interativa de personagens",
+          association: "Projeto autoral criado por Helison Dias",
+          overview: [
+            "Aplicação front-end desenvolvida como desafio técnico para explorar os recursos da API oficial de Rick and Morty, com listagem de personagens, episódios e localizações.",
+            "O projeto conta com uma página dedicada ao Esquadrão, onde é possível comparar personagens, calcular chance de sobrevivência e simular missões interdimensionais com análise sarcástica do Rick. Tudo com suporte a dois idiomas (PT/EN) e alternância entre modo escuro e claro.",
+          ],
+          contributionsTitle: "Destaques técnicos",
+          contributions: [
+            "Scroll infinito com Intersection Observer API para performance otimizada.",
+            "Fetch em lote de personagens via regex nos IDs de URL, reduzindo requisições à API drasticamente.",
+            "Focus Trap manual nos modais via hook dedicado, garantindo acessibilidade por teclado.",
+            "Sistema de tema e idioma persistidos no localStorage com Context API.",
+            "Animações fluidas com Framer Motion e testes unitários com Vitest e Testing Library.",
+          ],
+          stackTitle: "Stack",
+          stack: [
+            "React 19",
+            "TypeScript",
+            "Vite",
+            "styled-components",
+            "React Router DOM",
+            "Framer Motion",
+            "Fetch API",
+            "Vitest",
+            "Testing Library",
+            "Context API",
+          ],
+        },
       },
       items: [
         {
@@ -521,6 +551,18 @@ export const dictionary = {
             "Construção de interface responsiva para desktop e mobile.",
             "Experiência visual cinematográfica com navegação simples.",
             "Fluxo direto para criação de salas e apresentação dos recursos da plataforma.",
+          ],
+        },
+        {
+          storeName: "Rick & Morty Wiki",
+          category: "Desafio Técnico · React App",
+          description:
+            "Wiki interativa de personagens com scroll infinito, filtros, modal de detalhes, sistema de Esquadrão e suporte a dois idiomas.",
+          highlight: "SPA autoral com React, TypeScript e API Rick & Morty",
+          myContributions: [
+            "Scroll infinito com Intersection Observer e fetch em lote otimizado.",
+            "Página de Esquadrão com comparador, score de sobrevivência e missões.",
+            "Tema dark/light e idioma PT/EN persistidos via Context API e localStorage.",
           ],
         },
       ],
@@ -941,6 +983,36 @@ export const dictionary = {
             "Git",
           ],
         },
+        rickmorty: {
+          eyebrow: "Technical challenge",
+          title: "Rick & Morty Wiki - Interactive Character Application",
+          association: "Personal project by Helison Dias",
+          overview: [
+            "A front-end application built as a technical challenge to explore the official Rick and Morty API, featuring character listings, episodes, and locations.",
+            "The project includes a dedicated Squad page where you can compare characters, calculate survival scores, and simulate interdimensional missions with Rick's sarcastic analysis. Fully bilingual (PT/EN) with dark/light mode toggling.",
+          ],
+          contributionsTitle: "Technical highlights",
+          contributions: [
+            "Infinite scroll powered by the Intersection Observer API for optimal performance.",
+            "Batch character fetching via URL ID extraction with regex, drastically reducing API calls.",
+            "Manual Focus Trap in modals via a dedicated hook, ensuring full keyboard accessibility.",
+            "Theme and language preferences persisted in localStorage via Context API.",
+            "Smooth animations with Framer Motion and unit tests with Vitest and Testing Library.",
+          ],
+          stackTitle: "Tech",
+          stack: [
+            "React 19",
+            "TypeScript",
+            "Vite",
+            "styled-components",
+            "React Router DOM",
+            "Framer Motion",
+            "Fetch API",
+            "Vitest",
+            "Testing Library",
+            "Context API",
+          ],
+        },
       },
       items: [
         {
@@ -1061,6 +1133,18 @@ export const dictionary = {
             "Built a responsive interface for desktop and mobile.",
             "Created a cinematic visual experience with simple navigation.",
             "Designed a direct room creation flow and clear feature presentation.",
+          ],
+        },
+        {
+          storeName: "Rick & Morty Wiki",
+          category: "Technical Challenge · React App",
+          description:
+            "Interactive character wiki with infinite scroll, filters, detail modals, a Squad system, and full bilingual support (PT/EN).",
+          highlight: "Personal SPA with React, TypeScript & Rick and Morty API",
+          myContributions: [
+            "Infinite scroll via Intersection Observer and optimized batch fetching.",
+            "Squad page with character comparison, survival score, and mission simulator.",
+            "Dark/light theme and PT/EN language persisted via Context API and localStorage.",
           ],
         },
       ],
