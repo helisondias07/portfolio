@@ -142,7 +142,7 @@ function SkillRow({
         <div
           ref={scrollRef}
           onScroll={updateActiveIndex}
-          className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory gap-3 overflow-x-hidden pb-2 touch-pan-y [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:overflow-x-auto"
         >
           {categorySkills.map((skill, index) => (
             <FadeIn

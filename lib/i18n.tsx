@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
@@ -401,6 +401,33 @@ export const dictionary = {
             "Git",
           ],
         },
+        venari: {
+          eyebrow: "Case em destaque",
+          title: "Venari - E-commerce de moda feminina e beachwear",
+          association: "Associado ao Grupo Oásis (Agência Oásis)",
+          overview: [
+            "Desenvolvimento frontend da plataforma de e-commerce Venari, marca focada em moda feminina, beachwear e coleções sazonais com forte apelo visual.",
+            "Atuei na implementação de interfaces responsivas com foco em experiência mobile-first, destaque para campanhas, navegação fluida e consistência visual alinhada à identidade da marca.",
+          ],
+          contributionsTitle: "Minha atuação",
+          contributions: [
+            "Implementação de vitrines, banners e páginas de coleção com HTML5, CSS3 e JavaScript.",
+            "Refinamento de layout responsivo para melhor leitura de conteúdo e destaque de produtos em mobile.",
+            "Ajustes de performance, acessibilidade e usabilidade para uma jornada de compra mais fluida.",
+            "Colaboração com design e produto para manter consistência visual entre campanhas e seções da loja.",
+          ],
+          stackTitle: "Stack",
+          stack: [
+            "Frontend Development",
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Responsive Web Design",
+            "Web Performance",
+            "Accessibility",
+            "Git",
+          ],
+        },
         rickmorty: {
           eyebrow: "Desafio técnico",
           title: "Rick & Morty Wiki - Aplicação interativa de personagens",
@@ -539,6 +566,18 @@ export const dictionary = {
             "Construção de frontend responsivo com HTML5, CSS3 e JavaScript.",
             "Aplicação de boas práticas de SEO, acessibilidade e performance.",
             "Experiência de compra alinhada à identidade natural e wellness da marca.",
+          ],
+        },
+        {
+          storeName: "Venari",
+          category: "Women's Fashion E-commerce",
+          description:
+            "Storefront responsiva para moda feminina e beachwear, com foco em identidade visual elegante, navega��o fluida e experi�ncia mobile-first.",
+          highlight: "E-commerce de moda feminina com forte apelo de marca",
+          myContributions: [
+            "Implementa��o de se��es vitrines e p�ginas de cole��o com HTML5, CSS3 e JavaScript.",
+            "Refinamento de layout responsivo para destacar campanhas e cole��es sazonais.",
+            "Ajustes de UX, performance e consist�ncia visual entre desktop e mobile.",
           ],
         },
         {
@@ -983,6 +1022,33 @@ export const dictionary = {
             "Git",
           ],
         },
+        venari: {
+          eyebrow: "Featured case",
+          title: "Venari - Women's Fashion & Beachwear E-commerce",
+          association: "Associated with Grupo Oásis (Agência Oásis)",
+          overview: [
+            "Frontend development of the Venari e-commerce platform, a brand focused on women's fashion, beachwear, and seasonal collections with a strong visual identity.",
+            "I worked on responsive interface implementation with a mobile-first approach, emphasizing campaign visibility, smooth navigation, and visual consistency aligned with the brand.",
+          ],
+          contributionsTitle: "Key contributions",
+          contributions: [
+            "Implemented storefront showcases, campaign banners, and collection pages with HTML5, CSS3, and JavaScript.",
+            "Refined responsive layouts to improve content readability and product prominence on mobile.",
+            "Improved performance, accessibility, and usability for a smoother shopping journey.",
+            "Collaborated with design and product to keep visual consistency across campaigns and store sections.",
+          ],
+          stackTitle: "Tech",
+          stack: [
+            "Frontend Development",
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Responsive Web Design",
+            "Web Performance",
+            "Accessibility",
+            "Git",
+          ],
+        },
         rickmorty: {
           eyebrow: "Technical challenge",
           title: "Rick & Morty Wiki - Interactive Character Application",
@@ -1124,6 +1190,18 @@ export const dictionary = {
           ],
         },
         {
+          storeName: "Venari",
+          category: "Women's Fashion E-commerce",
+          description:
+            "Responsive storefront for women's fashion and beachwear, focused on elegant visual identity, smooth browsing, and a mobile-first shopping experience.",
+          highlight: "Women's fashion e-commerce with strong brand identity",
+          myContributions: [
+            "Implemented storefront sections and collection pages with HTML5, CSS3, and JavaScript.",
+            "Refined responsive layouts to highlight campaigns and seasonal collections.",
+            "Improved UX, performance, and visual consistency across desktop and mobile.",
+          ],
+        },
+        {
           storeName: "WebCine TV",
           category: "Real-time Streaming Platform",
           description:
@@ -1251,3 +1329,5 @@ export function useI18n() {
 
   return context;
 }
+
+

@@ -64,6 +64,12 @@ const projectMeta = [
     mobileScreenshot: "/thumbnails/yamuna-screenshot-mobile.jpg",
   },
   {
+    id: "venari",
+    url: "https://www.venari.com.br/",
+    screenshot: "/thumbnails/venari-screenshot-card.jpg",
+    mobileScreenshot: "/thumbnails/venari-screenshot-mobile.jpg",
+  },
+  {
     id: "webcine",
     url: "https://webcinetv.com.br/",
     screenshot: "/thumbnails/webcine-screenshot-card.jpg",
