@@ -13,7 +13,7 @@ const structuredData = {
   name: "Helison Dias",
   url: "https://helisondias.vercel.app",
   image: "https://helisondias.vercel.app/profile.jpg",
-  jobTitle: "Fullstack Developer",
+  jobTitle: "Frontend Developer",
   email: "mailto:helisondias07@gmail.com",
   address: {
     "@type": "PostalAddress",
@@ -26,10 +26,13 @@ const structuredData = {
     "React",
     "Next.js",
     "TypeScript",
-    "Node.js",
+    "Vue.js",
+    "Vite",
     "Wake Platform",
     "E-commerce",
-    "AI-assisted development",
+    "REST APIs",
+    "Jest",
+    "React Testing Library",
   ],
 };
 

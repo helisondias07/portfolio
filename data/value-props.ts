@@ -15,12 +15,12 @@ export const valueProps: ValueProp[] = [
   },
   {
     icon: Plug,
-    title: "Integração com APIs do zero",
-    desc: "Conecto frontend a REST APIs para listagens dinâmicas, filtros, checkout e fluxos de produto.",
+    title: "Integração com APIs e dados em tempo real",
+    desc: "Conecto frontends a REST APIs, WebSockets e serviços de terceiros para listagens, filtros, checkout e experiências sincronizadas.",
   },
   {
     icon: MonitorSmartphone,
-    title: "Design responsivo em todos os dispositivos",
-    desc: "Crio experiências consistentes para desktop, tablet e mobile, com layouts adaptáveis e testados em diferentes telas.",
+    title: "Qualidade para releases em produção",
+    desc: "Crio componentes reutilizáveis, cubro fluxos com Jest e React Testing Library e valido a experiência em diferentes browsers e telas.",
   },
 ];

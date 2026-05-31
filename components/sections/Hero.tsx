@@ -15,7 +15,7 @@ import { getCvFile } from "@/lib/cv";
 import { useI18n } from "@/lib/i18n";
 import { contactLinks } from "@/lib/utils";
 
-const coverTags = ["React", "Next.js", "TypeScript", "Wake", "AI Workflows"];
+const coverTags = ["React", "Next.js", "TypeScript", "Vue.js", "Vite"];
 
 export function Hero() {
   const { language, t } = useI18n();

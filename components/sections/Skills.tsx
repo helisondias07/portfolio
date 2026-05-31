@@ -9,7 +9,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SkillIcon } from "@/components/ui/SkillIcon";
 import { useI18n } from "@/lib/i18n";
 
-const categories: SkillCategory[] = ["frontend", "backend", "tools", "ai"];
+const categories: SkillCategory[] = ["frontend", "backend", "tools", "quality"];
 
 function SkillRow({
   category,

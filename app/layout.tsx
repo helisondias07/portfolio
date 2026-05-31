@@ -27,17 +27,19 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://helisondias.vercel.app"),
   applicationName: "Helison Dias Portfolio",
   title: {
-    default: "Helison Dias | Fullstack Developer",
+    default: "Helison Dias | Frontend Developer",
     template: "%s | Helison Dias",
   },
   description:
-    "Desenvolvedor Fullstack com experiência em React, Next.js, TypeScript, Vue.js, Angular, Node.js, Wake Platform e automação com IA. Baseado em Nova Friburgo, RJ.",
+    "Desenvolvedor Frontend com experiência em React, Next.js, TypeScript, Vue.js, Vite, Wake Platform, testes, REST APIs e e-commerce. Baseado em Nova Friburgo, RJ.",
   keywords: [
     "desenvolvedor frontend",
     "react developer",
     "next.js",
     "typescript",
-    "fullstack",
+    "frontend",
+    "vite",
+    "jest",
     "wake platform",
     "nova friburgo",
     "open to work",
@@ -49,9 +51,9 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
   },
   openGraph: {
-    title: "Helison Dias | Fullstack Developer",
+    title: "Helison Dias | Frontend Developer",
     description:
-      "Portfólio de Helison Dias - React, Next.js, TypeScript, Vue.js, Node.js, Wake Platform e automação com IA.",
+      "Portfólio de Helison Dias - React, Next.js, TypeScript, Vue.js, Vite, Wake Platform, testes e e-commerce.",
     url: "https://helisondias.vercel.app",
     siteName: "Helison Dias",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Helison Dias" }],
@@ -60,9 +62,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Helison Dias | Fullstack Developer",
+    title: "Helison Dias | Frontend Developer",
     description:
-      "Portfólio de Helison Dias - React, Next.js, TypeScript, Vue.js, Node.js.",
+      "Portfólio de Helison Dias - React, Next.js, TypeScript, Vue.js, Vite e Wake Platform.",
     images: ["/og-image.png"],
   },
   alternates: {
