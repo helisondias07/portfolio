@@ -392,7 +392,24 @@ nav .ls a:hover,.ls a:hover{background:rgba(17,17,17,.07);color:#000}
 /* container: content box min(1280, 100% - 2*gutter), aligned with nav edges */
 :root{--cpad:max(var(--cp),calc((100% - var(--cw))/2))}
 .abw,#sobre .abw,#projetos .abw,#contato .abw{width:min(var(--cw),calc(100% - 2*var(--cp)));max-width:none;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}
-.hero .hl .car{display:inline;width:auto;height:auto;position:relative}
-.hero .hl .car::after{top:-.78em;height:.82em;left:.02em}
 .hero .hl .hli{width:min(96%,22em)}
 .hero.g3 .hl{font-size:clamp(28px,3.3vw,60px);height:2.15em}
+
+/* caret: inline bar glued to the last typed char (word-joiners in JS), zero net width */
+.hero .hl .car{display:inline-block;position:static;width:.075em;height:.86em;margin:0 -.075em 0 0;vertical-align:-.1em;background:var(--g)!important;border-radius:2px;animation:cb 1s steps(2) infinite}
+.hero .hl .car::after{content:none;display:none}
+/* navbar pill spacing + bare theme icon */
+nav .ls,.ls{padding:6px 10px;gap:6px}
+nav .ls a,.ls a{padding:9px 16px}
+.lsd{margin:0 6px}
+.ls .thm,[data-theme=dark] .ls .thm{width:38px;height:38px;background:transparent;color:var(--ink);box-shadow:none;border-radius:999px;transition:background .2s,color .2s,transform .12s}
+.ls .thm:hover{background:rgba(17,17,17,.07);color:#1f7a10}
+[data-theme=dark] .ls .thm:hover{background:rgba(255,255,255,.08);color:var(--g)}
+@media(max-width:560px){nav .ls,.ls{padding:4px}}
+/* device mockups: fixed realistic ratio, capped height, never stretched */
+.hero.g3 .stage>.chat{align-self:center;flex:none;height:auto}
+.chat{aspect-ratio:9/19.3;width:min(88vw,calc(min(100svh - 190px,660px)*9/19.3))}
+.chat.tabc{aspect-ratio:3/4.1;width:min(90vw,calc(min(100svh - 210px,900px)*3/4.1))}
+@media(max-width:1023px) and (orientation:landscape) and (max-height:560px){.chat,.chat.tabc{aspect-ratio:auto;height:calc(100svh - 80px)}}
+/* chat: bottom-anchored, no empty scroll area */
+.msgs>.sp0{height:auto;flex:1 0 0;min-height:0}
