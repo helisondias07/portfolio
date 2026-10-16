@@ -11,7 +11,7 @@ export default function Hero() {
   }, []);
   return (
     <header className="hero g3" id="hero">
-      <p className="tag mo">Portfólio · 2026</p>
+      <p className="tag mo">Desenvolvedor Frontend &amp; IA Engineer</p>
       <h1 className="hl" aria-label="interfaces que vendem, automações que trabalham por você.">
         <span className="hli">
           <span id="hl" />
