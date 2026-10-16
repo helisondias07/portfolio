@@ -11,13 +11,13 @@ export default function Hero() {
   }, []);
   return (
     <header className="hero g3" id="hero">
-      <p className="tag mo">Frontend · E-commerce · Automação com IA</p>
-      <h1 className="hl" aria-label="helison dias, dev frontend & ia engineer">
+      <p className="tag mo">Portfólio · 2026</p>
+      <h1 className="hl" aria-label="interfaces que vendem, automações que trabalham por você.">
         <span className="hli">
           <span id="hl" />
           <span className="car" />
+          <span id="hlr" className="hlr" aria-hidden="true">interfaces que vendem, automações que trabalham por você.</span>
         </span>
-        <span id="hlr" hidden />
       </h1>
       <div className="hrow">
         <div className="stage" id="stage" aria-hidden="true">
