@@ -433,3 +433,17 @@ nav .ls a,.ls a{padding:9px 16px}
 @media(max-width:480px){.stt dt{font-size:34px}.stt dt small{font-size:13px}.stt{gap:0 18px}}
 .stt dt{flex-wrap:nowrap!important}.stt dt em{margin-left:-.08em}
 @media(max-width:380px){.stt dt{font-size:28px}.stt dt small{font-size:11px;margin:0 .1em}.stt{gap:0 12px}.stt dd{font-size:10px}}
+/* project images: never cropped */
+.cfc img{object-fit:contain;object-position:center top}
+.cfc .im{background:#f2f1ed}
+[data-theme=dark] .cfc .im{background:#151618}
+@media(max-width:767px){.cfc .im{background:radial-gradient(80% 60% at 50% 40%,#fbfaf7,#e7e5de)}[data-theme=dark] .cfc .im{background:radial-gradient(80% 60% at 50% 40%,#202125,#121315)}.cfc .im picture img{object-position:center;padding:6% 0;box-sizing:border-box;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}}
+/* "Mobile" view phone frame follows the screenshot's real ratio */
+.ph3 .fr{aspect-ratio:auto;width:auto}
+.ph3 img{width:auto!important;height:100%!important;max-width:none;object-fit:contain}
+/* case section mockups use the image's own ratio */
+.czd img,.czp img{aspect-ratio:auto;object-fit:contain;height:auto}
+.ph3{display:flex!important;align-items:center;justify-content:center}
+.ph3 .fr{height:88%!important;box-sizing:border-box;display:block;flex:none}
+.ph3 .fr picture{display:block;height:100%}
+@media(max-width:767px){.ph3 .fr{height:80%!important}}
