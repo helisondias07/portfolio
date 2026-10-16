@@ -16,6 +16,15 @@ export default function Projects() {
           <p>Projetos em e-commerce, integrações e automação aplicados a interfaces reais.</p>
         </div>
       </div>
+      <ul className="sr">
+        {projects.map((p) => (
+          <li key={p.id}>
+            <h3>{p.title}</h3>
+            <p>{p.overview[0]}</p>
+            {p.url ? <a href={p.url}>{p.url}</a> : null}
+          </li>
+        ))}
+      </ul>
       <div className="cf" id="cf" tabIndex={0} aria-roledescription="carrossel" aria-label="Projetos">
         <div className="cft" id="cft" />
         <button className="cfa l" id="cfl" aria-label="Projeto anterior">←</button>

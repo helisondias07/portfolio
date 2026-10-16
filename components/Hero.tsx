@@ -34,9 +34,9 @@ export default function Hero() {
         </aside>
       </div>
       <div className="foot mo" hidden style={{ display: "none" }}>
-        <span>Nova Friburgo, RJ — Remoto</span>
+        <span>Nova Friburgo, RJ</span>
         <span id="hint">Digite no seu teclado</span>
-        <span>10+ lojas Wake em produção</span>
+        <span>10+ projetos publicados</span>
       </div>
     </header>
   );

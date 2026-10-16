@@ -447,3 +447,9 @@ nav .ls a,.ls a{padding:9px 16px}
 .ph3 .fr{height:88%!important;box-sizing:border-box;display:block;flex:none}
 .ph3 .fr picture{display:block;height:100%}
 @media(max-width:767px){.ph3 .fr{height:80%!important}}
+
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px clamp(16px,2.4vw,32px);margin:clamp(32px,5vw,56px) auto 0;padding:0;max-width:900px;text-align:left}
+.skl dt{font:600 12px/1 'General Sans';letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:8px}
+.skl dd{margin:0;color:var(--mu);font-size:var(--fs-sm);line-height:1.5}
+@media(min-width:900px){.skl{grid-template-columns:repeat(4,1fr)}}

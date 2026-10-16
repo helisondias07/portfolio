@@ -11,6 +11,9 @@ export default function Counters() {
       nums.forEach((n) => (n.textContent = n.dataset.to!));
       return;
     }
+    const r0 = el.getBoundingClientRect();
+    if (r0.top < innerHeight && r0.bottom > 0) return;
+    nums.forEach((n) => (n.textContent = "0"));
     const run = () =>
       nums.forEach((n, i) => {
         const to = Number(n.dataset.to);
@@ -38,16 +41,16 @@ export default function Counters() {
     <dl className="stt" id="stt" ref={ref}>
       <div>
         <dt>
-          <span data-to="10">0</span>
+          <span data-to="10">10</span>
           <em>+</em>
         </dt>
         <dd>projetos publicados</dd>
       </div>
       <div>
         <dt aria-label="2 anos e 6 meses">
-          <span data-to="2">0</span>
+          <span data-to="2">2</span>
           <small>anos e</small>
-          <span data-to="6">0</span>
+          <span data-to="6">6</span>
           <small>meses</small>
         </dt>
         <dd>experiência em tecnologia</dd>

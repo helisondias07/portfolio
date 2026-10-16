@@ -68,6 +68,12 @@ export default function About() {
           })}
         </p>
         <Counters />
+        <dl className="skl">
+          <div><dt>Stack</dt><dd>React, Next.js, Vue.js, TypeScript, JavaScript, HTML5, CSS3, Scriban, Python, N8N</dd></div>
+          <div><dt>Plataformas</dt><dd>Wake, Nuvemshop, integrações REST</dd></div>
+          <div><dt>IA no fluxo</dt><dd>Agentes e LLMs, Claude Code, Codex</dd></div>
+          <div><dt>Formação</dt><dd>Ciência da Computação (Estácio), em andamento. Inglês C1</dd></div>
+        </dl>
       </div>
     </section>
   );
