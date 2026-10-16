@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { resend, FROM, getIp, sha256 } from "@/lib/server/resend";
 import { rateLimit } from "@/lib/server/kv";
+import { subscribeContact } from "@/lib/server/newsletter";
 
 export const runtime = "nodejs";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -32,13 +33,12 @@ export async function POST(req: Request) {
   }
 
   try {
-    const audienceId = process.env.RESEND_AUDIENCE_ID;
-    if (audienceId) {
-      // Store the contact in a Resend Audience (dedupes by email).
-      const { error } = await resend.contacts.create({ audienceId, email, unsubscribed: false });
-      if (error && !/already exists/i.test(error.message)) throw error;
-    } else {
-      console.warn("newsletter: RESEND_AUDIENCE_ID not set, contact not stored");
+    // Storing the contact must not block the confirmation (e.g. a send-only API key).
+    try {
+      const { stored } = await subscribeContact(resend, email);
+      if (!stored) console.warn("newsletter: RESEND_SEGMENT_ID/RESEND_AUDIENCE_ID not set, contact not stored");
+    } catch (e) {
+      console.error("newsletter: failed to store contact in segment", e);
     }
 
     const { error } = await resend.emails.send({

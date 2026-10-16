@@ -33,12 +33,12 @@ npm run lint && npm run build
 ## APIs
 | Rota | O que faz | Env |
 |---|---|---|
-| `POST /api/newsletter` | valida e-mail, honeypot, rate limit 5/h por IP, salva no Audience e envia confirmação | `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_AUDIENCE_ID`, `KV_*` |
+| `POST /api/newsletter` | valida e-mail, honeypot, rate limit 5/h por IP, salva no Segment e envia confirmação | `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_AUDIENCE_ID`, `KV_*` |
 | `POST /api/visit` | ignora bots, 1 aviso por IP/dia, teto diário, e-mail com cidade/país (headers geo da Vercel) | `RESEND_API_KEY`, `NOTIFY_EMAIL`, `KV_*` |
 
 Sem variáveis de ambiente tudo continua funcionando: a newsletter responde `503 not_configured` (o formulário mostra uma mensagem amigável) e o beacon de visita vira no-op.
 
 ## Deploy (Vercel)
 1. Marketplace → **Upstash Redis** → conectar ao projeto (injeta `KV_REST_API_URL`/`KV_REST_API_TOKEN`).
-2. Resend: verificar um domínio, criar um Audience; definir `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_AUDIENCE_ID`, `NOTIFY_EMAIL`, `IP_SALT`.
+2. Resend: verificar um domínio, criar um Segment; definir `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_AUDIENCE_ID`, `NOTIFY_EMAIL`, `IP_SALT`.
 3. Depois do deploy, medir o Lighthouse na URL de produção e atualizar `data/lighthouse.ts`.
