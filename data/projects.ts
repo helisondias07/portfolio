@@ -422,46 +422,6 @@ export const projects: Project[] = [
     "resultado": ""
   },
   {
-    "url": "https://sneakers.fbits.app/",
-    "eyebrow": "Case em destaque",
-    "association": "Associado ao Grupo Oásis (Agência Oásis)",
-    "contributionsTitle": "Minha atuação",
-    "stackTitle": "Stack",
-    "resultado": "",
-    "tags": [
-      "ecommerce",
-      "front"
-    ],
-    "id": "sneakers",
-    "img": "sneakers-screenshot-card.webp",
-    "mimg": "sneakers-screenshot-mobile.webp",
-    "name": "Sneakers New",
-    "cat": "Sneaker Store E-commerce",
-    "title": "Sneakers New - Storefront 2.0 na Wake a partir do Figma",
-    "overview": [
-      "Implementação do novo storefront da Sneakers New no Storefront 2.0 da Wake, com home, vitrines, marcas, PLP, PDP e blog construídos a partir do design no Figma.",
-      "Foi a loja piloto do Oasis Bot: parte das seções foi implementada com agentes de IA e revisada com comparação visual contra o Figma."
-    ],
-    "contributions": [
-      "Implementação da home com carrossel de banners, vitrines, gênero, campanhas, marcas e blog.",
-      "Design tokens versionados que geram as variáveis CSS do tema, com Tailwind CSS e CSS por página.",
-      "Testes visuais com Playwright para menu, cards, PLP e marcas.",
-      "Mais de 140 commits como principal autor desde agosto de 2026."
-    ],
-    "stack": [
-      "Wake Storefront 2.0",
-      "Scriban",
-      "GraphQL",
-      "Tailwind CSS",
-      "Design tokens",
-      "Playwright"
-    ],
-    "dw": 1440,
-    "dh": 1080,
-    "mw": 390,
-    "mh": 1190
-  },
-  {
     "url": "https://www.kingimports.com.br/",
     "eyebrow": "Case em destaque",
     "association": "Associado ao Grupo Oásis (Agência Oásis)",
