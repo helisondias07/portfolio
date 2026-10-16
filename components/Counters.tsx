@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-/** Animated counters — real numbers only (10+ lojas Wake, 2 anos e 6 meses). */
+/** Animated counters — real numbers only (10+ projetos publicados, 2 anos e 6 meses). */
 export default function Counters() {
   const ref = useRef<HTMLDListElement>(null);
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Counters() {
           <span data-to="10">0</span>
           <em>+</em>
         </dt>
-        <dd>lojas Wake em produção</dd>
+        <dd>projetos publicados</dd>
       </div>
       <div>
         <dt aria-label="2 anos e 6 meses">
@@ -50,11 +50,7 @@ export default function Counters() {
           <span data-to="6">0</span>
           <small>meses</small>
         </dt>
-        <dd>de experiência em frontend</dd>
-      </div>
-      <div>
-        <dt>Remoto</dt>
-        <dd>Nova Friburgo, RJ</dd>
+        <dd>experiência em tecnologia</dd>
       </div>
     </dl>
   );
