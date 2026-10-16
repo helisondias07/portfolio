@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-/** Animated counters — real numbers only (10+ projetos publicados, 2 anos e 6 meses). */
+/** Animated counters — real numbers only (15+ projetos publicados, 2 anos e 6 meses). */
 export default function Counters() {
   const ref = useRef<HTMLDListElement>(null);
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Counters() {
     <dl className="stt" id="stt" ref={ref}>
       <div>
         <dt>
-          <span data-to="10">10</span>
+          <span data-to="15">15</span>
           <em>+</em>
         </dt>
         <dd>projetos publicados</dd>

@@ -89,10 +89,10 @@ export const projects: Project[] = [
       "Wake GraphQL",
       "GitHub Actions"
     ],
-    "dw": 1400,
-    "dh": 1000,
-    "mw": 730,
-    "mh": 1000
+    "dw": 1256,
+    "dh": 754,
+    "mw": 699,
+    "mh": 754
   },
   {
     "id": "hotrio",
@@ -126,10 +126,10 @@ export const projects: Project[] = [
       "Web Performance",
       "Git"
     ],
-    "dw": 1433,
-    "dh": 1075,
-    "mw": 387,
-    "mh": 1028,
+    "dw": 1256,
+    "dh": 754,
+    "mw": 699,
+    "mh": 754,
     "tags": [
       "ecommerce"
     ],

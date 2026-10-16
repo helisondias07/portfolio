@@ -36,7 +36,7 @@ export default function Hero() {
       <div className="foot mo" hidden style={{ display: "none" }}>
         <span>Nova Friburgo, RJ</span>
         <span id="hint">Digite no seu teclado</span>
-        <span>10+ projetos publicados</span>
+        <span>15+ projetos publicados</span>
       </div>
     </header>
   );

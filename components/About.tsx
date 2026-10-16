@@ -71,7 +71,7 @@ export default function About() {
         <dl className="skl">
           <div><dt>Stack</dt><dd>React, Next.js, Vue.js, TypeScript, JavaScript, HTML5, CSS3, Scriban, Python, N8N</dd></div>
           <div><dt>Plataformas</dt><dd>Wake, Nuvemshop, integrações REST</dd></div>
-          <div><dt>IA no fluxo</dt><dd>Agentes e LLMs, Claude Code, Codex</dd></div>
+          <div className="skl-ia"><dt>IA no fluxo de trabalho</dt><dd>Construo ecossistemas de agentes de IA que trabalham em conjunto: agentes especializados por função, servidores MCP integrados às plataformas de e-commerce, revisão visual automatizada e memória com lições aprendidas. Uso IA generativa de código no dia a dia para transformar designs em interfaces, refatorar e acelerar entregas, sempre com revisão humana no fim.</dd></div>
           <div><dt>Formação</dt><dd>Ciência da Computação (Estácio), em andamento. Inglês C1</dd></div>
         </dl>
       </div>

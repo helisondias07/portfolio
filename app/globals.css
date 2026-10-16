@@ -453,3 +453,5 @@ nav .ls a,.ls a{padding:9px 16px}
 .skl dt{font:600 12px/1 'General Sans';letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:8px}
 .skl dd{margin:0;color:var(--mu);font-size:var(--fs-sm);line-height:1.5}
 @media(min-width:900px){.skl{grid-template-columns:repeat(4,1fr)}}
+.skl .skl-ia{grid-column:1/-1;order:-1;padding:20px 22px;border:1px solid color-mix(in srgb,var(--g) 40%,transparent);border-radius:16px;background:color-mix(in srgb,var(--g) 7%,transparent)}.skl .skl-ia dd{color:var(--ink);font-size:var(--fs-md,17px);line-height:1.6}
+@media(min-width:900px){.skl{grid-template-columns:repeat(3,1fr)}}
