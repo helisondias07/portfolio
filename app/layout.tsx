@@ -1,92 +1,45 @@
-import type { Metadata } from "next";
-import { Bebas_Neue, Inter, Plus_Jakarta_Sans } from "next/font/google";
-import { ThemeProvider } from "@/components/ui/ThemeProvider";
-import { LanguageProvider } from "@/lib/i18n";
+import type { Metadata, Viewport } from "next";
+import VisitBeacon from "@/components/VisitBeacon";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const bebasNeue = Bebas_Neue({
-  variable: "--font-project-heading",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
+const description =
+  "Helison Dias — desenvolvedor frontend em e-commerce (Wake, Nuvemshop) e automação com IA. React, Next.js, Vue.js e TypeScript. Nova Friburgo, RJ — remoto.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://helisondias.vercel.app"),
-  applicationName: "Helison Dias Portfolio",
-  title: {
-    default: "Helison Dias | Frontend Developer",
-    template: "%s | Helison Dias",
-  },
-  description:
-    "Desenvolvedor Frontend com experiência em React, Next.js, TypeScript, Vue.js, Vite, Wake Platform, testes, REST APIs e e-commerce. Baseado em Nova Friburgo, RJ.",
-  keywords: [
-    "desenvolvedor frontend",
-    "react developer",
-    "next.js",
-    "typescript",
-    "frontend",
-    "vite",
-    "jest",
-    "wake platform",
-    "nova friburgo",
-    "open to work",
-  ],
+  title: "Helison Dias — Frontend Dev",
+  description,
   authors: [{ name: "Helison Dias" }],
-  creator: "Helison Dias",
-  category: "portfolio",
-  icons: {
-    icon: "/icon.svg",
-  },
   openGraph: {
-    title: "Helison Dias | Frontend Developer",
-    description:
-      "Portfólio de Helison Dias - React, Next.js, TypeScript, Vue.js, Vite, Wake Platform, testes e e-commerce.",
+    title: "Helison Dias — Frontend Dev",
+    description,
     url: "https://helisondias.vercel.app",
     siteName: "Helison Dias",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Helison Dias" }],
     locale: "pt_BR",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Helison Dias | Frontend Developer",
-    description:
-      "Portfólio de Helison Dias - React, Next.js, TypeScript, Vue.js, Vite e Wake Platform.",
-    images: ["/og-image.png"],
-  },
-  alternates: {
-    canonical: "/",
-  },
+  twitter: { card: "summary_large_image", title: "Helison Dias — Frontend Dev", description, images: ["/og-image.png"] },
+  alternates: { canonical: "/" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = { colorScheme: "light dark" };
+
+// Runs before paint: stored choice, else system preference. Prevents a theme flash.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}})()`;
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="pt-BR"
-      suppressHydrationWarning
-      className={`${inter.variable} ${plusJakarta.variable} ${bebasNeue.variable} scroll-smooth antialiased`}
-    >
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <link rel="preload" href="/fonts/gs2.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/gs4.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/jb.woff2" as="font" type="font/woff2" crossOrigin="" />
+      </head>
       <body>
-        <ThemeProvider>
-          <LanguageProvider>{children}</LanguageProvider>
-        </ThemeProvider>
+        {children}
+        <VisitBeacon />
       </body>
     </html>
   );
