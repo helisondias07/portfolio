@@ -413,3 +413,11 @@ nav .ls a,.ls a{padding:9px 16px}
 @media(max-width:1023px) and (orientation:landscape) and (max-height:560px){.chat,.chat.tabc{aspect-ratio:auto;height:calc(100svh - 80px)}}
 /* chat: bottom-anchored, no empty scroll area */
 .msgs>.sp0{height:auto;flex:1 0 0;min-height:0}
+/* hero glow fades to --bg well before the hero's bottom edge (no seam with Sobre) */
+.hero,.hero.g3{background:radial-gradient(70% 40% at 50% 58%,rgba(255,255,255,.95) 0,rgba(255,255,255,0) 70%),var(--bg)}
+[data-theme=dark] .hero,[data-theme=dark] .hero.g3{background:radial-gradient(70% 40% at 50% 58%,#1c2a1a 0,rgba(28,42,26,0) 70%),var(--bg)}
+#sobre{background:var(--bg)}
+/* soften the 3D canvas edges so its shadow never forms a band */
+.kb3{-webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 99%),linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 72%,transparent 99%),linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);mask-composite:intersect}
+/* device shadow must end inside the hero (hero clips overflow) */
+.dev.chat{box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 18px 26px -16px rgba(0,0,0,.4),0 8px 14px -8px rgba(0,0,0,.25)}
