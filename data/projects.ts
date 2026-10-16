@@ -53,6 +53,48 @@ export const projects: Project[] = [
     "resultado": ""
   },
   {
+    "url": "",
+    "eyebrow": "Case em destaque",
+    "association": "Associado ao Grupo Oásis (Agência Oásis)",
+    "contributionsTitle": "Minha atuação",
+    "stackTitle": "Stack",
+    "resultado": "",
+    "tags": [
+      "pessoais",
+      "front"
+    ],
+    "id": "oasisbot",
+    "img": "oasisbot-screenshot-card.webp",
+    "mimg": "oasisbot-screenshot-mobile.webp",
+    "name": "Oasis Bot",
+    "cat": "Agentes de IA · App desktop",
+    "title": "Oasis Bot - Agentes de IA que implementam lojas Wake a partir do Figma",
+    "overview": [
+      "Ecossistema de agentes de IA da Agência Oásis para lojas Wake e Nuvemshop. A parte executável é um chat em que o bot lê o design no Figma e implementa seções da loja direto no repositório.",
+      "Roda como aplicativo desktop para Windows, que abre com um clique e sem terminal, e conta com um servidor MCP próprio para a Wake (API Pública, Storefront GraphQL, preview e comparação visual)."
+    ],
+    "contributions": [
+      "Arquitetura do sistema de agentes: prompts de sistema por função, gates de qualidade e memória institucional com lições aprendidas.",
+      "Painel de chat com o bot (Cursor SDK), escolha automática de modelo por complexidade para reduzir custo e aprovação das escritas na Wake.",
+      "Gate visual que compara a implementação com o Figma antes do \"Pronto pra revisar\", com commit em branch própria por conversa.",
+      "Servidor MCP local da Wake e app desktop em Electron, com bandeja, várias contas, chaves criptografadas e instalador gerado no GitHub Actions."
+    ],
+    "stack": [
+      "Node.js",
+      "Electron",
+      "MCP",
+      "Cursor SDK",
+      "LLMs",
+      "Figma API",
+      "Wake GraphQL",
+      "GitHub Actions"
+    ],
+    "dw": 1400,
+    "dh": 1000,
+    "mw": 730,
+    "mh": 1000
+  },
+  {
     "id": "hotrio",
     "url": "https://www.hotrio.com.br/",
     "img": "hotrio-screenshot-card.webp",
@@ -345,31 +387,29 @@ export const projects: Project[] = [
     "img": "yamuna-screenshot-card.webp",
     "mimg": "yamuna-screenshot-mobile.webp",
     "name": "Yamuna",
-    "cat": "Natural & Health Products E-commerce",
+    "cat": "Natural & Health E-commerce · Nuvemshop",
     "eyebrow": "Case em destaque",
-    "title": "Yamuna - E-commerce de produtos naturais e bem-estar",
+    "title": "Yamuna - Migração e tema na Nuvemshop",
     "association": "Associado ao Grupo Oásis (Agência Oásis)",
     "overview": [
-      "Desenvolvimento frontend da plataforma de e-commerce Yamuna, marca especializada em alimentos naturais, chás, especiarias e produtos voltados ao bem-estar.",
-      "Atuei com foco em responsividade, performance, acessibilidade e otimização de SEO, entregando uma experiência de compra intuitiva e agradável alinhada à identidade wellness da marca."
+      "Desenvolvimento do tema da Yamuna, marca de alimentos naturais, chás e especiarias, na migração da loja para a Nuvemshop.",
+      "Além das páginas da loja, conduzi um plano de performance da home, partindo de um diagnóstico com 229 imagens (199 sem lazy loading), 9 carrosséis e HTML de cerca de 1,3 MB."
     ],
     "contributionsTitle": "Minha atuação",
     "contributions": [
-      "Construção de frontend responsivo com HTML5, CSS3 e JavaScript.",
-      "Aplicação de boas práticas de SEO para ampliar a visibilidade orgânica.",
-      "Otimização de performance para uma experiência fluida e mobile-friendly.",
-      "Colaboração com o time multidisciplinar da Agência Oásis."
+      "Tema completo na Nuvemshop: home, PLP com filtros, PDP, carrinho e drawer, blog e checkout.",
+      "Otimização da home: prioridade só para a primeira imagem do hero, carregamento antecipado dos carrosséis e imagens otimizadas.",
+      "Melhorias no checkout e na experiência do carrinho no mobile.",
+      "Publicação automatizada do tema por FTP com scripts de watch e push."
     ],
     "stackTitle": "Stack",
     "stack": [
-      "Frontend Development",
-      "HTML5",
-      "CSS3",
+      "Nuvemshop",
+      "Twig",
       "JavaScript",
-      "Responsive Web Design",
-      "SEO",
+      "CSS",
       "Web Performance",
-      "Accessibility"
+      "PowerShell"
     ],
     "dw": 1438,
     "dh": 1078,
@@ -380,6 +420,86 @@ export const projects: Project[] = [
       "front"
     ],
     "resultado": ""
+  },
+  {
+    "url": "https://sneakers.fbits.app/",
+    "eyebrow": "Case em destaque",
+    "association": "Associado ao Grupo Oásis (Agência Oásis)",
+    "contributionsTitle": "Minha atuação",
+    "stackTitle": "Stack",
+    "resultado": "",
+    "tags": [
+      "ecommerce",
+      "front"
+    ],
+    "id": "sneakers",
+    "img": "sneakers-screenshot-card.webp",
+    "mimg": "sneakers-screenshot-mobile.webp",
+    "name": "Sneakers New",
+    "cat": "Sneaker Store E-commerce",
+    "title": "Sneakers New - Storefront 2.0 na Wake a partir do Figma",
+    "overview": [
+      "Implementação do novo storefront da Sneakers New no Storefront 2.0 da Wake, com home, vitrines, marcas, PLP, PDP e blog construídos a partir do design no Figma.",
+      "Foi a loja piloto do Oasis Bot: parte das seções foi implementada com agentes de IA e revisada com comparação visual contra o Figma."
+    ],
+    "contributions": [
+      "Implementação da home com carrossel de banners, vitrines, gênero, campanhas, marcas e blog.",
+      "Design tokens versionados que geram as variáveis CSS do tema, com Tailwind CSS e CSS por página.",
+      "Testes visuais com Playwright para menu, cards, PLP e marcas.",
+      "Mais de 140 commits como principal autor desde agosto de 2026."
+    ],
+    "stack": [
+      "Wake Storefront 2.0",
+      "Scriban",
+      "GraphQL",
+      "Tailwind CSS",
+      "Design tokens",
+      "Playwright"
+    ],
+    "dw": 1440,
+    "dh": 1080,
+    "mw": 390,
+    "mh": 1190
+  },
+  {
+    "url": "https://www.kingimports.com.br/",
+    "eyebrow": "Case em destaque",
+    "association": "Associado ao Grupo Oásis (Agência Oásis)",
+    "contributionsTitle": "Minha atuação",
+    "stackTitle": "Stack",
+    "resultado": "",
+    "tags": [
+      "ecommerce",
+      "front"
+    ],
+    "id": "kingimports",
+    "img": "kingimports-screenshot-card.webp",
+    "mimg": "kingimports-screenshot-mobile.webp",
+    "name": "King Imports",
+    "cat": "Import Store E-commerce",
+    "title": "King Imports - Storefront Wake SSR",
+    "overview": [
+      "Desenvolvimento e manutenção contínua do storefront da King Imports na Wake Platform, no modelo Storefront SSR com templates Scriban e Tailwind CSS.",
+      "Sou o principal autor do repositório, com mais de 600 commits desde dezembro de 2023, cobrindo páginas, componentes, carrinho e e-mails da loja."
+    ],
+    "contributions": [
+      "Construção e evolução de páginas, componentes e snippets em Scriban com dados via queries GraphQL.",
+      "Estilização com Tailwind CSS e fluxo de desenvolvimento local com watch do storefront.",
+      "Correções de layout e comportamento em carrinho, vitrines e páginas de produto.",
+      "Templates de e-mail transacional da loja."
+    ],
+    "stack": [
+      "Wake Storefront SSR",
+      "Scriban",
+      "GraphQL",
+      "Tailwind CSS",
+      "JavaScript",
+      "Git"
+    ],
+    "dw": 1440,
+    "dh": 1080,
+    "mw": 390,
+    "mh": 1190
   },
   {
     "id": "venari",

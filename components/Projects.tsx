@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { projects } from "@/data/projects";
 
-/** Coverflow carousel (12 real projects) + "Case em destaque" that crossfades with the active card. */
+/** Coverflow carousel (real projects) + "Case em destaque" that crossfades with the active card. */
 export default function Projects() {
   useEffect(() => {
     import("@/lib/engines/projects").then((m) => m.startProjects(projects));
