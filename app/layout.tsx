@@ -3,23 +3,23 @@ import VisitBeacon from "@/components/VisitBeacon";
 import "./globals.css";
 
 const description =
-  "Helison Dias — desenvolvedor frontend em e-commerce (Wake, Nuvemshop) e automação com IA. React, Next.js, Vue.js e TypeScript. Nova Friburgo, RJ — remoto.";
+  "Helison Dias — desenvolvedor frontend em e-commerce (Wake, Nuvemshop) e automação com IA. React, Next.js, Vue.js e TypeScript. Nova Friburgo, RJ.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://helisondias.vercel.app"),
-  title: "Helison Dias — Frontend Dev",
+  title: "Helison Dias — Frontend Developer & IA Engineer",
   description,
   authors: [{ name: "Helison Dias" }],
   openGraph: {
-    title: "Helison Dias — Frontend Dev",
+    title: "Helison Dias — Frontend Developer & IA Engineer",
     description,
     url: "https://helisondias.vercel.app",
     siteName: "Helison Dias",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Helison Dias" }],
+    images: [{ url: "/og-2026.png", width: 1200, height: 630, alt: "Helison Dias" }],
     locale: "pt_BR",
     type: "website",
   },
-  twitter: { card: "summary_large_image", title: "Helison Dias — Frontend Dev", description, images: ["/og-image.png"] },
+  twitter: { card: "summary_large_image", title: "Helison Dias — Frontend Developer & IA Engineer", description, images: ["/og-2026.png"] },
   alternates: { canonical: "/" },
 };
 
