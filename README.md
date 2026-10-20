@@ -4,8 +4,11 @@
 
 [![CI](https://github.com/helisondias07/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/helisondias07/portfolio/actions/workflows/ci.yml)
 
-<!-- TODO(Helison): gravar um print do hero (desktop e mobile) e salvar em docs/demo.gif, depois descomentar a linha abaixo -->
-<!-- ![Demonstração](./docs/demo.gif) -->
+<div align="center">
+  <img src="./docs/demo.gif" alt="Demonstração" width="800" />
+</div>
+
+<!-- Print estático: ./docs/screenshot.png -->
 
 Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
 
