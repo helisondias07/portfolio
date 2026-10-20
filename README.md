@@ -1,5 +1,12 @@
 # Helison Dias — Portfólio
 
+🔗 **Ao vivo:** [helisondias.vercel.app](https://helisondias.vercel.app)
+
+[![CI](https://github.com/helisondias07/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/helisondias07/portfolio/actions/workflows/ci.yml)
+
+<!-- TODO(Helison): gravar um print do hero (desktop e mobile) e salvar em docs/demo.gif, depois descomentar a linha abaixo -->
+<!-- ![Demonstração](./docs/demo.gif) -->
+
 Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
 
 ## Seções
@@ -42,3 +49,11 @@ Sem variáveis de ambiente tudo continua funcionando: a newsletter responde `503
 1. Marketplace → **Upstash Redis** → conectar ao projeto (injeta `KV_REST_API_URL`/`KV_REST_API_TOKEN`).
 2. Resend: verificar um domínio, criar um Segment; definir `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_AUDIENCE_ID`, `NOTIFY_EMAIL`, `IP_SALT`.
 3. Depois do deploy, medir o Lighthouse na URL de produção e atualizar `data/lighthouse.ts`.
+
+## Qualidade
+
+- `npm run lint` e `npm run build` rodam no CI (GitHub Actions) a cada push/PR
+
+## Licença
+
+MIT © Helison Dias
