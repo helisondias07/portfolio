@@ -1,5 +1,7 @@
+import { dict } from "@/lib/i18n/dict";
 import Newsletter from "./Newsletter";
 import PerfBadge from "./PerfBadge";
+import Tx from "./Tx";
 
 export default function Footer() {
   return (
@@ -7,14 +9,15 @@ export default function Footer() {
       <div className="abw">
         <div className="ftop">
           <div>
-            <span className="mo abk">Contato</span>
+            <span className="mo abk"><Tx pt={dict.pt.contact.kicker} en={dict.en.contact.kicker} /></span>
             <h2 className="fh">
-              Vamos <span className="ser">conversar?</span>
+              <Tx pt={dict.pt.contact.lets} en={dict.en.contact.lets} />{" "}
+              <span className="ser"><Tx pt={dict.pt.contact.talk} en={dict.en.contact.talk} /></span>
             </h2>
-            <p className="fp">Frontend Developer, e-commerce e automação com IA. Aberto a oportunidades remotas. Fale comigo por onde preferir.</p>
+            <p className="fp"><Tx pt={dict.pt.contact.lede} en={dict.en.contact.lede} /></p>
             <div className="btns">
 
-              <a className="btn" href="mailto:helisondias07@gmail.com">E-mail</a>
+              <a className="btn" href="mailto:helisondias07@gmail.com"><Tx pt={dict.pt.contact.email} en={dict.en.contact.email} /></a>
               <a className="btn" href="https://www.linkedin.com/in/helisondias" target="_blank" rel="noopener">LinkedIn ↗</a>
               <a className="btn" href="https://github.com/helisondias07" target="_blank" rel="noopener">GitHub ↗</a>
               <a className="btn wa" href="https://wa.me/5522981040084" target="_blank" rel="noopener">
@@ -34,14 +37,14 @@ export default function Footer() {
                 <path d="M12 11v6" />
                 <path d="m9 14.5 3 3 3-3" />
               </svg>
-              <span>Baixar CV <small>PDF</small></span>
+              <span><Tx pt={dict.pt.contact.cv} en={dict.en.contact.cv} /> <small>PDF</small></span>
             </a>
           </div>
         </div>
         <PerfBadge />
         <div className="fbot mo">
           <span>© 2026 Helison Dias</span>
-          <span>Nova Friburgo, RJ</span>
+          <span><Tx pt={dict.pt.contact.location} en={dict.en.contact.location} /></span>
         </div>
       </div>
     </footer>

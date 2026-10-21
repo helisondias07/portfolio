@@ -1,5 +1,8 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { dict } from "@/lib/i18n/dict";
+import { getLang, subscribe } from "@/lib/i18n/store";
+import Tx from "./Tx";
 
 /** Animated counters — real numbers only (15+ projetos publicados, 2 anos e 6 meses). */
 export default function Counters() {
@@ -37,6 +40,14 @@ export default function Counters() {
     io.observe(el);
     return () => io.disconnect();
   }, []);
+  useLayoutEffect(() => {
+    const apply = () => document.getElementById("exp-yrs")?.setAttribute("aria-label", dict[getLang()].about.counters.yearsAria);
+    apply();
+    return subscribe(apply);
+  }, []);
+
+  const pt = dict.pt.about.counters;
+  const en = dict.en.about.counters;
   return (
     <dl className="stt" id="stt" ref={ref}>
       <div>
@@ -44,16 +55,16 @@ export default function Counters() {
           <span data-to="15">15</span>
           <em>+</em>
         </dt>
-        <dd>projetos publicados</dd>
+        <dd><Tx pt={pt.projects} en={en.projects} /></dd>
       </div>
       <div>
-        <dt aria-label="2 anos e 6 meses">
+        <dt id="exp-yrs" aria-label={pt.yearsAria}>
           <span data-to="2">2</span>
-          <small>anos e</small>
+          <small><Tx pt={pt.years} en={en.years} /></small>
           <span data-to="6">6</span>
-          <small>meses</small>
+          <small><Tx pt={pt.months} en={en.months} /></small>
         </dt>
-        <dd>experiência em tecnologia</dd>
+        <dd><Tx pt={pt.experience} en={en.experience} /></dd>
       </div>
     </dl>
   );
