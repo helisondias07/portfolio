@@ -455,3 +455,9 @@ nav .ls a,.ls a{padding:9px 16px}
 @media(min-width:900px){.skl{grid-template-columns:repeat(4,1fr)}}
 .skl .skl-ia{grid-column:1/-1;order:-1;padding:20px 22px;border:1px solid color-mix(in srgb,var(--g) 40%,transparent);border-radius:16px;background:color-mix(in srgb,var(--g) 7%,transparent)}.skl .skl-ia dd{color:var(--ink);font-size:var(--fs-md,17px);line-height:1.6}
 @media(min-width:900px){.skl{grid-template-columns:repeat(3,1fr)}}
+/* Language: both copies are in the DOM; the head script sets data-lang before first paint. */
+html:not([data-lang="en"]) .i18n-en{display:none!important}
+html[data-lang="en"] .i18n-pt{display:none!important}
+.thm.lang{font:700 11px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.04em;user-select:none}
+@media(max-width:720px){nav .ls a,.ls a{padding:8px 11px}}
+@media(max-width:400px){html[data-lang="en"] .stt dt{font-size:30px}html[data-lang="en"] .stt dt small{font-size:11px;margin:0 .08em}}

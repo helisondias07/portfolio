@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { dict } from "@/lib/i18n/dict";
+import { useLang } from "@/lib/i18n/store";
 
 type Theme = "light" | "dark";
 const KEY = "theme";
@@ -68,8 +70,9 @@ export default function ThemeToggle() {
     }, 560);
   };
 
+  const lang = useLang();
   return (
-    <button ref={btn} id="thm" className="thm" type="button" aria-label="Alternar tema claro/escuro" aria-pressed={dark} onClick={toggle}>
+    <button ref={btn} id="thm" className="thm" type="button" aria-label={dict[lang].theme.label} aria-pressed={dark} onClick={toggle}>
       <svg className="sn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4" />
         <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />

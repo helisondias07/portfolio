@@ -1,78 +1,95 @@
 "use client";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useLayoutEffect } from "react";
+import { dict, type Segment } from "@/lib/i18n/dict";
+import { getLang, subscribe } from "@/lib/i18n/store";
 import Counters from "./Counters";
-
-// [text, highlighted]
-const BIO: [string, boolean][] = [
-  ["Sou Helison, desenvolvedor", false], ["frontend", true], ["há mais de 2 anos na Agência Oásis, de estagiário a júnior, unindo", false],
-  ["e-commerce", true], ["e", false], ["automação com IA", true], [". Entrego storefronts em", false], ["React, Next.js, Vue.js e TypeScript", true],
-  ["na plataforma", false], ["Wake", true], ["e participei da publicação de", false], ["mais de 10 lojas", true],
-  ["em produção, com listagens dinâmicas, filtros em tempo real, checkout e campanhas de alto tráfego. Também atuo com migrações e temas na", false],
-  ["Nuvemshop", true], [". No dia a dia, trabalho com", false], ["agentes de IA", true],
-  ["e seus ecossistemas para automatizar tarefas e acelerar o desenvolvimento. Estou em Nova Friburgo, RJ, trabalhando remoto.", false],
-];
+import Tx from "./Tx";
 
 const words = (t: string) => t.split(/\s+/).filter(Boolean).map((w, i) => <span key={i} className="w">{w}</span>).reduce<React.ReactNode[]>((a, w, i) => (i ? [...a, " ", w] : [w]), []);
 
-export default function About() {
-  const ref = useRef<HTMLParagraphElement>(null);
+function Bio({ segments, langClass }: { segments: readonly Segment[]; langClass: string }) {
+  return (
+    <p className={`bio ${langClass}`}>
+      {segments.map(([t, em], i) => {
+        const glue = i > 0 && !t.startsWith(".") ? " " : "";
+        return (
+          <Fragment key={i}>
+            {glue}
+            {em ? <em>{words(t)}</em> : words(t)}
+          </Fragment>
+        );
+      })}
+    </p>
+  );
+}
 
-  // Scroll-linked word reveal.
-  useEffect(() => {
-    const bio = ref.current!;
-    const ws = [...bio.querySelectorAll<HTMLElement>(".w")];
-    const ems = [...bio.querySelectorAll<HTMLElement>("em")];
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      ws.forEach((w) => w.classList.add("on"));
-      ems.forEach((e) => e.classList.add("lit"));
-      return;
+function bindBio(bio: HTMLElement) {
+  const ws = [...bio.querySelectorAll<HTMLElement>(".w")];
+  const ems = [...bio.querySelectorAll<HTMLElement>("em")];
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    ws.forEach((w) => w.classList.add("on"));
+    ems.forEach((e) => e.classList.add("lit"));
+    return () => {};
+  }
+  let tick = false;
+  const up = () => {
+    tick = false;
+    const r = bio.getBoundingClientRect();
+    const vh = innerHeight;
+    const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+    const n = Math.round(p * ws.length);
+    ws.forEach((w, i) => w.classList.toggle("on", i < n));
+    ems.forEach((e) => e.classList.toggle("lit", !!e.querySelector(".w:last-child")?.classList.contains("on")));
+  };
+  const onScroll = () => {
+    if (!tick) {
+      tick = true;
+      requestAnimationFrame(up);
     }
-    let tick = false;
-    const up = () => {
-      tick = false;
-      const r = bio.getBoundingClientRect();
-      const vh = innerHeight;
-      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
-      const n = Math.round(p * ws.length);
-      ws.forEach((w, i) => w.classList.toggle("on", i < n));
-      ems.forEach((e) => e.classList.toggle("lit", !!e.querySelector(".w:last-child")?.classList.contains("on")));
+  };
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", up);
+  up();
+  return () => {
+    removeEventListener("scroll", onScroll);
+    removeEventListener("resize", up);
+  };
+}
+
+export default function About() {
+  // Scroll-linked word reveal on the language that's actually on screen.
+  useLayoutEffect(() => {
+    let cleanup = () => {};
+    const bind = () => {
+      cleanup();
+      const bio = document.querySelector<HTMLElement>(getLang() === "en" ? "p.bio.i18n-en" : "p.bio.i18n-pt");
+      if (bio) cleanup = bindBio(bio);
     };
-    const onScroll = () => {
-      if (!tick) {
-        tick = true;
-        requestAnimationFrame(up);
-      }
-    };
-    addEventListener("scroll", onScroll, { passive: true });
-    addEventListener("resize", up);
-    up();
+    bind();
+    const unsub = subscribe(bind);
     return () => {
-      removeEventListener("scroll", onScroll);
-      removeEventListener("resize", up);
+      unsub();
+      cleanup();
     };
   }, []);
 
   return (
     <section className="s ab" id="sobre">
       <div className="abw">
-        <span className="mo abk">Sobre</span>
-        <p className="bio" id="bio" ref={ref}>
-          {BIO.map(([t, em], i) => {
-            const glue = i > 0 && !t.startsWith(".") ? " " : "";
-            return (
-              <Fragment key={i}>
-                {glue}
-                {em ? <em>{words(t)}</em> : words(t)}
-              </Fragment>
-            );
-          })}
-        </p>
+        <span className="mo abk"><Tx pt={dict.pt.about.kicker} en={dict.en.about.kicker} /></span>
+        <Bio segments={dict.pt.about.bio} langClass="i18n-pt" />
+        <Bio segments={dict.en.about.bio} langClass="i18n-en" />
         <Counters />
         <dl className="skl">
-          <div><dt>Stack</dt><dd>React, Next.js, Vue.js, TypeScript, JavaScript, HTML5, CSS3, Scriban, Python, N8N</dd></div>
-          <div><dt>Plataformas</dt><dd>Wake, Nuvemshop, integrações REST</dd></div>
-          <div className="skl-ia"><dt>IA no fluxo de trabalho</dt><dd>Construo ecossistemas de agentes de IA que trabalham em conjunto: agentes especializados por função, servidores MCP integrados às plataformas de e-commerce, revisão visual automatizada e memória com lições aprendidas. Uso IA generativa de código no dia a dia para transformar designs em interfaces, refatorar e acelerar entregas, sempre com revisão humana no fim.</dd></div>
-          <div><dt>Formação</dt><dd>Ciência da Computação (Estácio), em andamento. Inglês C1</dd></div>
+          {dict.pt.about.skills.map((skill, i) => {
+            const en = dict.en.about.skills[i];
+            return (
+              <div key={skill.title} className={skill.wide ? "skl-ia" : undefined}>
+                <dt><Tx pt={skill.title} en={en.title} /></dt>
+                <dd><Tx pt={skill.body} en={en.body} /></dd>
+              </div>
+            );
+          })}
         </dl>
       </div>
     </section>

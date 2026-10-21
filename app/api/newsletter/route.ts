@@ -2,12 +2,24 @@ import { NextResponse } from "next/server";
 import { resend, FROM, getIp, sha256 } from "@/lib/server/resend";
 import { rateLimit } from "@/lib/server/kv";
 import { subscribeContact } from "@/lib/server/newsletter";
+import type { Lang } from "@/lib/i18n/dict";
+
+const MAIL: Record<Lang, { subject: string; html: string }> = {
+  pt: {
+    subject: "Inscrição confirmada — Helison Dias",
+    html: "<p>Oi! Obrigado por se inscrever.</p><p>Vou mandar novidades sobre projetos e o que ando construindo, sem spam.</p><p>— Helison</p>",
+  },
+  en: {
+    subject: "You're subscribed — Helison Dias",
+    html: "<p>Hi! Thanks for subscribing.</p><p>I'll send updates on projects and what I'm building. No spam.</p><p>— Helison</p>",
+  },
+};
 
 export const runtime = "nodejs";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function POST(req: Request) {
-  let body: { email?: string; company?: string };
+  let body: { email?: string; company?: string; lang?: string };
   try {
     body = await req.json();
   } catch {
@@ -41,11 +53,12 @@ export async function POST(req: Request) {
       console.error("newsletter: failed to store contact in segment", e);
     }
 
+    const mail = MAIL[body.lang === "en" ? "en" : "pt"];
     const { error } = await resend.emails.send({
       from: FROM,
       to: email,
-      subject: "Inscrição confirmada — Helison Dias",
-      html: `<p>Oi! Obrigado por se inscrever.</p><p>Vou mandar novidades sobre projetos e o que ando construindo, sem spam.</p><p>— Helison</p>`,
+      subject: mail.subject,
+      html: mail.html,
     });
     if (error) throw error;
 
