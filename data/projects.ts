@@ -53,48 +53,6 @@ export const projects: Project[] = [
     "resultado": ""
   },
   {
-    "url": "",
-    "eyebrow": "Case em destaque",
-    "association": "Associado ao Grupo Oásis (Agência Oásis)",
-    "contributionsTitle": "Minha atuação",
-    "stackTitle": "Stack",
-    "resultado": "",
-    "tags": [
-      "pessoais",
-      "front"
-    ],
-    "id": "oasisbot",
-    "img": "oasisbot-screenshot-card.webp",
-    "mimg": "oasisbot-screenshot-mobile.webp",
-    "name": "Oasis Bot",
-    "cat": "Agentes de IA · App desktop",
-    "title": "Oasis Bot - Agentes de IA que implementam lojas Wake a partir do Figma",
-    "overview": [
-      "Ecossistema de agentes de IA da Agência Oásis para lojas Wake e Nuvemshop. A parte executável é um chat em que o bot lê o design no Figma e implementa seções da loja direto no repositório.",
-      "Roda como aplicativo desktop para Windows, que abre com um clique e sem terminal, e conta com um servidor MCP próprio para a Wake (API Pública, Storefront GraphQL, preview e comparação visual)."
-    ],
-    "contributions": [
-      "Arquitetura do sistema de agentes: prompts de sistema por função, gates de qualidade e memória institucional com lições aprendidas.",
-      "Painel de chat com o bot (Cursor SDK), escolha automática de modelo por complexidade para reduzir custo e aprovação das escritas na Wake.",
-      "Gate visual que compara a implementação com o Figma antes do \"Pronto pra revisar\", com commit em branch própria por conversa.",
-      "Servidor MCP local da Wake e app desktop em Electron, com bandeja, várias contas, chaves criptografadas e instalador gerado no GitHub Actions."
-    ],
-    "stack": [
-      "Node.js",
-      "Electron",
-      "MCP",
-      "Cursor SDK",
-      "LLMs",
-      "Figma API",
-      "Wake GraphQL",
-      "GitHub Actions"
-    ],
-    "dw": 1256,
-    "dh": 754,
-    "mw": 699,
-    "mh": 754
-  },
-  {
     "id": "hotrio",
     "url": "https://www.hotrio.com.br/",
     "img": "hotrio-screenshot-card.webp",
@@ -537,51 +495,6 @@ export const projects: Project[] = [
     "dh": 1071,
     "mw": 383,
     "mh": 1192,
-    "tags": [
-      "pessoais",
-      "front"
-    ],
-    "resultado": ""
-  },
-  {
-    "id": "rickmorty",
-    "url": "https://rick-morty-wiki-steel-delta.vercel.app/",
-    "img": "rickmorty-wiki-preview2.webp",
-    "mimg": "rickmorty-wiki-preview-mobile2.webp",
-    "name": "Rick & Morty Wiki",
-    "cat": "Desafio Técnico · React App",
-    "eyebrow": "Desafio técnico",
-    "title": "Rick & Morty Wiki - Aplicação interativa de personagens",
-    "association": "Projeto autoral criado por Helison Dias",
-    "overview": [
-      "Aplicação front-end desenvolvida como desafio técnico para explorar os recursos da API oficial de Rick and Morty, com listagem de personagens, episódios e localizações.",
-      "O projeto conta com uma página dedicada ao Esquadrão, onde é possível comparar personagens, calcular chance de sobrevivência e simular missões interdimensionais com análise sarcástica do Rick. Tudo com suporte a dois idiomas (PT/EN) e alternância entre modo escuro e claro."
-    ],
-    "contributionsTitle": "Destaques técnicos",
-    "contributions": [
-      "Scroll infinito com Intersection Observer API para performance otimizada.",
-      "Fetch em lote de personagens via regex nos IDs de URL, reduzindo requisições à API drasticamente.",
-      "Focus Trap manual nos modais via hook dedicado, garantindo acessibilidade por teclado.",
-      "Sistema de tema e idioma persistidos no localStorage com Context API.",
-      "Animações fluidas com Framer Motion e testes unitários com Vitest e Testing Library."
-    ],
-    "stackTitle": "Stack",
-    "stack": [
-      "React 19",
-      "TypeScript",
-      "Vite",
-      "styled-components",
-      "React Router DOM",
-      "Framer Motion",
-      "Fetch API",
-      "Vitest",
-      "Testing Library",
-      "Context API"
-    ],
-    "dw": 675,
-    "dh": 506,
-    "mw": 640,
-    "mh": 480,
     "tags": [
       "pessoais",
       "front"

@@ -24,23 +24,6 @@ export const enProjects: Record<string, ProjectCopy> = {
       "Visual refinement aligned with the brand and a fitness-fashion audience.",
     ],
   },
-  oasisbot: {
-    cat: "AI agents · Desktop app",
-    eyebrow: featured,
-    title: "Oasis Bot — AI agents that implement Wake stores from Figma",
-    association: withOasis,
-    overview: [
-      "An AI-agent ecosystem at Agência Oásis for Wake and Nuvemshop stores. The part you can run is a chat where the bot reads a Figma design and implements store sections straight in the repo.",
-      "It runs as a Windows desktop app that opens in one click, with no terminal, and ships a dedicated Wake MCP server (Public API, Storefront GraphQL, preview, and visual diff).",
-    ],
-    contributionsTitle: role,
-    contributions: [
-      "Architected the agent system: role-specific system prompts, quality gates, and institutional memory of lessons learned.",
-      "Chat panel for the bot (Cursor SDK), automatic model choice by complexity to keep cost down, and approval before writes to Wake.",
-      "A visual gate that compares the implementation to Figma before \"Ready for review\", with each conversation committed on its own branch.",
-      "Local Wake MCP server and an Electron desktop app, with a system tray, multiple accounts, encrypted keys, and an installer built in GitHub Actions.",
-    ],
-  },
   hotrio: {
     cat: "Adult Products E-commerce",
     eyebrow: featured,
@@ -226,24 +209,6 @@ export const enProjects: Record<string, ProjectCopy> = {
       "Implemented a mobile-first experience for quick access across devices.",
       "Organized cards, usage steps, and interaction states with a focus on clarity.",
       "Shipped the web app with its own visual identity and a direct way in.",
-    ],
-  },
-  rickmorty: {
-    cat: "Technical challenge · React app",
-    eyebrow: "Technical challenge",
-    title: "Rick & Morty Wiki — Interactive character app",
-    association: "Personal project by Helison Dias",
-    overview: [
-      "A frontend app built as a technical challenge to explore the official Rick and Morty API, with listings for characters, episodes, and locations.",
-      "It includes a Squad page where you can compare characters, calculate survival odds, and simulate interdimensional missions with Rick's sarcastic analysis. It supports two languages (PT/EN) and a light/dark theme.",
-    ],
-    contributionsTitle: "Technical highlights",
-    contributions: [
-      "Infinite scroll with the Intersection Observer API for better performance.",
-      "Batch character fetches by parsing IDs out of URLs with a regex, cutting API requests sharply.",
-      "A manual focus trap in modals via a dedicated hook, so keyboard access works.",
-      "Theme and language persisted in localStorage with the Context API.",
-      "Fluid animation with Framer Motion and unit tests with Vitest and Testing Library.",
     ],
   },
 };
