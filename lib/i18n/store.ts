@@ -2,18 +2,26 @@
 
 import { useSyncExternalStore } from "react";
 import { dict, type Lang } from "./dict";
+import { browserLanguageTags, LANG_KEY, langCookieAssignment, langFromCookie, resolveLang } from "./detect";
 
-export const LANG_KEY = "lang";
+export { LANG_KEY };
 
 const listeners = new Set<() => void>();
 
 function detect(): Lang {
+  let stored: string | null = null;
   try {
-    const saved = localStorage.getItem(LANG_KEY);
-    if (saved === "pt" || saved === "en") return saved;
-  } catch {}
-  const n = (navigator.language || "pt").toLowerCase();
-  return n.startsWith("pt") ? "pt" : "en";
+    stored = localStorage.getItem(LANG_KEY);
+  } catch {
+    /* private mode or blocked storage */
+  }
+  let cookie: string | null = null;
+  try {
+    cookie = langFromCookie(document.cookie);
+  } catch {
+    /* ignore */
+  }
+  return resolveLang({ stored, cookie, languages: browserLanguageTags() });
 }
 
 function readInitial(): Lang {
@@ -62,7 +70,14 @@ export function applyLang(next: Lang, persist = false) {
   if (persist) {
     try {
       localStorage.setItem(LANG_KEY, next);
-    } catch {}
+    } catch {
+      /* private mode or blocked storage */
+    }
+    try {
+      document.cookie = langCookieAssignment(next, location.protocol === "https:");
+    } catch {
+      /* ignore */
+    }
   }
   listeners.forEach((cb) => cb());
 }

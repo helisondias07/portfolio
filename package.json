@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --import ./scripts/register-ts.mjs --test lib/i18n/detect.test.ts"
   },
   "dependencies": {
     "@upstash/redis": "^1.39.0",
