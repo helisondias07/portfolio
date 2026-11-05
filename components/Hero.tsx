@@ -27,7 +27,7 @@ export default function Hero() {
       <h1 className="hl" id="hero-title" aria-label={dict.pt.hero.headline}>
         <span className="hli">
           <span id="hl" />
-          <span className="car" />
+          <span className="car" aria-hidden="true">{"\u2060"}</span>
           <span id="hlr" className="hlr" aria-hidden="true">
             <span className="i18n-pt">{dict.pt.hero.headline}</span>
             <span className="i18n-en">{dict.en.hero.headline}</span>

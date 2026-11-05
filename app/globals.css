@@ -347,7 +347,7 @@ html[data-theme=dark]{color-scheme:dark;--bg:#0f1011;--ink:#ecebe6;--g:#44D62C;-
 .sel{--sb:#fff;--sf:var(--ink);--st:#e6e4de;display:none;margin-top:28px;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 14px 10px 16px;border-radius:16px;background:var(--sb);color:var(--sf);border:1px solid var(--ln);width:max-content;max-width:100%;box-sizing:border-box;box-shadow:0 14px 30px -24px rgba(0,0,0,.4)}
 [data-theme=dark] .sel{--sb:#17181a;--st:#2a2b2e}
 .sel.ok{display:flex}.selt{font:600 12px 'General Sans';color:var(--mu)}
-.sel .rg{display:flex;gap:8px}.sel .rg span{position:relative;width:42px;height:42px;display:grid;place-items:center;font:700 12px 'General Sans';color:var(--sf)}.sel .rg small{position:absolute;bottom:-14px;font:500 9px 'JetBrains Mono';color:var(--mu);text-transform:uppercase}
+.sel .rg{display:flex;gap:8px}.sel .rg>span{position:relative;width:42px;height:42px;display:grid;place-items:center;font:700 12px 'General Sans';color:var(--sf)}.sel .rg small{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);white-space:nowrap;font:500 9px 'JetBrains Mono';color:var(--mu);text-transform:uppercase;letter-spacing:.04em}
 .sel svg{position:absolute;inset:0;transform:rotate(-90deg)}.sel circle{fill:none;stroke-width:3}.sel .bg{stroke:var(--st)}.sel .fg{stroke:#2fb31d;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.22,1,.36,1)}[data-theme=dark] .sel .fg{stroke:#44D62C}
 .sel .tg2{display:flex;gap:4px;padding:3px;border-radius:9px;background:var(--bg)}.sel .tg2 button{all:unset;cursor:pointer;padding:5px 9px;border-radius:7px;color:var(--mu);font:600 11.5px 'General Sans';transition:background .3s ease,color .3s ease}.sel .tg2 button.on{background:var(--sb);color:var(--sf);box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .sel .rg{padding-bottom:12px}
@@ -395,8 +395,10 @@ nav .ls a:hover,.ls a:hover{background:rgba(17,17,17,.07);color:#000}
 .hero .hl .hli{width:min(96%,22em)}
 .hero.g3 .hl{font-size:clamp(28px,3.3vw,60px);height:2.15em}
 
-/* caret: inline bar glued to the last typed char (word-joiners in JS), zero net width */
-.hero .hl .car{display:inline-block;position:static;width:.075em;height:.86em;margin:0 -.075em 0 0;vertical-align:-.1em;background:var(--g)!important;border-radius:2px;animation:cb 1s steps(2) infinite}
+/* Caret is taken out of the line. An inline-block here is an atomic inline, so it
+   always offers a soft wrap; text-wrap:balance was breaking on that opportunity
+   and parking the bar on line 2 while "automações" was still on line 1. */
+.hero .hl .car{position:absolute;display:block;width:.075em;height:.86em;margin:0;pointer-events:none;background:var(--g)!important;border-radius:2px;animation:cb 1s steps(2) infinite}
 .hero .hl .car::after{content:none;display:none}
 /* navbar pill spacing + bare theme icon */
 nav .ls,.ls{padding:6px 10px;gap:6px}
@@ -461,3 +463,18 @@ html[data-lang="en"] .i18n-pt{display:none!important}
 .thm.lang{font:700 11px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.04em;user-select:none}
 @media(max-width:720px){nav .ls a,.ls a{padding:8px 11px}}
 @media(max-width:400px){html[data-lang="en"] .stt dt{font-size:30px}html[data-lang="en"] .stt dt small{font-size:11px;margin:0 .08em}}
+
+/* Contact: the button row is sized by the Lighthouse card and the pills fill it.
+   From 821px up, the newsletter grows so Download CV meets the card's bottom. */
+.ftop{align-items:stretch}
+.fmain{min-width:0}
+.fpair{display:flex;flex-direction:column;align-items:stretch;width:max-content;max-width:100%;margin-top:28px}
+.fpair .btns{width:0;min-width:100%;margin-top:0;flex-wrap:nowrap;gap:8px}
+.fpair .btns .btn{flex:1 1 0;justify-content:center;min-width:0;padding-inline:12px;white-space:nowrap}
+.fpair .sel{width:max-content;max-width:100%}
+.fside{height:auto}
+@media(min-width:821px){.fside .nl{flex:1 1 auto}}
+@media(max-width:480px){
+  .fpair .btns{flex-wrap:wrap}
+  .fpair .btns .btn{flex:0 0 auto;padding-inline:20px}
+}
