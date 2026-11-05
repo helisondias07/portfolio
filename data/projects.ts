@@ -15,13 +15,13 @@ export const projects: Project[] = [
     "img": "fiturban-screenshot.webp",
     "mimg": "fiturban-screenshot-mobile.webp",
     "name": "Fit Urban",
-    "cat": "Fashion E-commerce",
+    "cat": "E-commerce fitness",
     "eyebrow": "Case em destaque",
-    "title": "Fit Urban - E-commerce de moda fitness feminina",
+    "title": "Fit Urban - Storefront fitness",
     "association": "Associado ao Grupo Oásis (Agência Oásis)",
     "overview": [
-      "Desenvolvimento frontend do storefront da Fit Urban, marca de moda fitness feminina especializada em peças de alta performance para treino.",
-      "Atuei na implementação da experiência de compra na Wake Platform, com foco em responsividade, refinamento visual e navegação clara para um catálogo amplo com coleções como Zenith, Seamless, Fit Run, Vitality e Fit Basic."
+      "Storefront fitness na Wake: listagens, coleções, variantes e responsividade.",
+      "Implementação da experiência de compra com foco em navegação clara para um catálogo com várias coleções."
     ],
     "contributionsTitle": "Minha atuação",
     "contributions": [
@@ -304,13 +304,13 @@ export const projects: Project[] = [
     "img": "viaveneto-screenshot-card.webp",
     "mimg": "viaveneto-screenshot-mobile.webp",
     "name": "ViaVeneto",
-    "cat": "Men's Fashion E-commerce",
+    "cat": "Moda masculina",
     "eyebrow": "Case em destaque",
-    "title": "ViaVeneto - E-commerce de moda masculina",
+    "title": "ViaVeneto - Moda masculina",
     "association": "Associado ao Grupo Oásis (Agência Oásis)",
     "overview": [
-      "Desenvolvimento frontend da plataforma de e-commerce ViaVeneto, marca tradicional de moda masculina e alfaiataria.",
-      "Colaborei em um time multidisciplinar para entregar uma storefront performática, acessível e responsiva, alinhada à identidade clássica da marca e aos padrões de experiência do usuário."
+      "Moda masculina na Wake: UI premium, acessibilidade, performance e SEO.",
+      "Storefront responsiva alinhada à identidade da marca, em um time multidisciplinar."
     ],
     "contributionsTitle": "Minha atuação",
     "contributions": [
@@ -345,29 +345,28 @@ export const projects: Project[] = [
     "img": "yamuna-screenshot-card.webp",
     "mimg": "yamuna-screenshot-mobile.webp",
     "name": "Yamuna",
-    "cat": "Natural & Health E-commerce · Nuvemshop",
+    "cat": "Naturais e bem-estar · Nuvemshop",
     "eyebrow": "Case em destaque",
-    "title": "Yamuna - Migração e tema na Nuvemshop",
+    "title": "Yamuna - Migração Wake para Nuvemshop",
     "association": "Associado ao Grupo Oásis (Agência Oásis)",
     "overview": [
-      "Desenvolvimento do tema da Yamuna, marca de alimentos naturais, chás e especiarias, na migração da loja para a Nuvemshop.",
-      "Além das páginas da loja, conduzi um plano de performance da home, partindo de um diagnóstico com 229 imagens (199 sem lazy loading), 9 carrosséis e HTML de cerca de 1,3 MB."
+      "Migração do storefront de naturais e bem-estar da Wake para a Nuvemshop.",
+      "Tema em Go Template com foco em identidade, responsividade, performance, acessibilidade e SEO."
     ],
     "contributionsTitle": "Minha atuação",
     "contributions": [
-      "Tema completo na Nuvemshop: home, PLP com filtros, PDP, carrinho e drawer, blog e checkout.",
-      "Otimização da home: prioridade só para a primeira imagem do hero, carregamento antecipado dos carrosséis e imagens otimizadas.",
-      "Melhorias no checkout e na experiência do carrinho no mobile.",
-      "Publicação automatizada do tema por FTP com scripts de watch e push."
+      "Migração do storefront Wake para a Nuvemshop.",
+      "Tema em Go Template orientado a identidade, responsividade, performance, acessibilidade e SEO."
     ],
     "stackTitle": "Stack",
     "stack": [
       "Nuvemshop",
-      "Twig",
+      "Go Template",
       "JavaScript",
       "CSS",
       "Web Performance",
-      "PowerShell"
+      "Acessibilidade",
+      "SEO"
     ],
     "dw": 1438,
     "dh": 1078,
@@ -394,11 +393,11 @@ export const projects: Project[] = [
     "img": "kingimports-screenshot-card.webp",
     "mimg": "kingimports-screenshot-mobile.webp",
     "name": "King Imports",
-    "cat": "Import Store E-commerce",
-    "title": "King Imports - Storefront Wake SSR",
+    "cat": "Autopeças",
+    "title": "King Imports - Frontend de autopeças",
     "overview": [
-      "Desenvolvimento e manutenção contínua do storefront da King Imports na Wake Platform, no modelo Storefront SSR com templates Scriban e Tailwind CSS.",
-      "Sou o principal autor do repositório, com mais de 600 commits desde dezembro de 2023, cobrindo páginas, componentes, carrinho e e-mails da loja."
+      "Frontend de autopeças na Wake: layouts responsivos e performance.",
+      "Páginas, componentes e vitrines do storefront, com ajustes de carrinho e página de produto."
     ],
     "contributions": [
       "Construção e evolução de páginas, componentes e snippets em Scriban com dados via queries GraphQL.",
@@ -425,20 +424,19 @@ export const projects: Project[] = [
     "img": "venari-screenshot-card.webp",
     "mimg": "venari-screenshot-mobile.webp",
     "name": "Venari",
-    "cat": "Women's Fashion E-commerce",
+    "cat": "Fitness feminino",
     "eyebrow": "Case em destaque",
-    "title": "Venari - E-commerce de moda feminina e beachwear",
+    "title": "Venari - Storefront fitness feminino",
     "association": "Associado ao Grupo Oásis (Agência Oásis)",
     "overview": [
-      "Desenvolvimento frontend da plataforma de e-commerce Venari, marca focada em moda feminina, beachwear e coleções sazonais com forte apelo visual.",
-      "Atuei na implementação de interfaces responsivas com foco em experiência mobile-first, destaque para campanhas, navegação fluida e consistência visual alinhada à identidade da marca."
+      "Storefront fitness feminino na Wake: PLPs, coleções, variantes de cor e layout mobile-first.",
+      "Frontend responsivo com HTML5, CSS3 e JavaScript, alinhado à identidade da marca."
     ],
     "contributionsTitle": "Minha atuação",
     "contributions": [
-      "Implementação de vitrines, banners e páginas de coleção com HTML5, CSS3 e JavaScript.",
-      "Refinamento de layout responsivo para melhor leitura de conteúdo e destaque de produtos em mobile.",
-      "Ajustes de performance, acessibilidade e usabilidade para uma jornada de compra mais fluida.",
-      "Colaboração com design e produto para manter consistência visual entre campanhas e seções da loja."
+      "PLPs, coleções e variantes de cor com HTML5, CSS3 e JavaScript.",
+      "Layout mobile-first para leitura do catálogo e destaque dos produtos.",
+      "Ajustes de responsividade no storefront Wake."
     ],
     "stackTitle": "Stack",
     "stack": [
@@ -467,29 +465,30 @@ export const projects: Project[] = [
     "img": "webcine-screenshot-card.webp",
     "mimg": "webcine-screenshot-mobile.webp",
     "name": "WebCine TV",
-    "cat": "Real-time Streaming Platform",
+    "cat": "Cinema online",
     "eyebrow": "Projeto autoral",
-    "title": "WebCine TV - Sala de cinema online em tempo real",
+    "title": "WebCine TV - Salas sincronizadas",
     "association": "Projeto criado por Helison Dias",
     "overview": [
-      "Desenvolvimento de uma plataforma web para assistir vídeos online em salas compartilhadas, com foco em sincronização da experiência, conversa em tempo real e acesso simples sem instalação.",
-      "A interface foi construída para funcionar bem em desktop e mobile, com experiência imersiva, visual cinematográfico, criação rápida de salas e apresentação clara dos recursos principais da plataforma."
+      "Plataforma de cinema online com salas sincronizadas (play/pause/seek e chat), YouTube, Twitch/HLS, screen share e navegador virtual.",
+      "V2 com Docker multi-stage, Node.js 24 e E2E em Playwright. Desenvolvimento com Claude e Codex."
     ],
     "contributionsTitle": "Minha atuação",
     "contributions": [
-      "Construção da interface responsiva para criação de salas, navegação e apresentação dos recursos.",
-      "Implementação de experiência mobile-first para acesso rápido em diferentes dispositivos.",
-      "Organização visual de cards, etapas de uso e estados de interação com foco em clareza.",
-      "Publicação da aplicação web com identidade visual própria e fluxo direto de entrada."
+      "Salas sincronizadas com play, pause, seek e chat.",
+      "YouTube, Twitch/HLS, screen share e navegador virtual.",
+      "V2 com Docker multi-stage, Node.js 24 e testes E2E em Playwright."
     ],
     "stackTitle": "Stack",
     "stack": [
-      "Frontend Development",
-      "Responsive Web Design",
-      "Real-time UX",
-      "Web Performance",
-      "Accessibility",
-      "Git"
+      "React",
+      "TypeScript",
+      "Vite",
+      "Mantine",
+      "Firebase",
+      "Playwright",
+      "Docker",
+      "Node.js"
     ],
     "dw": 1428,
     "dh": 1071,

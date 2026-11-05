@@ -53,6 +53,26 @@ export default function PerfBadge() {
     return subscribe(apply);
   }, []);
 
+  // The contact pills share the Lighthouse card's width, including after wrap or font load.
+  useLayoutEffect(() => {
+    const card = ref.current;
+    const btns = card?.parentElement?.querySelector<HTMLElement>(".btns");
+    if (!card || !btns) return;
+    const sync = () => {
+      const w = card.getBoundingClientRect().width;
+      if (w > 0) btns.style.width = `${Math.round(w)}px`;
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(card);
+    addEventListener("resize", sync);
+    return () => {
+      ro.disconnect();
+      removeEventListener("resize", sync);
+      btns.style.width = "";
+    };
+  }, []);
+
   if (!devices.length) return null;
   return (
     <div className="sel ok" ref={ref} aria-label={`${dict.pt.perf.badge}, ${dict.pt.perf.measured} ${lighthouse.measured}`}>
@@ -72,7 +92,7 @@ export default function PerfBadge() {
               <circle className="fg" cx="21" cy="21" r="18" strokeDasharray={C} strokeDashoffset={shown ? C * (1 - v / 100) : C} />
             </svg>
             {v}
-            <small>{k === "best-practices" ? <Tx pt={dict.pt.perf.practices} en={dict.en.perf.practices} /> : LABEL[k]}</small>
+            <small className="perf-lab">{k === "best-practices" ? <Tx pt={dict.pt.perf.practices} en={dict.en.perf.practices} /> : LABEL[k]}</small>
           </span>
         ))}
       </div>
