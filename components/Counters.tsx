@@ -4,7 +4,7 @@ import { dict } from "@/lib/i18n/dict";
 import { getLang, subscribe } from "@/lib/i18n/store";
 import Tx from "./Tx";
 
-/** Animated counters — real numbers only (15+ projetos publicados, 2 anos e 6 meses). */
+/** Animated counter for production stores. The start year is static: since 2023, not a rounded year count. */
 export default function Counters() {
   const ref = useRef<HTMLDListElement>(null);
   useEffect(() => {
@@ -52,17 +52,15 @@ export default function Counters() {
     <dl className="stt" id="stt" ref={ref}>
       <div>
         <dt>
-          <span data-to="15">15</span>
+          <span data-to="10">10</span>
           <em>+</em>
         </dt>
         <dd><Tx pt={pt.projects} en={en.projects} /></dd>
       </div>
       <div>
         <dt id="exp-yrs" aria-label={pt.yearsAria}>
-          <span data-to="2">2</span>
-          <small><Tx pt={pt.years} en={en.years} /></small>
-          <span data-to="6">6</span>
-          <small><Tx pt={pt.months} en={en.months} /></small>
+          <small><Tx pt={pt.since} en={en.since} /></small>
+          <span>2023</span>
         </dt>
         <dd><Tx pt={pt.experience} en={en.experience} /></dd>
       </div>

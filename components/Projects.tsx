@@ -69,6 +69,23 @@ export default function Projects() {
           <span className="cdn" id="cdn" />
         </div>
         <article className="csd" id="csd" />
+        <div className="opl">
+          <span className="mo abk"><Tx pt={ui.alsoKicker} en={en.alsoKicker} /></span>
+          <p className="opl-l"><Tx pt={ui.alsoLede} en={en.alsoLede} /></p>
+          <ul>
+            {ui.also.map((item, i) => {
+              const enItem = en.also[i];
+              const href = item.href;
+              const name = <Tx pt={item.name} en={enItem.name} />;
+              return (
+                <li key={item.name}>
+                  <strong>{href ? <a href={href} target="_blank" rel="noopener">{name}</a> : name}</strong>
+                  <span><Tx pt={item.detail} en={enItem.detail} /></span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </section>
   );

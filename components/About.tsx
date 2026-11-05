@@ -81,10 +81,40 @@ export default function About() {
         <Bio segments={dict.en.about.bio} langClass="i18n-en" />
         <Counters />
         <dl className="skl">
+          {dict.pt.about.skills.filter((skill) => skill.wide).map((skill) => {
+            const en = dict.en.about.skills[dict.pt.about.skills.indexOf(skill)];
+            return (
+              <div key={skill.title} className="skl-ia">
+                <dt><Tx pt={skill.title} en={en.title} /></dt>
+                <dd><Tx pt={skill.body} en={en.body} /></dd>
+              </div>
+            );
+          })}
+        </dl>
+        <span className="mo abk xpk"><Tx pt={dict.pt.about.experienceKicker} en={dict.en.about.experienceKicker} /></span>
+        <ol className="xp">
+          {dict.pt.about.roles.map((role, i) => {
+            const en = dict.en.about.roles[i];
+            return (
+              <li key={role.when}>
+                <h3><Tx pt={role.title} en={en.title} /></h3>
+                <p className="when"><Tx pt={role.when} en={en.when} /></p>
+                <p className="where"><Tx pt={role.where} en={en.where} /></p>
+                <ul>
+                  {role.bullets.map((bullet, j) => (
+                    <li key={j}><Tx pt={bullet} en={en.bullets[j]} /></li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ol>
+        <dl className="skl">
           {dict.pt.about.skills.map((skill, i) => {
+            if (skill.wide) return null;
             const en = dict.en.about.skills[i];
             return (
-              <div key={skill.title} className={skill.wide ? "skl-ia" : undefined}>
+              <div key={skill.title}>
                 <dt><Tx pt={skill.title} en={en.title} /></dt>
                 <dd><Tx pt={skill.body} en={en.body} /></dd>
               </div>

@@ -8,13 +8,13 @@ const role = "What I did";
 
 export const enProjects: Record<string, ProjectCopy> = {
   fiturban: {
-    cat: "Fashion E-commerce",
+    cat: "Fitness e-commerce",
     eyebrow: featured,
-    title: "Fit Urban — Women's fitness fashion store",
+    title: "Fit Urban — Fitness storefront",
     association: withOasis,
     overview: [
-      "Frontend development for the Fit Urban storefront, a women's fitness brand focused on high-performance training apparel.",
-      "I built the shopping experience on Wake, with an emphasis on responsive layout, visual polish, and clear navigation across a large catalog — collections such as Zenith, Seamless, Fit Run, Vitality, and Fit Basic.",
+      "Fitness storefront on Wake: listings, collections, variants, and responsive layout.",
+      "Shopping experience built for clear navigation across a catalog with several collections.",
     ],
     contributionsTitle: role,
     contributions: [
@@ -127,13 +127,13 @@ export const enProjects: Record<string, ProjectCopy> = {
     ],
   },
   viaveneto: {
-    cat: "Men's Fashion E-commerce",
+    cat: "Men's fashion",
     eyebrow: featured,
-    title: "ViaVeneto — Men's fashion store",
+    title: "ViaVeneto — Men's fashion",
     association: withOasis,
     overview: [
-      "Frontend development for ViaVeneto, a traditional men's fashion and tailoring brand.",
-      "I worked with a multidisciplinary team to ship a fast, accessible, responsive storefront aligned with the brand's classic identity and with UX standards.",
+      "Men's fashion on Wake: premium UI, accessibility, performance, and SEO.",
+      "Responsive storefront aligned with the brand, built with a multidisciplinary team.",
     ],
     contributionsTitle: role,
     contributions: [
@@ -144,30 +144,28 @@ export const enProjects: Record<string, ProjectCopy> = {
     ],
   },
   yamuna: {
-    cat: "Natural & Health E-commerce · Nuvemshop",
+    cat: "Natural goods · Nuvemshop",
     eyebrow: featured,
-    title: "Yamuna — Nuvemshop migration and theme",
+    title: "Yamuna — Wake to Nuvemshop migration",
     association: withOasis,
     overview: [
-      "Theme development for Yamuna, a brand of natural foods, teas, and spices, during the store's migration to Nuvemshop.",
-      "Beyond the store pages, I led a homepage performance plan, starting from an audit that found 229 images (199 without lazy loading), 9 carousels, and roughly 1.3 MB of HTML.",
+      "Migration of the natural and wellness storefront from Wake to Nuvemshop.",
+      "Go Template theme focused on identity, responsive layout, performance, accessibility, and SEO.",
     ],
     contributionsTitle: role,
     contributions: [
-      "Full Nuvemshop theme: home, PLP with filters, PDP, cart and drawer, blog, and checkout.",
-      "Homepage optimization: priority only for the first hero image, earlier carousel loading, and optimized images.",
-      "Checkout improvements and a better mobile cart experience.",
-      "Automated theme publishing over FTP with watch and push scripts.",
+      "Migrated the Wake storefront to Nuvemshop.",
+      "Go Template theme aimed at identity, responsive layout, performance, accessibility, and SEO.",
     ],
   },
   kingimports: {
-    cat: "Import Store E-commerce",
+    cat: "Auto parts",
     eyebrow: featured,
-    title: "King Imports — Wake SSR storefront",
+    title: "King Imports — Auto parts frontend",
     association: withOasis,
     overview: [
-      "Ongoing development and maintenance of the King Imports storefront on Wake, using the Storefront SSR model with Scriban templates and Tailwind CSS.",
-      "I'm the primary author of the repository, with 600+ commits since December 2023, covering pages, components, the cart, and store emails.",
+      "Auto parts frontend on Wake: responsive layouts and performance.",
+      "Storefront pages, components, and showcases, with cart and product-page fixes.",
     ],
     contributionsTitle: role,
     contributions: [
@@ -178,37 +176,35 @@ export const enProjects: Record<string, ProjectCopy> = {
     ],
   },
   venari: {
-    cat: "Women's Fashion E-commerce",
+    cat: "Women's fitness",
     eyebrow: featured,
-    title: "Venari — Women's fashion and beachwear store",
+    title: "Venari — Women's fitness storefront",
     association: withOasis,
     overview: [
-      "Frontend development for Venari, a brand focused on women's fashion, beachwear, and highly visual seasonal collections.",
-      "I implemented responsive interfaces with a mobile-first experience, room for campaigns to stand out, fluid navigation, and visual consistency with the brand.",
+      "Women's fitness storefront on Wake: PLPs, collections, color variants, and a mobile-first layout.",
+      "Responsive frontend with HTML5, CSS3, and JavaScript, aligned with the brand.",
     ],
     contributionsTitle: role,
     contributions: [
-      "Implemented product showcases, banners, and collection pages with HTML5, CSS3, and JavaScript.",
-      "Refined the responsive layout so content reads clearly and products stand out on mobile.",
-      "Performance, accessibility, and usability fixes for a smoother purchase flow.",
-      "Worked with design and product to keep visual consistency across campaigns and store sections.",
+      "PLPs, collections, and color variants with HTML5, CSS3, and JavaScript.",
+      "Mobile-first layout for catalog reading and product emphasis.",
+      "Responsive adjustments on the Wake storefront.",
     ],
   },
   webcine: {
-    cat: "Real-time Streaming Platform",
+    cat: "Online cinema",
     eyebrow: "Personal project",
-    title: "WebCine TV — Real-time online cinema",
+    title: "WebCine TV — Synced rooms",
     association: "Created by Helison Dias",
     overview: [
-      "A web platform for watching videos together in shared rooms, focused on synced playback, real-time chat, and simple access with nothing to install.",
-      "The interface is built for desktop and mobile, with an immersive, cinematic look, fast room creation, and a clear presentation of the main features.",
+      "Online cinema platform with synced rooms (play/pause/seek and chat), YouTube, Twitch/HLS, screen share, and a virtual browser.",
+      "V2 uses multi-stage Docker, Node.js 24, and Playwright E2E. Built with Claude and Codex.",
     ],
     contributionsTitle: role,
     contributions: [
-      "Built the responsive interface for creating rooms, navigating, and presenting features.",
-      "Implemented a mobile-first experience for quick access across devices.",
-      "Organized cards, usage steps, and interaction states with a focus on clarity.",
-      "Shipped the web app with its own visual identity and a direct way in.",
+      "Synced rooms with play, pause, seek, and chat.",
+      "YouTube, Twitch/HLS, screen share, and a virtual browser.",
+      "V2 with multi-stage Docker, Node.js 24, and Playwright E2E tests.",
     ],
   },
 };
