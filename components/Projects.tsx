@@ -1,12 +1,15 @@
 "use client";
+
 import { useEffect, useLayoutEffect } from "react";
-import { projects } from "@/data/projects";
 import { dict } from "@/lib/i18n/dict";
 import { localizeProject } from "@/lib/i18n/localize";
 import { getLang, subscribe } from "@/lib/i18n/store";
+import { publishedProjects } from "@/lib/projects/catalog";
 import Tx from "./Tx";
 
-/** Coverflow carousel (real projects) + "Case em destaque" that crossfades with the active card. */
+const projects = publishedProjects();
+
+/** Coverflow carousel (published projects) + "Case em destaque" that crossfades with the active card. */
 export default function Projects() {
   useLayoutEffect(() => {
     const apply = () => {
@@ -40,14 +43,21 @@ export default function Projects() {
         </div>
       </div>
       <ul className="sr">
-        {projects.map((p) => {
-          const localized = localizeProject(p, "en");
+        {projects.map((project) => {
+          const localized = localizeProject(project, "en");
           return (
-            <li key={p.id}>
-              <h3>{p.name}</h3>
-              <p className="i18n-pt">{p.overview[0]}</p>
+            <li key={project.id}>
+              <h3>{project.name}</h3>
+              <p className="i18n-pt">{project.overview[0]}</p>
               <p className="i18n-en">{localized.overview[0]}</p>
-              {p.url ? <a href={p.url}>{p.url}</a> : null}
+              {project.limits ? (
+                <>
+                  <p className="i18n-pt">{project.limits}</p>
+                  <p className="i18n-en">{localized.limits}</p>
+                </>
+              ) : null}
+              {project.url ? <a href={project.url}>{project.url}</a> : null}
+              {project.demo ? <a href={project.demo}>{project.demo}</a> : null}
             </li>
           );
         })}

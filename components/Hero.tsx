@@ -26,14 +26,26 @@ export default function Hero() {
       <p className="tag mo"><Tx pt={dict.pt.hero.tag} en={dict.en.hero.tag} /></p>
       <h1 className="hl" id="hero-title" aria-label={dict.pt.hero.headline}>
         <span className="hli">
-          <span id="hl" />
+          <span id="hl" aria-hidden="true" />
           <span className="car" aria-hidden="true">{"\u2060"}</span>
-          <span id="hlr" className="hlr" aria-hidden="true">
+          <span id="hlrest" className="hlrest" aria-hidden="true" />
+          <span id="hlr" className="hlr">
             <span className="i18n-pt">{dict.pt.hero.headline}</span>
             <span className="i18n-en">{dict.en.hero.headline}</span>
           </span>
         </span>
       </h1>
+      <div className="hcta">
+        <p className="hmeta mo">
+          <Tx pt={dict.pt.hero.location} en={dict.en.hero.location} />
+          <span aria-hidden="true"> · </span>
+          <Tx pt={dict.pt.hero.published} en={dict.en.hero.published} />
+        </p>
+        <div className="hacts">
+          <a className="btn wa" href="#projetos"><Tx pt={dict.pt.hero.ctaProjects} en={dict.en.hero.ctaProjects} /></a>
+          <a className="btn ghost" href="#contato"><Tx pt={dict.pt.hero.ctaContact} en={dict.en.hero.ctaContact} /></a>
+        </div>
+      </div>
       <div className="hrow">
         <div className="stage" id="stage" aria-hidden="true">
           <div className="kb3" />
