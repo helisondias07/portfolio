@@ -18,7 +18,7 @@ Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
   - Em GPUs por software (SwiftShader/llvmpipe) o render é limitado (~25 fps, pixel ratio menor).
   - Após a intro, o teclado 3D reage ao teclado físico (sem `preventDefault`).
 - **Sobre** — bio com revelação por scroll e contadores (10+ lojas Wake, 2 anos e 6 meses).
-- **Projetos** — carrossel coverflow com 13 projetos reais (`data/projects.ts`) e **Case em destaque** que acompanha o projeto ativo com crossfade.
+- **Projetos** — carrossel coverflow com 14 projetos reais (`data/projects.ts`) e **Case em destaque** que acompanha o projeto ativo com crossfade.
 - **Contato** — WhatsApp, LinkedIn, GitHub, Baixar CV, newsletter e selo Lighthouse (só aparece com notas ≥ 90; valores em `data/lighthouse.ts`).
 - Tema claro/escuro com revelação circular (View Transitions API + fallback), salvo em `localStorage`, padrão do sistema.
 

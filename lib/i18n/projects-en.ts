@@ -236,4 +236,22 @@ export const enProjects: Record<string, ProjectCopy> = {
     ],
     resultado: "30 offline pytest tests. None of them call a model API.",
   },
+  supfy: {
+    cat: "Structured orders · n8n",
+    eyebrow: "Personal project",
+    title: "Supfy — from free text to validated orders",
+    association: "Created by Helison Dias",
+    overview: [
+      "An MVP that turns free-text orders (WhatsApp-style) into structured orders, validated against a central catalog. Price and stock are decided by the application, not by the message. The parser is deterministic — regex and rules, no LLM. Demo data is synthetic and does not represent a real operation.",
+      "The demo is published and the code lives in the public repository (github.com/helisondias07/supfy-mvp). The entry endpoint uses a synthetic WhatsApp Cloud API envelope, with no real send. Ambiguous items go to a human review queue. There are 35 automated tests, and the demo is reproducible with npm run demo.",
+    ],
+    contributionsTitle: role,
+    contributions: [
+      "POST /api/orders integrates an n8n webhook authenticated by a secret, with a 15s timeout, type guards, an X-Idempotency-Key header, and a visible local fallback when n8n does not respond.",
+      "A versioned, importable n8n workflow with validation and non-retryable 4xx errors (no throw).",
+      "An entry endpoint that accepts the synthetic WhatsApp Cloud API envelope without sending a real message.",
+      "A human review queue for ambiguous items, a suite of 35 automated tests, and a reproducible demo via npm run demo.",
+    ],
+    resultado: "35 automated tests. Reproducible demo with npm run demo.",
+  },
 };
