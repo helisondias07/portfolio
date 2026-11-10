@@ -8,12 +8,14 @@ export type Skill = { readonly title: string; readonly body: string; readonly wi
 
 export type Dict = {
   meta: { title: string; description: string; htmlLang: string; locale: string };
-  nav: { about: string; projects: string; contact: string };
+  nav: { about: string; projects: string; contact: string; skip: string; open: string; close: string };
   langToggle: { label: string };
   theme: { label: string };
   hero: {
     tag: string;
     headline: string;
+    ctaProjects: string;
+    ctaContact: string;
     terminal: string;
     now: string;
     nowLine: string;
@@ -56,6 +58,19 @@ export type Dict = {
     mobile: string;
     overview: string;
     roleFallback: string;
+    filters: string;
+    filterAll: string;
+    filterEcommerce: string;
+    filterFront: string;
+    filterAuthored: string;
+    index: string;
+    empty: string;
+    buildProblem: string;
+    buildApproach: string;
+    buildDecisions: string;
+    buildLearnings: string;
+    visitRepo: string;
+    openCase: string;
   };
   contact: {
     kicker: string;
@@ -91,12 +106,21 @@ export const dict: Record<Lang, Dict> = {
       htmlLang: "pt-BR",
       locale: "pt_BR",
     },
-    nav: { about: "Sobre", projects: "Projetos", contact: "Contato" },
+    nav: {
+      about: "Sobre",
+      projects: "Projetos",
+      contact: "Contato",
+      skip: "Ir para o conteúdo",
+      open: "Abrir menu",
+      close: "Fechar menu",
+    },
     langToggle: { label: "Idioma: português. Mudar para inglês" },
     theme: { label: "Alternar tema claro/escuro" },
     hero: {
       tag: "Desenvolvedor Frontend & IA Engineer",
       headline: "interfaces que vendem, automações que trabalham por você.",
+      ctaProjects: "Ver projetos",
+      ctaContact: "Falar comigo",
       terminal: "Terminal",
       now: "AGORA",
       nowLine: "Helison · agora",
@@ -191,7 +215,7 @@ export const dict: Record<Lang, Dict> = {
     projectsUi: {
       kicker: "Cases selecionados",
       title: "Projetos",
-      lede: "Projetos em e-commerce, integrações e automação aplicados a interfaces reais.",
+      lede: "Storefronts em produção, mais o processo de construção nos projetos autorais — agente de atendimento e sala de cinema em tempo real.",
       featured: "Case em destaque",
       carousel: "carrossel",
       carouselLabel: "Projetos",
@@ -208,6 +232,19 @@ export const dict: Record<Lang, Dict> = {
       mobile: "versão mobile",
       overview: "Visão geral",
       roleFallback: "Minha atuação",
+      filters: "Filtrar projetos",
+      filterAll: "Todos",
+      filterEcommerce: "E-commerce",
+      filterFront: "Frontend",
+      filterAuthored: "Autoria",
+      index: "Índice",
+      empty: "Nenhum projeto nesta categoria.",
+      buildProblem: "Problema",
+      buildApproach: "Como foi feito",
+      buildDecisions: "Decisões",
+      buildLearnings: "Aprendizados",
+      visitRepo: "Ver repositório",
+      openCase: "Abrir o case",
     },
     contact: {
       kicker: "Contato",
@@ -244,12 +281,21 @@ export const dict: Record<Lang, Dict> = {
       htmlLang: "en",
       locale: "en_US",
     },
-    nav: { about: "About", projects: "Projects", contact: "Contact" },
+    nav: {
+      about: "About",
+      projects: "Projects",
+      contact: "Contact",
+      skip: "Skip to content",
+      open: "Open menu",
+      close: "Close menu",
+    },
     langToggle: { label: "Language: English. Switch to Portuguese" },
     theme: { label: "Toggle light and dark theme" },
     hero: {
       tag: "Frontend Developer & AI Engineer",
       headline: "interfaces that sell, automation that works for you.",
+      ctaProjects: "See work",
+      ctaContact: "Get in touch",
       terminal: "Terminal",
       now: "NOW",
       nowLine: "Helison · now",
@@ -344,7 +390,7 @@ export const dict: Record<Lang, Dict> = {
     projectsUi: {
       kicker: "Selected work",
       title: "Projects",
-      lede: "E-commerce, integrations, and automation, applied to real interfaces.",
+      lede: "Production storefronts, plus the build process on authored work — a store-attendant agent and a real-time cinema room.",
       featured: "Featured case",
       carousel: "carousel",
       carouselLabel: "Projects",
@@ -361,6 +407,19 @@ export const dict: Record<Lang, Dict> = {
       mobile: "mobile view",
       overview: "Overview",
       roleFallback: "What I did",
+      filters: "Filter projects",
+      filterAll: "All",
+      filterEcommerce: "E-commerce",
+      filterFront: "Frontend",
+      filterAuthored: "Authored",
+      index: "Index",
+      empty: "No projects in this category.",
+      buildProblem: "Problem",
+      buildApproach: "How it was built",
+      buildDecisions: "Decisions",
+      buildLearnings: "What I learned",
+      visitRepo: "View repository",
+      openCase: "Open the case",
     },
     contact: {
       kicker: "Contact",

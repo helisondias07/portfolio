@@ -1,7 +1,7 @@
 import type { Project } from "@/data/projects";
 
 export type ProjectCopy = Pick<Project, "cat" | "eyebrow" | "title" | "association" | "overview" | "contributionsTitle" | "contributions"> &
-  Partial<Pick<Project, "resultado">>;
+  Partial<Pick<Project, "resultado" | "build">>;
 
 const withOasis = "With Grupo Oásis (Agência Oásis)";
 const featured = "Featured case";
@@ -204,6 +204,10 @@ export const enProjects: Record<string, ProjectCopy> = {
       "A web platform for watching videos together in shared rooms, focused on synced playback, real-time chat, and simple access with nothing to install.",
       "The interface is built for desktop and mobile, with an immersive, cinematic look, fast room creation, and a clear presentation of the main features.",
     ],
+    build: {
+      problem: "Watch videos together in the browser, with a synced room and real-time chat — without asking the visitor to install anything.",
+      approach: "The interface covers room creation, navigation, and the main features on desktop and mobile, with a cinematic look and a direct way into the published app.",
+    },
     contributionsTitle: role,
     contributions: [
       "Built the responsive interface for creating rooms, navigating, and presenting features.",
@@ -220,11 +224,26 @@ export const enProjects: Record<string, ProjectCopy> = {
     overview: [
       "This is the first hands-on AI agent, built end to end. It answers customers of Empório da Música, a fictional instrument shop in Campo Grande, Mato Grosso do Sul. The customer writes in Portuguese and the counter replies in Portuguese, in the voice the store manual asks for: informal, professional, “você”, no emoji.",
       "The screen is the conversation. python main.py --web serves the chat at http://127.0.0.1:4721: a catalog sheet in the center, a fixed greeting from the interface, and shortcuts for the case questions. The same agent runs in the terminal with python main.py. With no API key the page opens and says the model is not configured, instead of inventing a price or a deadline. With OPENAI_API_KEY or GEMINI_API_KEY, the same screen answers for real. History stays in the session. “Nova conversa” clears the chat; in the CLI, /limpar does the same.",
-      "Structured data and store rules take different paths. Price, stock, promotions, and orders go through function calling over the CSVs: search_products, get_product, list_categories, list_active_promotions, and lookup_order. The loader uses the csv module and Decimal, so 799.9 does not become a float. The sale price already includes the active discount, and a filter such as “up to R$ 1,000” uses that price. The 5% PIX price is returned only when no promotion is active. Phone and email are masked before the model sees them.",
-      "Store policy goes through search_policies. The manual is eight pages with stable headings. It becomes a section index, ranked with BM25 plus a boost for short queries such as address and hours. That is RAG-style retrieval: the model receives the section text. Embeddings and a vector database are the next step if the manual grows, and the tool the model calls can stay the same. Return deadlines are not left to the model. evaluate_aftersales returns whether each window is still open, and the deadline. The store clock is 2026-03-25 (EMPORIO_TODAY), a few days after the last order in the file. A laptop date in November would make every deadline look expired.",
-      "Accessories are out of catalog. Strings, picks, cables, cases, pedals, and amplifiers are declined, including when the message also asks for an instrument. The pack has no partner-shop list, so the agent does not invent a name and says the counter can point the customer somewhere. A description that contradicts the SKU name, and specs copied across products, are hidden. The original CSV is not rewritten. An inactive promotion stays on the detail payload so the agent can say the offer is over, and it does not change the sale price. The Takamine GD20 (id 95) is the clear case: list price R$ 2,199.00, PIX R$ 2,089.05, five in stock, a 12% offer with is_active = 0.",
-      "The loop allows at most six tool rounds per turn, with no agent framework. Thirty pytest tests run offline: they load the real CSVs and the PDF and never call a model API. The suite checks the 12 in-stock violões up to R$ 1,000, the GD20 price, the four active promotions, masking, the order 7 windows, phrases from the manual, and the accessory guard. The code, the five examples, and the run steps are in the public repository.",
+      "The Takamine GD20 (id 95) is the clear catalog case: list price R$ 2,199.00, PIX R$ 2,089.05, five in stock, a 12% offer with is_active = 0. The code, the five examples, and the run steps are in the public repository.",
     ],
+    build: {
+      problem: "The counter has to answer in Portuguese, in the voice of the store manual, with price, stock, and deadlines grounded in store data — and refuse anything outside the catalog — instead of letting the model invent.",
+      approach: "One tool loop serves the FastAPI chat and the CLI. Structured data (price, stock, promotions, orders) goes through function calling over CSVs. Policy goes through search_policies. After-sales is calculated outside the model. With no API key the interface says the model is not configured.",
+      decisions: [
+        "Price, stock, promotions, and orders go through search_products, get_product, list_categories, list_active_promotions, and lookup_order. The loader uses csv and Decimal, so 799.9 does not become a float.",
+        "The sale price already includes the active discount; a filter such as “up to R$ 1,000” uses that price. The 5% PIX price is returned only when no promotion is active. Phone and email are masked before the model sees them.",
+        "The eight-page manual becomes a section index, ranked with BM25 plus a boost for short queries such as address and hours. That is RAG-style retrieval: the model receives the section text. Embeddings and a vector database are the next step if the manual grows; the tool the model calls can stay the same.",
+        "evaluate_aftersales returns whether each return or warranty window is still open, and the deadline. The store clock is 2026-03-25 (EMPORIO_TODAY), a few days after the last order in the file. A laptop date in November would make every deadline look expired.",
+        "Strings, picks, cables, cases, pedals, and amplifiers are declined, including when the message also asks for an instrument. The pack has no partner-shop list, so the agent does not invent a name and says the counter can point the customer somewhere.",
+        "A description that contradicts the SKU name, and specs copied across products, are hidden. The original CSV is not rewritten. An inactive promotion stays on the detail payload so the agent can say the offer is over, and it does not change the sale price.",
+        "The loop allows at most six tool rounds per turn, with no agent framework. Thirty pytest tests run offline: they load the real CSVs and the PDF and never call a model API. The suite checks the 12 in-stock violões up to R$ 1,000, the GD20 price, the four active promotions, masking, the order 7 windows, phrases from the manual, and the accessory guard.",
+      ],
+      learnings: [
+        "The manual index was transcribed from the PDF because the tables extract with broken columns. A test fails if a key phrase disappears from the PDF or from the index.",
+        "The five example conversations were written from tool output, not from a live model completion. python -m pytest checks that those lines still cite the right price, address, tracking code, and deadline.",
+        "How the manual’s own conflicts (phone, WhatsApp, installments) were read is in the repository. The agent does not debate that with the customer unless they ask.",
+      ],
+    },
     contributionsTitle: role,
     contributions: [
       "FastAPI chat and CLI on the same tool loop. When the agent looks something up, the chat shows a short line (“Olhei o catálogo”, “Olhei o pedido e o manual da loja”). In the terminal, --verbose prints the tool name and the arguments.",

@@ -34,6 +34,17 @@ export default function Hero() {
           </span>
         </span>
       </h1>
+      <div className="hcta">
+        <p className="hmeta mo">
+          <Tx pt={dict.pt.hero.location} en={dict.en.hero.location} />
+          <span aria-hidden="true"> · </span>
+          <Tx pt={dict.pt.hero.published} en={dict.en.hero.published} />
+        </p>
+        <div className="hacts">
+          <a className="btn wa" href="#projetos"><Tx pt={dict.pt.hero.ctaProjects} en={dict.en.hero.ctaProjects} /></a>
+          <a className="btn ghost" href="#contato"><Tx pt={dict.pt.hero.ctaContact} en={dict.en.hero.ctaContact} /></a>
+        </div>
+      </div>
       <div className="hrow">
         <div className="stage" id="stage" aria-hidden="true">
           <div className="kb3" />

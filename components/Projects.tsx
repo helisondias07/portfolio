@@ -4,9 +4,17 @@ import { projects } from "@/data/projects";
 import { dict } from "@/lib/i18n/dict";
 import { localizeProject } from "@/lib/i18n/localize";
 import { getLang, subscribe } from "@/lib/i18n/store";
+import { FILTERS } from "@/lib/projects/explore";
 import Tx from "./Tx";
 
-/** Coverflow carousel (real projects) + "Case em destaque" that crossfades with the active card. */
+const FILTER_COPY: Record<(typeof FILTERS)[number], { pt: string; en: string }> = {
+  "*": { pt: dict.pt.projectsUi.filterAll, en: dict.en.projectsUi.filterAll },
+  ecommerce: { pt: dict.pt.projectsUi.filterEcommerce, en: dict.en.projectsUi.filterEcommerce },
+  front: { pt: dict.pt.projectsUi.filterFront, en: dict.en.projectsUi.filterFront },
+  pessoais: { pt: dict.pt.projectsUi.filterAuthored, en: dict.en.projectsUi.filterAuthored },
+};
+
+/** Coverflow + case detail, with filters and an index over the real project list. */
 export default function Projects() {
   useLayoutEffect(() => {
     const apply = () => {
@@ -19,6 +27,8 @@ export default function Projects() {
       document.getElementById("cfl2")?.setAttribute("aria-label", ui.prev);
       document.getElementById("cfr2")?.setAttribute("aria-label", ui.next);
       document.getElementById("dots")?.setAttribute("aria-label", ui.dots);
+      document.getElementById("pix")?.setAttribute("aria-label", ui.index);
+      document.getElementById("flt2")?.setAttribute("aria-label", ui.filters);
     };
     apply();
     return subscribe(apply);
@@ -38,6 +48,23 @@ export default function Projects() {
           <h2><Tx pt={ui.title} en={en.title} /></h2>
           <p><Tx pt={ui.lede} en={en.lede} /></p>
         </div>
+        <div className="flt2" id="flt2" role="group" aria-label={ui.filters}>
+          {FILTERS.map((id) => (
+            <button key={id} type="button" data-f={id} className={id === "*" ? "on" : undefined} aria-pressed={id === "*"}>
+              <Tx pt={FILTER_COPY[id].pt} en={FILTER_COPY[id].en} />
+            </button>
+          ))}
+        </div>
+        <div className="pix" id="pix" role="list" aria-label={ui.index}>
+          {projects.map((p) => (
+            <button key={p.id} type="button" className="pixi" data-id={p.id} role="listitem">
+              {p.name}
+            </button>
+          ))}
+        </div>
+        <p className="pempty" id="pempty" hidden>
+          <Tx pt={ui.empty} en={en.empty} />
+        </p>
       </div>
       <ul className="sr">
         {projects.map((p) => {
@@ -54,14 +81,14 @@ export default function Projects() {
       </ul>
       <div className="cf" id="cf" tabIndex={0} aria-roledescription={ui.carousel} aria-label={ui.carouselLabel}>
         <div className="cft" id="cft" />
-        <button className="cfa l" id="cfl" aria-label={ui.prev}>←</button>
-        <button className="cfa r" id="cfr" aria-label={ui.next}>→</button>
+        <button className="cfa l" id="cfl" type="button" aria-label={ui.prev}>←</button>
+        <button className="cfa r" id="cfr" type="button" aria-label={ui.next}>→</button>
       </div>
       <div className="cfn">
-        <button className="cfa m" id="cfl2" aria-label={ui.prev}>←</button>
+        <button className="cfa m" id="cfl2" type="button" aria-label={ui.prev}>←</button>
         <div className="dots" id="dots" role="group" aria-label={ui.dots} />
         <span className="cnt mo" id="cnt">01 / {String(projects.length).padStart(2, "0")}</span>
-        <button className="cfa m" id="cfr2" aria-label={ui.next}>→</button>
+        <button className="cfa m" id="cfr2" type="button" aria-label={ui.next}>→</button>
       </div>
       <div className="abw">
         <div className="cdh">

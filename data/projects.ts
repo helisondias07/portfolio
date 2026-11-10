@@ -1,3 +1,11 @@
+/** Process notes for authored technical work. Omit keys (or the whole object) when there is no verified source. */
+export type ProjectBuild = {
+  problem?: string;
+  approach?: string;
+  decisions?: string[];
+  learnings?: string[];
+};
+
 export type Project = {
   id: string; url: string; img: string; mimg: string; name: string; cat: string; eyebrow: string; title: string;
   association: string; overview: string[]; contributionsTitle: string; contributions: string[]; stackTitle: string; stack: string[];
@@ -6,6 +14,7 @@ export type Project = {
   tags: ("ecommerce" | "front" | "pessoais")[];
   /** Optional measured result. Leave empty unless there is a real number. */
   resultado: string;
+  build?: ProjectBuild;
 };
 
 export const projects: Project[] = [
@@ -475,6 +484,10 @@ export const projects: Project[] = [
       "Desenvolvimento de uma plataforma web para assistir vídeos online em salas compartilhadas, com foco em sincronização da experiência, conversa em tempo real e acesso simples sem instalação.",
       "A interface foi construída para funcionar bem em desktop e mobile, com experiência imersiva, visual cinematográfico, criação rápida de salas e apresentação clara dos recursos principais da plataforma."
     ],
+    "build": {
+      "problem": "Assistir vídeos juntos, no navegador, com a sala sincronizada e conversa em tempo real — sem pedir instalação ao visitante.",
+      "approach": "A interface cobre criação de salas, navegação e os recursos principais em desktop e mobile, com visual cinematográfico e um fluxo direto de entrada na aplicação publicada."
+    },
     "contributionsTitle": "Minha atuação",
     "contributions": [
       "Construção da interface responsiva para criação de salas, navegação e apresentação dos recursos.",
@@ -514,11 +527,26 @@ export const projects: Project[] = [
     "overview": [
       "Este é o primeiro projeto prático com um agente de IA de ponta a ponta. É o atendimento da Empório da Música, loja fictícia de instrumentos em Campo Grande, Mato Grosso do Sul. O cliente escreve em português e o balcão responde em português, no tom do manual da loja: informal, profissional, tratamento por “você”, sem emoji.",
       "A tela é a conversa. python main.py --web sobe o chat em http://127.0.0.1:4721: uma folha de catálogo no centro, saudação fixa da interface e atalhos para as perguntas do caso. O mesmo agente atende no terminal com python main.py. Sem chave de API a página abre e avisa que o modelo não está configurado, em vez de inventar preço ou prazo. Com OPENAI_API_KEY ou GEMINI_API_KEY, a mesma tela responde de verdade. O histórico fica na sessão. “Nova conversa” zera o chat; no CLI, /limpar faz o mesmo.",
-      "Dado estruturado e regra da loja seguem caminhos diferentes. Preço, estoque, promoção e pedido passam por function calling sobre os CSVs: search_products, get_product, list_categories, list_active_promotions e lookup_order. O loader usa o módulo csv e Decimal, para 799.9 não virar float. O preço de venda já inclui o desconto ativo, e um filtro como “até R$ 1.000” usa esse preço. O PIX de 5% só aparece quando não há promoção ativa. Telefone e e-mail do cliente são mascarados antes de chegar ao modelo.",
-      "Política da loja passa por search_policies. O manual tem oito páginas e títulos estáveis. Ele vira um índice de seções, ranqueado com BM25 e um reforço para consultas curtas como endereço e horário. É recuperação no estilo RAG: o modelo recebe o trecho da seção. Embedding e banco vetorial ficam para um manual maior, e a ferramenta que o modelo chama pode continuar a mesma. Prazo de troca e garantia não fica na conta do modelo. evaluate_aftersales devolve se a janela ainda está aberta e a data limite. O relógio da loja é 25/03/2026 (EMPORIO_TODAY), alguns dias depois do último pedido do arquivo. A data de um computador em novembro faria todo prazo parecer vencido.",
-      "Acessório fica fora do catálogo. Corda, palheta, cabo, case, pedal e amplificador são recusados, mesmo quando a mensagem também pede um instrumento. O pacote não traz loja parceira, então o agente não inventa nome e diz que o balcão pode indicar. Descrição que contradiz o nome do SKU, e spec copiada entre produtos, fica escondida. O CSV original não é reescrito. Promoção inativa continua no detalhe, para o agente dizer que a oferta acabou, e não muda o preço. O Takamine GD20 (id 95) é o caso claro: tabela R$ 2.199,00, PIX R$ 2.089,05, cinco em estoque, oferta de 12% com is_active = 0.",
-      "O loop tem no máximo seis rodadas de ferramenta por turno, sem framework de agente. São 30 testes com pytest, offline: carregam os CSVs e o PDF de verdade e não chamam API de modelo. A suíte confere os 12 violões em estoque até R$ 1.000, o preço do GD20, as quatro promoções ativas, o mascaramento, as janelas do pedido 7, as frases do manual e a trava de acessório. O código, os cinco exemplos e o passo a passo estão no repositório público."
+      "O Takamine GD20 (id 95) é o caso claro no catálogo: tabela R$ 2.199,00, PIX R$ 2.089,05, cinco em estoque, oferta de 12% com is_active = 0. O código, os cinco exemplos e o passo a passo estão no repositório público."
     ],
+    "build": {
+      "problem": "O balcão precisa responder em português, no tom do manual, com preço, estoque e prazo ancorados nos dados da loja — e recusar o que está fora do catálogo — em vez de o modelo inventar.",
+      "approach": "Um loop de ferramentas atende o chat FastAPI e o CLI. Dado estruturado (preço, estoque, promoção, pedido) vai por function calling sobre CSVs. Política vai por search_policies. Pós-venda é calculado fora do modelo. Sem chave de API a interface avisa que o modelo não está configurado.",
+      "decisions": [
+        "Preço, estoque, promoção e pedido passam por search_products, get_product, list_categories, list_active_promotions e lookup_order. O loader usa csv e Decimal, para 799.9 não virar float.",
+        "O preço de venda já inclui o desconto ativo; um filtro como “até R$ 1.000” usa esse preço. O PIX de 5% só aparece quando não há promoção ativa. Telefone e e-mail são mascarados antes de chegar ao modelo.",
+        "O manual de oito páginas vira um índice de seções, ranqueado com BM25 e um reforço para consultas curtas como endereço e horário. É recuperação no estilo RAG: o modelo recebe o trecho da seção. Embedding e banco vetorial ficam para um manual maior; a ferramenta chamada pode continuar a mesma.",
+        "evaluate_aftersales devolve se a janela de troca ou garantia ainda está aberta e a data limite. O relógio da loja é 25/03/2026 (EMPORIO_TODAY), alguns dias depois do último pedido do arquivo. A data de um computador em novembro faria todo prazo parecer vencido.",
+        "Corda, palheta, cabo, case, pedal e amplificador são recusados, mesmo quando a mensagem também pede um instrumento. O pacote não traz loja parceira, então o agente não inventa nome e diz que o balcão pode indicar.",
+        "Descrição que contradiz o nome do SKU, e spec copiada entre produtos, fica escondida. O CSV original não é reescrito. Promoção inativa continua no detalhe, para o agente dizer que a oferta acabou, e não muda o preço.",
+        "O loop tem no máximo seis rodadas de ferramenta por turno, sem framework de agente. São 30 testes com pytest, offline: carregam os CSVs e o PDF de verdade e não chamam API de modelo. A suíte confere os 12 violões em estoque até R$ 1.000, o preço do GD20, as quatro promoções ativas, o mascaramento, as janelas do pedido 7, as frases do manual e a trava de acessório."
+      ],
+      "learnings": [
+        "O índice do manual foi transcrito do PDF porque as tabelas extraem com as colunas quebradas. Um teste falha se uma frase-chave sumir do PDF ou do índice.",
+        "Os cinco exemplos de conversa foram escritos a partir da saída das ferramentas, não de completion ao vivo. python -m pytest confere preço, endereço, rastreio e prazo que essas frases ainda citam.",
+        "A leitura dos conflitos do manual (telefone, WhatsApp, parcelamento) fica no repositório. O agente não discute isso com o cliente a menos que perguntem."
+      ]
+    },
     "contributionsTitle": "Minha atuação",
     "contributions": [
       "Chat em FastAPI e CLI no mesmo loop de ferramentas. Quando o agente consulta um dado, o chat mostra uma linha curta (“Olhei o catálogo”, “Olhei o pedido e o manual da loja”). No terminal, --verbose imprime o nome da ferramenta e os argumentos.",
