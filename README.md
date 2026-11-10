@@ -18,7 +18,7 @@ Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
   - Em GPUs por software (SwiftShader/llvmpipe) o render é limitado (~25 fps, pixel ratio menor).
   - Após a intro, o teclado 3D reage ao teclado físico (sem `preventDefault`).
 - **Sobre** — bio com revelação por scroll e contadores (10+ lojas Wake, 2 anos e 6 meses).
-- **Projetos** — carrossel coverflow com 13 projetos reais (`data/projects.ts`) e **Case em destaque** que acompanha o projeto ativo com crossfade.
+- **Projetos** — galeria em lanes (autoria e e-commerce) a partir de `data/projects.ts`, com cases em `/projetos/[id]`.
 - **Contato** — WhatsApp, LinkedIn, GitHub, Baixar CV, newsletter e selo Lighthouse (só aparece com notas ≥ 90; valores em `data/lighthouse.ts`).
 - Tema claro/escuro com revelação circular (View Transitions API + fallback), salvo em `localStorage`, padrão do sistema.
 
@@ -26,7 +26,7 @@ Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
 ```
 app/            layout (script anti-flash de tema, preload de fontes), page, globals.css, api/
 components/     Nav, ThemeToggle, Hero, About, Counters, Projects, Footer, Newsletter, PerfBadge, VisitBeacon
-lib/engines/    hero.js (teclado/terminal/chat + three.js lazy), projects.js (carrossel + case)
+lib/engines/    hero.js (teclado/terminal/chat + three.js lazy)
 lib/server/     kv.ts (Upstash, opcional), resend.ts (Resend, opcional)
 data/           projects.ts, lighthouse.ts
 public/         fonts/ (woff2 subset latin), thumbnails/ (AVIF + WebP), cv/
@@ -56,6 +56,8 @@ Sem variáveis de ambiente tudo continua funcionando: a newsletter responde `503
 ## Qualidade
 
 - `npm run lint` e `npm run build` rodam no CI (GitHub Actions) a cada push/PR
+- `npm test` cobre i18n, filtros e o catálogo público
+- `npm run e2e` sobe `next start` e usa **puppeteer-core** + Chrome do sistema (`CHROME_PATH` ou `/usr/bin/google-chrome`). Não roda no CI. Sem Chrome a suíte falha de propósito.
 
 ## Licença
 

@@ -64,6 +64,24 @@ test("filters only return published projects and empty lists stay empty", () => 
   }
 });
 
+test("Empório case copy stays a case, not a README", () => {
+  const emporio = projectById("emporio");
+  assert.ok(emporio);
+  const blob = [
+    emporio.overview.join(" "),
+    emporio.build?.problem,
+    emporio.build?.approach,
+    ...(emporio.build?.decisions ?? []),
+    ...(emporio.build?.learnings ?? []),
+    ...emporio.contributions,
+  ].join(" ");
+  assert.equal(/127\.0\.0\.1|OPENAI_API_KEY|python main\.py/i.test(blob), false);
+  const words = blob.split(/\s+/).filter(Boolean).length;
+  assert.ok(words < 400, `Empório case is ${words} words`);
+  assert.ok(emporio.overview.length <= 2);
+  assert.match(emporio.resultado, /30/);
+});
+
 test("case and gallery paths stay on the public site", () => {
   assert.equal(casePath("emporio"), "/projetos/emporio");
   assert.equal(galleryPath("*"), "/#projetos");

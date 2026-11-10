@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { dict } from "@/lib/i18n/dict";
 import { localizeProject } from "@/lib/i18n/localize";
+import { useLang } from "@/lib/i18n/store";
 import { casePath, projectLane } from "@/lib/projects/catalog";
 import { isGithubUrl } from "@/lib/projects/explore";
 import type { Project } from "@/data/projects";
@@ -11,9 +14,11 @@ function thumbSrc(file: string) {
 }
 
 export default function WorkCard({ project }: { project: Project }) {
+  const lang = useLang();
   const en = localizeProject(project, "en");
   const href = casePath(project.id);
   const authored = projectLane(project) === "authored";
+  const preview = dict[lang].projectsUi.preview;
   const visit = project.url
     ? isGithubUrl(project.url)
       ? { pt: dict.pt.projectsUi.visitRepo, en: dict.en.projectsUi.visitRepo }
@@ -26,7 +31,7 @@ export default function WorkCard({ project }: { project: Project }) {
       <Link href={href} className="wk-media" tabIndex={-1} aria-hidden="true">
         <picture>
           <source srcSet={thumbSrc(avif)} type="image/avif" />
-          <img src={thumbSrc(project.img)} alt="" width={project.dw} height={project.dh} />
+          <img src={thumbSrc(project.img)} alt={`${preview}${project.name}`} width={project.dw} height={project.dh} />
         </picture>
       </Link>
       <div className="wk-body">

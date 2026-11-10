@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { dict } from "@/lib/i18n/dict";
 import { useLang } from "@/lib/i18n/store";
+import Tx from "./Tx";
 
 type Theme = "light" | "dark";
 const KEY = "theme";
@@ -14,7 +15,7 @@ function applyTheme(t: Theme) {
 }
 
 /** Light/dark toggle with a circular reveal from the button (View Transitions API + fallback). */
-export default function ThemeToggle() {
+export default function ThemeToggle({ tabIndex }: { tabIndex?: number }) {
   const btn = useRef<HTMLButtonElement>(null);
   const [dark, setDark] = useState(false);
 
@@ -70,9 +71,12 @@ export default function ThemeToggle() {
     }, 560);
   };
 
-  const lang = useLang();
+  useLang();
   return (
-    <button ref={btn} id="thm" className="thm" type="button" aria-label={dict[lang].theme.label} aria-pressed={dark} onClick={toggle}>
+    <button ref={btn} id="thm" className="thm" type="button" tabIndex={tabIndex} aria-pressed={dark} onClick={toggle}>
+      <span className="sr">
+        <Tx pt={dict.pt.theme.label} en={dict.en.theme.label} />
+      </span>
       <svg className="sn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4" />
         <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />

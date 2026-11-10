@@ -61,7 +61,10 @@ export default function Projects() {
           <h2><Tx pt={ui.title} en={en.title} /></h2>
           <p><Tx pt={ui.lede} en={en.lede} /></p>
         </div>
-        <div className="flt2" id="flt2" role="group" aria-label={ui.filters}>
+        <span id="flt2-label" className="sr">
+          <Tx pt={ui.filters} en={en.filters} />
+        </span>
+        <div className="flt2" id="flt2" role="group" aria-labelledby="flt2-label">
           {FILTERS.map((id) => (
             <button
               key={id}
@@ -75,13 +78,16 @@ export default function Projects() {
             </button>
           ))}
         </div>
-        <nav className="pix" id="pix" aria-label={ui.index}>
+        <span id="pix-label" className="sr">
+          <Tx pt={ui.index} en={en.index} />
+        </span>
+        <div className="pix" id="pix" role="list" aria-labelledby="pix-label">
           {visible.map((project) => (
-            <Link key={project.id} href={casePath(project.id)} className="pixi" data-id={project.id}>
+            <Link key={project.id} href={casePath(project.id)} className="pixi" data-id={project.id} role="listitem">
               {project.name}
             </Link>
           ))}
-        </nav>
+        </div>
         {empty ? (
           <p className="pempty" id="pempty">
             <Tx pt={ui.empty} en={en.empty} />

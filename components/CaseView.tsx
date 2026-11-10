@@ -35,11 +35,21 @@ export default function CaseView({ project }: { project: Project }) {
       <div className="cz-hero">
         <picture>
           <source srcSet={thumbSrc(avif)} type="image/avif" />
-          <img src={thumbSrc(project.img)} alt="" width={project.dw} height={project.dh} />
+          <img
+            src={thumbSrc(project.img)}
+            alt={`${ui.preview}${project.name} (${ui.desktop})`}
+            width={project.dw}
+            height={project.dh}
+          />
         </picture>
         <picture className="cz-mobile">
           <source srcSet={thumbSrc(mavif)} type="image/avif" />
-          <img src={thumbSrc(project.mimg)} alt="" width={project.mw} height={project.mh} />
+          <img
+            src={thumbSrc(project.mimg)}
+            alt={`${ui.preview}${project.name} (${ui.mobile})`}
+            width={project.mw}
+            height={project.mh}
+          />
         </picture>
       </div>
       <div className="cz-grid">

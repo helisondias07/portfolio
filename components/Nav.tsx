@@ -51,6 +51,12 @@ export default function Nav() {
 
   useEffect(() => {
     if (!open) return;
+    const trapNodes = () =>
+      [
+        ...(panel.current?.querySelectorAll<HTMLElement>("a,button") ?? []),
+        btn.current,
+      ].filter((n): n is HTMLElement => !!n && !n.hasAttribute("disabled") && n.tabIndex !== -1);
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         close();
@@ -64,12 +70,15 @@ export default function Nav() {
     };
     const trap = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
-      const nodes = [
-        ...(panel.current?.querySelectorAll<HTMLElement>("a,button") ?? []),
-        btn.current,
-      ].filter((n): n is HTMLElement => !!n && !n.hasAttribute("disabled"));
+      const nodes = trapNodes();
       if (!nodes.length) return;
-      const i = nodes.indexOf(document.activeElement as HTMLElement);
+      const active = document.activeElement as HTMLElement | null;
+      const i = active ? nodes.indexOf(active) : -1;
+      if (i === -1) {
+        e.preventDefault();
+        (e.shiftKey ? nodes[nodes.length - 1] : nodes[0]).focus();
+        return;
+      }
       if (e.shiftKey && i <= 0) {
         e.preventDefault();
         nodes[nodes.length - 1].focus();
@@ -83,12 +92,16 @@ export default function Nav() {
     document.addEventListener("pointerdown", onClick);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.getElementById("conteudo")?.setAttribute("inert", "");
+    document.querySelector("footer")?.setAttribute("inert", "");
     panel.current?.querySelector<HTMLElement>("a")?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("keydown", trap);
       document.removeEventListener("pointerdown", onClick);
       document.body.style.overflow = prev;
+      document.getElementById("conteudo")?.removeAttribute("inert");
+      document.querySelector("footer")?.removeAttribute("inert");
     };
   }, [open, close]);
 
@@ -99,7 +112,7 @@ export default function Nav() {
       <a className="skip" href="#conteudo">
         <Tx pt={dict.pt.nav.skip} en={dict.en.nav.skip} />
       </a>
-      <nav aria-label="Helison Dias">
+      <nav className="site" aria-label="Helison Dias">
         <a className="lg" href={home ? "#hero" : "/"}>
           Helison Dias<span style={{ color: "var(--g)" }}>.</span>
         </a>
@@ -111,8 +124,8 @@ export default function Nav() {
           ))}
         </div>
         <div className="nvr">
-          <LangToggle />
-          <ThemeToggle />
+          <LangToggle tabIndex={open ? -1 : undefined} />
+          <ThemeToggle tabIndex={open ? -1 : undefined} />
           <button
             ref={btn}
             className="nb"
