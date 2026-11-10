@@ -547,5 +547,46 @@ export const projects: Project[] = [
       "pessoais"
     ],
     "resultado": "30 testes offline com pytest. Nenhum chama API de modelo."
+  },
+  {
+    "id": "supfy",
+    "url": "https://supfy-mvp.vercel.app",
+    "img": "supfy-screenshot-card.webp",
+    "mimg": "supfy-screenshot-mobile.webp",
+    "name": "Supfy",
+    "cat": "Pedidos estruturados · n8n",
+    "eyebrow": "Projeto autoral",
+    "title": "Supfy — de texto livre a pedidos validados",
+    "association": "Projeto criado por Helison Dias",
+    "overview": [
+      "MVP que transforma pedidos em texto livre (estilo WhatsApp) em pedidos estruturados, validados contra um catálogo central. Preço e estoque são decididos pela aplicação, não pela mensagem. O parser é determinístico — regex e regras, sem LLM. Os dados da demo são sintéticos e não representam operação real.",
+      "A demo está publicada e o código no repositório público (github.com/helisondias07/supfy-mvp). O endpoint de entrada usa um envelope sintético da WhatsApp Cloud API, sem envio real. Itens ambíguos entram numa fila de revisão humana. São 35 testes automatizados e a demo se reproduz com npm run demo."
+    ],
+    "contributionsTitle": "Minha atuação",
+    "contributions": [
+      "POST /api/orders integra um webhook n8n autenticado por segredo, com timeout de 15s, type guards, cabeçalho X-Idempotency-Key e fallback local visível quando o n8n não responde.",
+      "Workflow n8n versável e importável, com validação e erros 4xx não repetíveis (sem throw).",
+      "Endpoint de entrada que aceita o envelope sintético da WhatsApp Cloud API, sem disparar mensagem real.",
+      "Fila de revisão humana para itens ambíguos, suíte de 35 testes automatizados e demo reproduzível com npm run demo."
+    ],
+    "stackTitle": "Stack",
+    "stack": [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind",
+      "n8n",
+      "Vitest",
+      "GitHub Actions"
+    ],
+    "dw": 1440,
+    "dh": 1080,
+    "mw": 390,
+    "mh": 844,
+    "tags": [
+      "pessoais",
+      "front"
+    ],
+    "resultado": "35 testes automatizados. Demo reproduzível com npm run demo."
   }
 ];
