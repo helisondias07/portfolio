@@ -540,4 +540,57 @@ nav a.lg:focus-visible,.hacts a:focus-visible,.pixi:focus-visible,.flt2 button:f
 nav .ls a[aria-current=location]{background:rgba(17,17,17,.08)}
 [data-theme=dark] nav .ls a[aria-current=location]{background:rgba(255,255,255,.1)}
 .cf:focus-visible{outline:2px solid var(--g);outline-offset:6px}
-@media(prefers-reduced-motion:reduce){.hacts .btn,.pixi,.czlab{transition:none}}
+@media(prefers-reduced-motion:reduce){.hacts .btn,.pixi,.czlab,.wk-card,.wk-media img{transition:none;transform:none}}
+
+.wk-lanes{display:grid;gap:clamp(36px,5vw,64px);margin-top:clamp(28px,4vw,48px)}
+.wk-lane h3{font:600 clamp(18px,1rem + .6vw,24px)/1.2 'General Sans';letter-spacing:-.03em;margin:0 0 16px}
+.wk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.wk-grid-authored{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.wk-card{display:flex;flex-direction:column;border:1px solid var(--ln);border-radius:18px;background:var(--card);overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.wk-card:hover{border-color:var(--g);box-shadow:0 18px 40px -28px rgba(0,0,0,.55)}
+.wk-authored{border-color:color-mix(in srgb,var(--g) 35%,var(--ln))}
+.wk-media{display:block;background:#111;aspect-ratio:16/10;overflow:hidden}
+.wk-media img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .4s ease}
+.wk-card:hover .wk-media img{transform:scale(1.03)}
+.wk-body{display:grid;gap:8px;padding:16px 18px 20px}
+.wk-eye{font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--gd);margin:0}
+.wk-card h3{font:600 clamp(20px,1rem + .8vw,28px)/1.1 'General Sans';letter-spacing:-.03em;margin:0}
+.wk-card h3 a{color:inherit;text-decoration:none}
+.wk-card h3 a:hover{color:var(--g)}
+.wk-cat{margin:0;color:var(--mu);font:500 12px 'JetBrains Mono',monospace}
+.wk-ov{margin:0;color:#4a4a48;font-size:var(--fs-sm);line-height:1.65}
+.wk-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;align-items:center}
+.wk-case{display:inline-flex;align-items:center;padding:10px 14px;border-radius:10px;background:var(--g);color:#0b2a05;font:600 var(--fs-sm) 'General Sans';text-decoration:none;box-shadow:inset 0 -3px 0 #2a9a17}
+.wk-ext{font:500 13px 'JetBrains Mono',monospace;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ln)}
+.wk-ext:hover{border-color:var(--g)}
+.wk-case:focus-visible,.wk-ext:focus-visible,.wk-card h3 a:focus-visible,.pix a:focus-visible{outline:2px solid var(--g);outline-offset:3px}
+.pix a.pixi{text-decoration:none;display:inline-flex}
+[data-theme=dark] .wk-ov{color:#c5c4be}
+[data-theme=dark] .wk-card{background:#16171a}
+.czpage{max-width:1100px;margin:0 auto;padding:108px clamp(20px,5vw,64px) 80px}
+.czpage h1{font:600 clamp(32px,2rem + 2vw,56px)/1.05 'General Sans';letter-spacing:-.04em;margin:8px 0 12px;text-wrap:balance}
+.czcase{display:grid;gap:24px}
+.wk-back a{font:500 13px 'JetBrains Mono',monospace;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ln)}
+.wk-as{font-weight:600;font-size:var(--fs-sm);margin:0}
+.cz-hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.55fr);gap:16px;align-items:start}
+.cz-hero picture{display:block;border-radius:16px;overflow:hidden;border:1px solid var(--ln);background:#111}
+.cz-hero img{width:100%;height:auto;display:block;object-fit:cover;object-position:top}
+.cz-mobile{max-width:220px}
+.cz-grid{display:grid;gap:28px}
+.cz-grid h2{font:600 12px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}
+.cz-grid p,.cz-grid li{color:#4a4a48;font-size:var(--fs-sm);line-height:1.7}
+.cz-grid ul{list-style:none;display:grid;gap:12px;margin:0;padding:0}
+.cz-grid li{display:flex;gap:12px}
+.cz-grid li::before{content:"";flex:none;width:7px;height:7px;border-radius:2px;background:var(--g);margin-top:.6em}
+.cz-acts{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.czcase .res{margin-top:14px;padding:10px 12px;border-left:3px solid var(--g);background:#fff;font-weight:600;font-size:var(--fs-sm)}
+[data-theme=dark] .cz-grid p,[data-theme=dark] .cz-grid li{color:#c5c4be}
+[data-theme=dark] .czcase .res{background:#1a1b1e}
+@media(max-width:767px){
+  .cz-hero{grid-template-columns:1fr}
+  .cz-mobile{max-width:160px}
+  .wk-grid,.wk-grid-authored{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .wk-card:hover,.wk-card:hover .wk-media img,.wk-case{transform:none}
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { dict } from "@/lib/i18n/dict";
 import { useLang } from "@/lib/i18n/store";
 import LangToggle from "./LangToggle";
@@ -15,6 +16,8 @@ const LINKS = [
 
 export default function Nav() {
   const lang = useLang();
+  const path = usePathname();
+  const home = path === "/";
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
   const panelId = useId();
@@ -97,12 +100,12 @@ export default function Nav() {
         <Tx pt={dict.pt.nav.skip} en={dict.en.nav.skip} />
       </a>
       <nav aria-label="Helison Dias">
-        <a className="lg" href="#hero">
+        <a className="lg" href={home ? "#hero" : "/"}>
           Helison Dias<span style={{ color: "var(--g)" }}>.</span>
         </a>
         <div className={`ls${open ? " open" : ""}`} id={panelId} ref={panel} role={open ? "dialog" : undefined} aria-modal={open || undefined} aria-label={open ? t.open : undefined}>
           {LINKS.map((l) => (
-            <a key={l.id} href={l.href} aria-current={active === l.id ? "location" : undefined} onClick={close}>
+            <a key={l.id} href={home ? l.href : `/${l.href}`} aria-current={active === l.id ? "location" : undefined} onClick={close}>
               <Tx pt={l.pt} en={l.en} />
             </a>
           ))}

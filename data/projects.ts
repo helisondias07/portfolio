@@ -9,6 +9,8 @@ export type ProjectBuild = {
 export type Project = {
   id: string; url: string; img: string; mimg: string; name: string; cat: string; eyebrow: string; title: string;
   association: string; overview: string[]; contributionsTitle: string; contributions: string[]; stackTitle: string; stack: string[];
+  /** Extra GitHub URL when `url` is the live site. Omit when unavailable. */
+  repo?: string;
   /** image intrinsic sizes (desktop / mobile) to avoid layout shift */
   dw: number; dh: number; mw: number; mh: number;
   tags: ("ecommerce" | "front" | "pessoais")[];
@@ -473,6 +475,7 @@ export const projects: Project[] = [
   {
     "id": "webcine",
     "url": "https://webcinetv.com.br/",
+    "repo": "https://github.com/helisondias07/webcine",
     "img": "webcine-screenshot-card.webp",
     "mimg": "webcine-screenshot-mobile.webp",
     "name": "WebCine TV",

@@ -71,6 +71,10 @@ export type Dict = {
     buildLearnings: string;
     visitRepo: string;
     openCase: string;
+    laneAuthored: string;
+    laneStorefronts: string;
+    backToWork: string;
+    notFound: string;
   };
   contact: {
     kicker: string;
@@ -245,6 +249,10 @@ export const dict: Record<Lang, Dict> = {
       buildLearnings: "Aprendizados",
       visitRepo: "Ver repositório",
       openCase: "Abrir o case",
+      laneAuthored: "Autoria",
+      laneStorefronts: "E-commerce",
+      backToWork: "Todos os projetos",
+      notFound: "Esta página não está no portfólio público.",
     },
     contact: {
       kicker: "Contato",
@@ -420,6 +428,10 @@ export const dict: Record<Lang, Dict> = {
       buildLearnings: "What I learned",
       visitRepo: "View repository",
       openCase: "Open the case",
+      laneAuthored: "Authored",
+      laneStorefronts: "E-commerce",
+      backToWork: "All projects",
+      notFound: "This page is not on the public portfolio.",
     },
     contact: {
       kicker: "Contact",

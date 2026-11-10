@@ -1,11 +1,14 @@
 "use client";
-import { useEffect, useLayoutEffect, useState } from "react";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import { projects } from "@/data/projects";
 import { dict } from "@/lib/i18n/dict";
-import { localizeProject } from "@/lib/i18n/localize";
-import { getLang, subscribe, useLang } from "@/lib/i18n/store";
-import { FILTERS, type FilterId, isFilterId } from "@/lib/projects/explore";
+import { useLang } from "@/lib/i18n/store";
+import { casePath, filterPublished, galleryPath, laneFromSearch, projectLane, publishedProjectIds } from "@/lib/projects/catalog";
+import { FILTERS, type FilterId, projectIdFromHash } from "@/lib/projects/explore";
 import Tx from "./Tx";
+import WorkCard from "./WorkCard";
 
 const FILTER_COPY: Record<(typeof FILTERS)[number], { pt: string; en: string }> = {
   "*": { pt: dict.pt.projectsUi.filterAll, en: dict.en.projectsUi.filterAll },
@@ -14,45 +17,42 @@ const FILTER_COPY: Record<(typeof FILTERS)[number], { pt: string; en: string }> 
   pessoais: { pt: dict.pt.projectsUi.filterAuthored, en: dict.en.projectsUi.filterAuthored },
 };
 
-/** Coverflow + case detail, with filters and an index over the real project list. */
+function applyLane(id: FilterId) {
+  history.replaceState(null, "", galleryPath(id));
+}
+
 export default function Projects() {
   useLang();
   const [filter, setFilter] = useState<FilterId>("*");
-  useLayoutEffect(() => {
-    const apply = () => {
-      const ui = dict[getLang()].projectsUi;
-      const cf = document.getElementById("cf");
-      cf?.setAttribute("aria-roledescription", ui.carousel);
-      cf?.setAttribute("aria-label", ui.carouselLabel);
-      document.getElementById("cfl")?.setAttribute("aria-label", ui.prev);
-      document.getElementById("cfr")?.setAttribute("aria-label", ui.next);
-      document.getElementById("cfl2")?.setAttribute("aria-label", ui.prev);
-      document.getElementById("cfr2")?.setAttribute("aria-label", ui.next);
-      document.getElementById("dots")?.setAttribute("aria-label", ui.dots);
-      document.getElementById("pix")?.setAttribute("aria-label", ui.index);
-      document.getElementById("flt2")?.setAttribute("aria-label", ui.filters);
-    };
-    apply();
-    return subscribe(apply);
-  }, []);
 
   useEffect(() => {
-    let alive = true;
-    import("@/lib/engines/projects").then((m) => {
-      if (!alive) return;
-      m.startProjects(projects, {
-        onFilter(next: string) {
-          if (isFilterId(next)) setFilter(next);
-        },
-      });
-    });
+    const sync = () => {
+      setFilter(laneFromSearch(window.location.search));
+      const id = projectIdFromHash(window.location.hash, publishedProjectIds());
+      if (id) window.location.replace(casePath(id));
+    };
+    sync();
+    window.addEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
     return () => {
-      alive = false;
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
     };
   }, []);
+
+  const visible = useMemo(() => filterPublished(projects, filter), [filter]);
+  const authored = visible.filter((project) => projectLane(project) === "authored");
+  const storefronts = visible.filter((project) => projectLane(project) === "storefront");
+  const empty = visible.length === 0;
+
+  const onFilter = (id: FilterId) => {
+    setFilter(id);
+    applyLane(id);
+  };
 
   const ui = dict.pt.projectsUi;
   const en = dict.en.projectsUi;
+
   return (
     <section className="s pj4" id="projetos">
       <div className="abw">
@@ -63,52 +63,63 @@ export default function Projects() {
         </div>
         <div className="flt2" id="flt2" role="group" aria-label={ui.filters}>
           {FILTERS.map((id) => (
-            <button key={id} type="button" data-f={id} className={id === filter ? "on" : undefined} aria-pressed={id === filter}>
+            <button
+              key={id}
+              type="button"
+              data-f={id}
+              className={id === filter ? "on" : undefined}
+              aria-pressed={id === filter}
+              onClick={() => onFilter(id)}
+            >
               <Tx pt={FILTER_COPY[id].pt} en={FILTER_COPY[id].en} />
             </button>
           ))}
         </div>
-        <div className="pix" id="pix" role="list" aria-label={ui.index}>
-          {projects.map((p) => (
-            <button key={p.id} type="button" className="pixi" data-id={p.id} role="listitem">
-              {p.name}
-            </button>
+        <nav className="pix" id="pix" aria-label={ui.index}>
+          {visible.map((project) => (
+            <Link key={project.id} href={casePath(project.id)} className="pixi" data-id={project.id}>
+              {project.name}
+            </Link>
           ))}
-        </div>
-        <p className="pempty" id="pempty" hidden>
-          <Tx pt={ui.empty} en={en.empty} />
-        </p>
-      </div>
-      <ul className="sr">
-        {projects.map((p) => {
-          const localized = localizeProject(p, "en");
-          return (
-            <li key={p.id}>
-              <h3>{p.name}</h3>
-              <p className="i18n-pt">{p.overview[0]}</p>
-              <p className="i18n-en">{localized.overview[0]}</p>
-              {p.url ? <a href={p.url}>{p.url}</a> : null}
+        </nav>
+        {empty ? (
+          <p className="pempty" id="pempty">
+            <Tx pt={ui.empty} en={en.empty} />
+          </p>
+        ) : (
+          <p className="pempty" id="pempty" hidden>
+            <Tx pt={ui.empty} en={en.empty} />
+          </p>
+        )}
+        <ul className="sr">
+          {visible.map((project) => (
+            <li key={project.id}>
+              <a href={casePath(project.id)}>{project.name}</a>
             </li>
-          );
-        })}
-      </ul>
-      <div className="cf" id="cf" tabIndex={0} aria-roledescription={ui.carousel} aria-label={ui.carouselLabel}>
-        <div className="cft" id="cft" />
-        <button className="cfa l" id="cfl" type="button" aria-label={ui.prev}>←</button>
-        <button className="cfa r" id="cfr" type="button" aria-label={ui.next}>→</button>
-      </div>
-      <div className="cfn">
-        <button className="cfa m" id="cfl2" type="button" aria-label={ui.prev}>←</button>
-        <div className="dots" id="dots" role="group" aria-label={ui.dots} />
-        <span className="cnt mo" id="cnt">01 / {String(projects.length).padStart(2, "0")}</span>
-        <button className="cfa m" id="cfr2" type="button" aria-label={ui.next}>→</button>
-      </div>
-      <div className="abw">
-        <div className="cdh">
-          <span className="mo abk"><Tx pt={ui.featured} en={en.featured} /></span>
-          <span className="cdn" id="cdn" />
+          ))}
+        </ul>
+        <div className="wk-lanes">
+          {authored.length ? (
+            <section className="wk-lane" aria-labelledby="lane-authored">
+              <h3 id="lane-authored"><Tx pt={ui.laneAuthored} en={en.laneAuthored} /></h3>
+              <div className="wk-grid wk-grid-authored">
+                {authored.map((project) => (
+                  <WorkCard key={project.id} project={project} />
+                ))}
+              </div>
+            </section>
+          ) : null}
+          {storefronts.length ? (
+            <section className="wk-lane" aria-labelledby="lane-stores">
+              <h3 id="lane-stores"><Tx pt={ui.laneStorefronts} en={en.laneStorefronts} /></h3>
+              <div className="wk-grid">
+                {storefronts.map((project) => (
+                  <WorkCard key={project.id} project={project} />
+                ))}
+              </div>
+            </section>
+          ) : null}
         </div>
-        <article className="csd" id="csd" />
       </div>
     </section>
   );

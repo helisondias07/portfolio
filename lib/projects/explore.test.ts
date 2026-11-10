@@ -50,6 +50,7 @@ test("hash only selects a known project id under #projetos/", () => {
   assert.equal(projectIdFromHash("#projetos", ids), null);
   assert.equal(projectIdFromHash("#contato", ids), null);
   assert.equal(projectIdFromHash("#projetos/missing", ids), null);
+  assert.equal(projectIdFromHash("#projetos/critica", ids), null);
   assert.equal(projectHash("webcine"), "#projetos/webcine");
 });
 
