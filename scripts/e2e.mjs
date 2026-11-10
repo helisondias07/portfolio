@@ -7,15 +7,35 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { createConnection } from "node:net";
+import { createConnection, createServer } from "node:net";
 import { setTimeout as delay } from "node:timers/promises";
 import puppeteer from "puppeteer-core";
 
-const PORT = Number(process.env.E2E_PORT || 3022);
-const ORIGIN = `http://127.0.0.1:${PORT}`;
 const CHROME =
   process.env.CHROME_PATH ||
   ["/usr/bin/google-chrome", "/usr/bin/chromium", "/usr/bin/chromium-browser"].find((p) => existsSync(p));
+
+function portOpen(port) {
+  return new Promise((resolve) => {
+    const sock = createConnection({ port, host: "127.0.0.1" }, () => {
+      sock.end();
+      resolve(true);
+    });
+    sock.on("error", () => resolve(false));
+  });
+}
+
+function allocatePort() {
+  return new Promise((resolve, reject) => {
+    const server = createServer();
+    server.listen(0, "127.0.0.1", () => {
+      const addr = server.address();
+      const port = typeof addr === "object" && addr ? addr.port : 0;
+      server.close((err) => (err ? reject(err) : resolve(port)));
+    });
+    server.on("error", reject);
+  });
+}
 
 function waitPort(port, ms = 20000) {
   const start = Date.now();
@@ -67,6 +87,12 @@ async function assertFoldClear(page, width, height) {
     const midX = Math.round(window.innerWidth / 2);
     const heroY = heroBox ? Math.round(heroBox.top + Math.min(80, heroBox.height / 3)) : 160;
     const hit = document.elementFromPoint(midX, heroY);
+    const h1 = document.querySelector("#hero-title, h1.hl");
+    const h1cs = h1 ? getComputedStyle(h1) : null;
+    const h1box = h1?.getBoundingClientRect();
+    const hlr = document.getElementById("hlr");
+    const hlrcs = hlr ? getComputedStyle(hlr) : null;
+    const visibleCopy = h1?.innerText?.replace(/\s+/g, " ").trim() || "";
     return {
       pixPosition: pixCs?.position ?? "missing",
       pixFixed: pixCs?.position === "fixed",
@@ -76,22 +102,30 @@ async function assertFoldClear(page, width, height) {
       hitPix: Boolean(hit?.closest("#pix")),
       hitTag: hit?.tagName ?? null,
       hitClass: String(hit?.className ?? ""),
+      h1Display: h1cs?.display ?? "missing",
+      h1Visibility: h1cs?.visibility ?? "missing",
+      h1Width: h1box?.width ?? 0,
+      h1Height: h1box?.height ?? 0,
+      h1Top: h1box?.top ?? -1,
+      h1Bottom: h1box?.bottom ?? -1,
+      hlrVisibility: hlrcs?.visibility ?? "missing",
+      hlrDisplay: hlrcs?.display ?? "missing",
+      copy: visibleCopy,
+      fold: window.innerHeight,
     };
   });
   assert.equal(layout.pixFixed, false, `${width}px pix must not be position:fixed`);
   assert.notEqual(layout.pixPosition, "fixed");
   assert.equal(layout.navPosition, "fixed");
   assert.equal(layout.hitPix, false, `${width}px hero covered by #pix`);
+  assert.notEqual(layout.h1Display, "none", `${width}px H1 display`);
+  assert.notEqual(layout.h1Visibility, "hidden", `${width}px H1 visibility`);
+  assert.ok(layout.h1Height > 24, `${width}px H1 height ${layout.h1Height}`);
+  assert.ok(layout.h1Width > 80, `${width}px H1 width ${layout.h1Width}`);
+  assert.ok(layout.h1Top >= 0 && layout.h1Bottom <= layout.fold + 1, `${width}px H1 not in first fold: top=${layout.h1Top} bottom=${layout.h1Bottom} fold=${layout.fold}`);
+  assert.match(layout.copy, /interfaces/i, `${width}px H1 text missing: ${layout.copy}`);
   const mid = await hitAt(page, layout.midX, layout.heroY);
   assert.equal(mid.pix, false, `${width}px elementFromPoint hero is a project chip`);
-}
-
-try {
-  const { execSync } = await import("node:child_process");
-  execSync(`fuser -k ${PORT}/tcp`, { stdio: "ignore" });
-  await delay(400);
-} catch {
-  /* port free */
 }
 
 if (!CHROME) {
@@ -99,17 +133,30 @@ if (!CHROME) {
   process.exit(1);
 }
 
+let PORT;
+if (process.env.E2E_PORT) {
+  PORT = Number(process.env.E2E_PORT);
+  if (!Number.isInteger(PORT) || PORT <= 0) {
+    console.error(`e2e: invalid E2E_PORT=${process.env.E2E_PORT}`);
+    process.exit(1);
+  }
+  if (await portOpen(PORT)) {
+    console.error(`e2e: port ${PORT} is already in use by another process`);
+    process.exit(1);
+  }
+} else {
+  PORT = await allocatePort();
+}
+
+const ORIGIN = `http://127.0.0.1:${PORT}`;
+
 const server = spawn("npx", ["next", "start", "-H", "127.0.0.1", "-p", String(PORT)], {
   stdio: ["ignore", "pipe", "pipe"],
   env: { ...process.env, PORT: String(PORT) },
 });
 let stderr = "";
-let stdout = "";
 server.stderr.on("data", (chunk) => {
   stderr += chunk.toString();
-});
-server.stdout.on("data", (chunk) => {
-  stdout += chunk.toString();
 });
 
 let failed = 0;
@@ -160,6 +207,7 @@ try {
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
 
   await assertFoldClear(page, 1440, 900);
+  await assertFoldClear(page, 768, 1024);
   await assertFoldClear(page, 390, 844);
 
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
@@ -239,6 +287,9 @@ try {
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
   await page.screenshot({ path: `${shotDir}/after_desktop_home.png`, fullPage: false });
+  await page.setViewport({ width: 768, height: 1024, deviceScaleFactor: 1 });
+  await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
+  await page.screenshot({ path: `${shotDir}/after_tablet_home.png`, fullPage: false });
   await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
   await page.screenshot({ path: `${shotDir}/after_desktop_work.png`, fullPage: true });
   await page.goto(`${ORIGIN}/projetos/emporio`, { waitUntil: "networkidle0" });

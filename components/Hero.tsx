@@ -26,9 +26,10 @@ export default function Hero() {
       <p className="tag mo"><Tx pt={dict.pt.hero.tag} en={dict.en.hero.tag} /></p>
       <h1 className="hl" id="hero-title" aria-label={dict.pt.hero.headline}>
         <span className="hli">
-          <span id="hl" />
+          <span id="hl" aria-hidden="true" />
           <span className="car" aria-hidden="true">{"\u2060"}</span>
-          <span id="hlr" className="hlr" aria-hidden="true">
+          <span id="hlrest" className="hlrest" aria-hidden="true" />
+          <span id="hlr" className="hlr">
             <span className="i18n-pt">{dict.pt.hero.headline}</span>
             <span className="i18n-en">{dict.en.hero.headline}</span>
           </span>

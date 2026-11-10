@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { dict } from "@/lib/i18n/dict";
 import { localizeProject } from "@/lib/i18n/localize";
+import { useLang } from "@/lib/i18n/store";
 import { isGithubUrl } from "@/lib/projects/explore";
 import Tx from "./Tx";
 
@@ -10,9 +13,11 @@ function thumbSrc(file: string) {
 }
 
 export default function CaseView({ project }: { project: Project }) {
+  const lang = useLang();
   const en = localizeProject(project, "en");
   const ui = dict.pt.projectsUi;
   const uien = dict.en.projectsUi;
+  const altUi = dict[lang].projectsUi;
   const avif = project.img.replace(/\.webp$/i, ".avif");
   const mavif = project.mimg.replace(/\.webp$/i, ".avif");
   const primaryLabel = project.url
@@ -37,7 +42,7 @@ export default function CaseView({ project }: { project: Project }) {
           <source srcSet={thumbSrc(avif)} type="image/avif" />
           <img
             src={thumbSrc(project.img)}
-            alt={`${ui.preview}${project.name} (${ui.desktop})`}
+            alt={`${altUi.preview}${project.name} (${altUi.desktop})`}
             width={project.dw}
             height={project.dh}
           />
@@ -46,7 +51,7 @@ export default function CaseView({ project }: { project: Project }) {
           <source srcSet={thumbSrc(mavif)} type="image/avif" />
           <img
             src={thumbSrc(project.mimg)}
-            alt={`${ui.preview}${project.name} (${ui.mobile})`}
+            alt={`${altUi.preview}${project.name} (${altUi.mobile})`}
             width={project.mw}
             height={project.mh}
           />
