@@ -5,9 +5,9 @@ import { dict } from "@/lib/i18n/dict";
 import { localizeProject } from "@/lib/i18n/localize";
 import { useLang } from "@/lib/i18n/store";
 import { casePath, projectLane } from "@/lib/projects/catalog";
-import { isGithubUrl } from "@/lib/projects/explore";
 import type { Project } from "@/data/projects";
 import Tx from "./Tx";
+import ProjectActions from "./projects/ProjectActions";
 
 function thumbSrc(file: string) {
   return file.startsWith("/") ? file : `/thumbnails/${file}`;
@@ -19,11 +19,6 @@ export default function WorkCard({ project }: { project: Project }) {
   const href = casePath(project.id);
   const authored = projectLane(project) === "authored";
   const preview = dict[lang].projectsUi.preview;
-  const visit = project.url
-    ? isGithubUrl(project.url)
-      ? { pt: dict.pt.projectsUi.visitRepo, en: dict.en.projectsUi.visitRepo }
-      : { pt: dict.pt.projectsUi.visitSite, en: dict.en.projectsUi.visitSite }
-    : null;
   const webp = /\.webp$/i.test(project.img);
   const avif = webp ? project.img.replace(/\.webp$/i, ".avif") : null;
 
@@ -51,16 +46,7 @@ export default function WorkCard({ project }: { project: Project }) {
         </h3>
         <p className="wk-cat"><Tx pt={project.cat} en={en.cat} /></p>
         <p className="wk-ov"><Tx pt={project.overview[0]} en={en.overview[0]} /></p>
-        <div className="wk-acts">
-          <Link href={href} className="wk-case">
-            <Tx pt={dict.pt.projectsUi.openCase} en={dict.en.projectsUi.openCase} />
-          </Link>
-          {visit ? (
-            <a className="wk-ext" href={project.url} target="_blank" rel="noopener">
-              <Tx pt={visit.pt} en={visit.en} />
-            </a>
-          ) : null}
-        </div>
+        <ProjectActions project={project} />
       </div>
     </article>
   );

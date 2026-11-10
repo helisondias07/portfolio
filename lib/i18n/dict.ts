@@ -77,6 +77,8 @@ export type Dict = {
     notFound: string;
     buildLimits: string;
     mvpBadge: string;
+    visitDemo: string;
+    visitGithub: string;
   };
   contact: {
     kicker: string;
@@ -257,6 +259,8 @@ export const dict: Record<Lang, Dict> = {
       notFound: "Esta página não está no portfólio público.",
       buildLimits: "Limitações",
       mvpBadge: "MVP",
+      visitDemo: "Demo ao vivo",
+      visitGithub: "GitHub",
     },
     contact: {
       kicker: "Contato",
@@ -438,6 +442,8 @@ export const dict: Record<Lang, Dict> = {
       notFound: "This page is not on the public portfolio.",
       buildLimits: "Limits",
       mvpBadge: "MVP",
+      visitDemo: "Live demo",
+      visitGithub: "GitHub",
     },
     contact: {
       kicker: "Contact",

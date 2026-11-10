@@ -174,7 +174,8 @@ try {
   assert.match(home.text, /Crítica de planos/);
   assert.match(home.text, /Loop de agentes/);
   assert.match(home.text, /Benchmark de serialização/);
-  assert.doesNotMatch(home.text, /Timesheet inteligente|Caderno de Talhão|Counter-Strike|Fazenda/i);
+  assert.match(home.text, /Timesheet inteligente/);
+  assert.doesNotMatch(home.text, /Caderno de Talhão|Counter-Strike|Fazenda/i);
   assert.doesNotMatch(home.text, /127\.0\.0\.1:4721|OPENAI_API_KEY/);
 
   const emporio = await http("/projetos/emporio");
@@ -190,26 +191,40 @@ try {
   const store = await http("/projetos/fiturban");
   assert.equal(store.status, 200, "storefront case");
 
-  for (const id of ["brag", "critica", "loop", "benchmark"]) {
+  for (const id of ["brag", "critica", "loop", "benchmark", "timesheet"]) {
     const res = await http(`/projetos/${id}`);
     assert.equal(res.status, 200, `${id} case`);
     assert.match(res.text, /Limitações/);
     assert.match(res.text, /github.com\/helisondias07/);
+    assert.match(res.text, /vercel\.app/);
+    assert.match(res.text, /Demo ao vivo|Live demo/);
   }
   const brag = await http("/projetos/brag");
   assert.match(brag.text, /joaoraul\.dev\/writing\/automated-brag-document/);
-  assert.match(brag.text, /Sem integrações live/);
+  assert.match(brag.text, /localStorage/);
+  const timesheet = await http("/projetos/timesheet");
+  assert.match(timesheet.text, /Não inventa horas/);
+  assert.match(timesheet.text, /joaoraul\.dev\/writing\/timesheet-auto-filler/);
 
-  for (const id of ["timesheet", "fazenda", "cs"]) {
+  for (const id of ["fazenda", "cs"]) {
     const res = await http(`/projetos/${id}`);
     assert.equal(res.status, 404, `${id} must 404, got ${res.status}`);
+  }
+
+  const gallery = await http("/projetos");
+  assert.equal(gallery.status, 200, "projetos index");
+  for (const layout of ["a", "b", "c", "d", "e"]) {
+    const res = await http(`/projetos?layout=${layout}`);
+    assert.equal(res.status, 200, `layout ${layout}`);
+    assert.doesNotMatch(res.text, /Caderno de Talhão|Counter-Strike|Fazenda/i);
   }
 
   const sitemap = await http("/sitemap.xml");
   assert.equal(sitemap.status, 200);
   assert.match(sitemap.text, /\/projetos\/emporio/);
   assert.match(sitemap.text, /\/projetos\/brag/);
-  assert.doesNotMatch(sitemap.text, /timesheet|fazenda/);
+  assert.match(sitemap.text, /\/projetos\/timesheet/);
+  assert.doesNotMatch(sitemap.text, /fazenda/);
 
   console.log("e2e http: ok");
 
@@ -299,20 +314,28 @@ try {
   assert.equal(await page.$eval(".nb", (el) => el.getAttribute("aria-expanded")), "false");
 
   const shotDir = process.env.E2E_SHOTS || "/opt/cursor/artifacts";
+  async function shot(path, file, width, height) {
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
+    await page.goto(`${ORIGIN}${path}`, { waitUntil: "networkidle0" });
+    if (path.includes("#projetos") || path.startsWith("/projetos")) {
+      await page.evaluate(() => document.getElementById("projetos")?.scrollIntoView());
+    }
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    assert.equal(overflow, false, `horizontal scroll at ${width} ${path}`);
+    await page.screenshot({ path: `${shotDir}/${file}`, fullPage: true });
+  }
+
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
   await page.screenshot({ path: `${shotDir}/after_desktop_home.png`, fullPage: false });
-  await page.setViewport({ width: 768, height: 1024, deviceScaleFactor: 1 });
-  await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_tablet_home.png`, fullPage: false });
-  await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_desktop_work.png`, fullPage: true });
-  await page.goto(`${ORIGIN}/projetos/emporio`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_desktop_case_emporio.png`, fullPage: true });
-  await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_desktop_projetos.png`, fullPage: true });
-  await page.goto(`${ORIGIN}/projetos/brag`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_desktop_case_brag.png`, fullPage: true });
+
+  await shot("/projetos", "layout_current_1440.png", 1440, 900);
+  await shot("/projetos?layout=a", "layout_a_1440.png", 1440, 900);
+  await shot("/projetos?layout=b", "layout_b_1440.png", 1440, 900);
+  await shot("/projetos?layout=c", "layout_c_1440.png", 1440, 900);
+  await shot("/projetos?layout=d", "layout_d_1440.png", 1440, 900);
+  await shot("/projetos?layout=e", "layout_e_1440.png", 1440, 900);
+  await shot("/projetos/timesheet", "after_desktop_case_timesheet.png", 1440, 900);
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
@@ -321,14 +344,14 @@ try {
   await page.$eval(".nb", (el) => el instanceof HTMLElement && el.click());
   await page.screenshot({ path: `${shotDir}/after_mobile_menu.png`, fullPage: false });
   await page.keyboard.press("Escape");
-  await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_mobile_work.png`, fullPage: true });
-  await page.goto(`${ORIGIN}/projetos/emporio`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_mobile_case_emporio.png`, fullPage: true });
-  await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_mobile_projetos.png`, fullPage: true });
-  await page.goto(`${ORIGIN}/projetos/brag`, { waitUntil: "networkidle0" });
-  await page.screenshot({ path: `${shotDir}/after_mobile_case_brag.png`, fullPage: true });
+
+  await shot("/projetos", "layout_current_390.png", 390, 844);
+  await shot("/projetos?layout=a", "layout_a_390.png", 390, 844);
+  await shot("/projetos?layout=b", "layout_b_390.png", 390, 844);
+  await shot("/projetos?layout=c", "layout_c_390.png", 390, 844);
+  await shot("/projetos?layout=d", "layout_d_390.png", 390, 844);
+  await shot("/projetos?layout=e", "layout_e_390.png", 390, 844);
+  await shot("/projetos/timesheet", "after_mobile_case_timesheet.png", 390, 844);
 
   await browser.close();
   console.log("e2e browser: ok (puppeteer-core +", CHROME, ")");

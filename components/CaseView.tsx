@@ -22,12 +22,8 @@ export default function CaseView({ project }: { project: Project }) {
   const mwebp = /\.webp$/i.test(project.mimg);
   const avif = webp ? project.img.replace(/\.webp$/i, ".avif") : null;
   const mavif = mwebp ? project.mimg.replace(/\.webp$/i, ".avif") : null;
-  const primaryLabel = project.url
-    ? isGithubUrl(project.url)
-      ? { pt: ui.visitRepo, en: uien.visitRepo }
-      : { pt: ui.visit, en: uien.visit }
-    : null;
-  const extraRepo = project.repo && project.repo !== project.url ? project.repo : null;
+  const github = isGithubUrl(project.url) ? project.url : project.repo;
+  const site = project.url && !isGithubUrl(project.url) ? project.url : null;
   const inspiration = lang === "en" ? en.inspiration : project.inspiration;
 
   return (
@@ -146,14 +142,18 @@ export default function CaseView({ project }: { project: Project }) {
         </section>
       </div>
       <p className="cz-acts">
-        {primaryLabel ? (
-          <a className="go2" href={project.url} target="_blank" rel="noopener">
-            <Tx pt={primaryLabel.pt} en={primaryLabel.en} />
+        {project.demo ? (
+          <a className="go2" href={project.demo} target="_blank" rel="noopener">
+            <Tx pt={ui.visitDemo} en={uien.visitDemo} />
+          </a>
+        ) : site ? (
+          <a className="go2" href={site} target="_blank" rel="noopener">
+            <Tx pt={ui.visit} en={uien.visit} />
           </a>
         ) : null}
-        {extraRepo ? (
-          <a className="wk-ext" href={extraRepo} target="_blank" rel="noopener">
-            <Tx pt={ui.visitRepo} en={uien.visitRepo} />
+        {github ? (
+          <a className={project.demo || site ? "wk-ext" : "go2"} href={github} target="_blank" rel="noopener">
+            <Tx pt={ui.visitGithub} en={uien.visitGithub} />
           </a>
         ) : null}
       </p>

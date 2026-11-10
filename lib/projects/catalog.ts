@@ -13,6 +13,7 @@ function experimentToProject(item: ExperimentRecord): Project {
   return {
     id: item.id,
     url: item.github ?? "",
+    demo: item.demo ?? undefined,
     img: item.img ?? "",
     mimg: item.mimg ?? "",
     name: copy.name,

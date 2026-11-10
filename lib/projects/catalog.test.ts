@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { parseProjectLayout } from "../../components/projects/layout-types";
 import { experiments } from "../../data/experiments";
 import { projects } from "../../data/projects";
 import {
@@ -18,31 +19,28 @@ import {
 } from "./catalog";
 import { FILTERS } from "./explore";
 
-const publishedExperimentIds = ["benchmark", "brag", "critica", "loop"] as const;
+const publishedExperimentIds = ["benchmark", "brag", "critica", "loop", "timesheet"] as const;
 
-test("four GitHub experiments are published; timesheet stays unpublished", () => {
-  assert.deepEqual(unpublishedExperimentIds(), ["timesheet"]);
-  assert.equal(publicExperimentCount(), 4);
+test("five GitHub experiments are published with demos", () => {
+  assert.deepEqual(unpublishedExperimentIds(), []);
+  assert.equal(publicExperimentCount(), 5);
   for (const id of publishedExperimentIds) {
     const project = projectById(id);
     assert.ok(project, id);
     assert.equal(project.mvp, true);
     assert.ok(project.limits);
     assert.match(project.url, /^https:\/\/github\.com\/helisondias07\//);
+    assert.match(project.demo ?? "", /^https:\/\/.+\.vercel\.app$/);
     assert.equal(isPublishedProjectId(id), true);
     assert.equal(projectLane(project), "authored");
   }
-  assert.equal(isPublishedProjectId("timesheet"), false);
-  assert.equal(projectById("timesheet"), undefined);
-  const timesheet = experiments.find((item) => item.id === "timesheet");
-  assert.equal(timesheet?.public, false);
-  assert.equal(timesheet?.github, null);
 });
 
 test("published experiment copy cites joaoraul.dev where the source already does", () => {
   assert.match(projectById("brag")!.inspiration!.href, /joaoraul\.dev\/writing\/automated-brag-document/);
   assert.match(projectById("loop")!.inspiration!.href, /joaoraul\.dev\/writing\/superpowered-ralph/);
   assert.match(projectById("benchmark")!.inspiration!.href, /joaoraul\.dev\/writing\/protobuf-vs-json/);
+  assert.match(projectById("timesheet")!.inspiration!.href, /joaoraul\.dev\/writing\/timesheet-auto-filler/);
   assert.doesNotMatch(projectById("critica")!.inspiration!.href, /joaoraul\.dev/);
 });
 
@@ -59,14 +57,14 @@ test("published catalog keeps Empório and WebCine as authored work", () => {
   assert.equal(projectLane(emporio), "authored");
   assert.equal(projectLane(webcine), "authored");
   assert.equal(projectLane(projectById("fiturban")!), "storefront");
-  assert.equal(publishedProjectIds().length, projects.length + 4);
+  assert.equal(publishedProjectIds().length, projects.length + 5);
 });
 
 test("filters only return published projects and empty lists stay empty", () => {
   const authored = filterPublished(publishedProjects(), "pessoais");
   assert.deepEqual(
     authored.map((p) => p.id).sort(),
-    ["benchmark", "brag", "critica", "emporio", "loop", "webcine"],
+    ["benchmark", "brag", "critica", "emporio", "loop", "timesheet", "webcine"],
   );
   assert.equal(filterPublished([], "ecommerce").length, 0);
   for (const filter of FILTERS) {
@@ -93,14 +91,22 @@ test("Empório case copy stays a case, not a README", () => {
   assert.match(emporio.resultado, /30/);
 });
 
-test("experiment pages do not invent benchmark multiples or live-agent claims", () => {
+test("experiment pages keep honest limits and no invented metrics", () => {
   const blob = publishedExperimentIds.map((id) => JSON.stringify(projectById(id))).join(" ");
   assert.doesNotMatch(blob, /OPENAI_API_KEY|127\.0\.0\.1:4314|python main\.py/);
   assert.equal(projectById("benchmark")!.resultado, "");
-  assert.match(projectById("benchmark")!.limits!, /pré-construída/);
-  assert.match(projectById("loop")!.limits!, /Não é evidência de produtividade/);
-  assert.match(projectById("brag")!.limits!, /Sem integrações live/);
-  assert.match(projectById("critica")!.limits!, /Sem modelo hospedado real/);
+  assert.match(projectById("benchmark")!.limits!, /pré-construída|pre-built/i);
+  assert.match(projectById("loop")!.limits!, /Não é evidência de produtividade|Not productivity evidence/);
+  assert.match(projectById("brag")!.limits!, /localStorage/);
+  assert.match(projectById("critica")!.limits!, /browser/);
+  assert.match(projectById("timesheet")!.limits!, /Não inventa horas|Does not invent hours/);
+});
+
+test("layout preview ids stay on the query string", () => {
+  assert.equal(parseProjectLayout("a"), "a");
+  assert.equal(parseProjectLayout("e"), "e");
+  assert.equal(parseProjectLayout("z"), "current");
+  assert.equal(parseProjectLayout(undefined), "current");
 });
 
 test("case and gallery paths stay on the public site", () => {

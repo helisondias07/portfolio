@@ -20,6 +20,8 @@ export type Project = {
   mvp?: boolean;
   limits?: string;
   inspiration?: { text: string; href: string };
+  /** Public Vercel (or other) demo. Omit when there is no live demo. */
+  demo?: string;
 };
 
 export const projects: Project[] = [
