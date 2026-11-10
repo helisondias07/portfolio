@@ -321,6 +321,13 @@ html[data-theme=dark]{color-scheme:dark;--bg:#0f1011;--ink:#ecebe6;--g:#44D62C;-
 .czh h3{font:600 clamp(26px,1.1rem + 1.9vw,46px)/1.06 'General Sans';letter-spacing:-.035em;margin:0;text-wrap:balance}
 .cza{margin:10px 0 0;color:var(--mu);font-size:var(--fs-sm)}
 .czv{flex:none;display:inline-flex;gap:8px;align-items:center;padding:13px 20px 15px;border-radius:12px;background:var(--g);color:#0b2a05;font:600 15px 'General Sans';text-decoration:none;box-shadow:inset 0 -4px 0 #2a9a17,0 12px 26px -16px rgba(68,214,44,.9);transition:transform .2s ease,box-shadow .2s ease}.czv:hover{transform:translateY(-2px)}.czv:active{transform:translateY(2px);box-shadow:inset 0 -1px 0 #2a9a17}
+.czlinks{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.czx{flex:none;color:var(--ink);font:600 15px 'General Sans';text-decoration:underline;text-underline-offset:3px}
+.czx:hover{color:var(--gd)}
+.czlim{margin:0 0 12px;color:var(--mu);font-size:var(--fs-sm);line-height:1.65}
+.czlim a{color:inherit}
+.cfc .ov h3{text-wrap:balance}
+.cfc.long .ov h3{font-size:clamp(20px,1rem + 1.35vw,36px);line-height:.95;text-wrap:balance;overflow-wrap:anywhere}
 .czm{position:relative;margin:clamp(24px,3.4vw,40px) 0;display:grid;grid-template-columns:minmax(0,1fr) clamp(130px,17%,210px);gap:clamp(16px,2.4vw,32px);align-items:end}
 .czd{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--ln);background:#fff;box-shadow:0 40px 70px -50px rgba(0,0,0,.55)}
 .czbar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#f1f0eb;border-bottom:1px solid var(--ln)}.czbar i{width:9px;height:9px;border-radius:50%;background:#d3d1ca}.czbar span{margin-left:10px;padding:3px 10px;border-radius:6px;background:#fff;font:500 11px 'JetBrains Mono';color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}

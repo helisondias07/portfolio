@@ -18,7 +18,7 @@ Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
   - Em GPUs por software (SwiftShader/llvmpipe) o render é limitado (~25 fps, pixel ratio menor).
   - Após a intro, o teclado 3D reage ao teclado físico (sem `preventDefault`).
 - **Sobre** — bio com revelação por scroll e contadores (10+ lojas Wake, 2 anos e 6 meses).
-- **Projetos** — galeria em lanes (autoria e e-commerce) a partir de `data/projects.ts`, com cases em `/projetos/[id]`.
+- **Projetos** — carrossel coverflow com os projetos reais (`data/projects.ts` e experimentos publicados em `data/experiments.ts`) e **Case em destaque** que acompanha o projeto ativo com crossfade. Cases também em `/projetos/[id]`. Layouts alternativos de prévia (editorial, índice, bento, duas colunas) ficam no código e só aparecem com `NEXT_PUBLIC_LAYOUT_LAB=1`.
 - **Contato** — WhatsApp, LinkedIn, GitHub, Baixar CV, newsletter e selo Lighthouse (só aparece com notas ≥ 90; valores em `data/lighthouse.ts`).
 - Tema claro/escuro com revelação circular (View Transitions API + fallback), salvo em `localStorage`, padrão do sistema.
 
@@ -26,7 +26,7 @@ Portfólio pessoal (redesign 2026) em **Next.js 16 / React 19 / TypeScript**.
 ```
 app/            layout (script anti-flash de tema, preload de fontes), page, globals.css, api/
 components/     Nav, ThemeToggle, Hero, About, Counters, Projects, Footer, Newsletter, PerfBadge, VisitBeacon
-lib/engines/    hero.js (teclado/terminal/chat + three.js lazy)
+lib/engines/    hero.js (teclado/terminal/chat + three.js lazy), projects.js (carrossel)
 lib/server/     kv.ts (Upstash, opcional), resend.ts (Resend, opcional)
 data/           projects.ts, lighthouse.ts
 public/         fonts/ (woff2 subset latin), thumbnails/ (AVIF + WebP), cv/

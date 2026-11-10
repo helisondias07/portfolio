@@ -57,7 +57,7 @@ function waitPort(port, ms = 20000) {
 async function http(path) {
   const res = await fetch(`${ORIGIN}${path}`, { redirect: "manual" });
   const text = await res.text();
-  return { status: res.status, text };
+  return { status: res.status, text, location: res.headers.get("location") };
 }
 
 function hitAt(page, x, y) {
@@ -166,15 +166,24 @@ try {
   const home = await http("/");
   assert.equal(home.status, 200, "home 200");
   assert.match(home.text, /id="projetos"/);
+  assert.match(home.text, /id="cf"/);
   assert.match(home.text, /class="site"/);
   if (/EADDRINUSE/.test(stderr)) throw new Error("stale next start");
-  assert.match(home.text, /id="pix"/);
-  assert.doesNotMatch(home.text, /<nav class="pix"/);
+  assert.doesNotMatch(home.text, /id="pix"/);
+  assert.doesNotMatch(home.text, /Opções de layout|Layout options \(preview\)/);
   assert.match(home.text, /Brag semanal/);
   assert.match(home.text, /Crítica de planos/);
   assert.match(home.text, /Loop de agentes/);
   assert.match(home.text, /Benchmark de serialização/);
   assert.match(home.text, /Timesheet inteligente/);
+  assert.match(home.text, /Supfy/);
+  assert.match(home.text, /Empório da Música/);
+  assert.match(home.text, /https:\/\/brag-semanal\.vercel\.app/);
+  assert.match(home.text, /https:\/\/critica-de-planos\.vercel\.app/);
+  assert.match(home.text, /https:\/\/loop-de-agentes\.vercel\.app/);
+  assert.match(home.text, /https:\/\/benchmark-serializacao\.vercel\.app/);
+  assert.match(home.text, /https:\/\/timesheet-inteligente\.vercel\.app/);
+  assert.match(home.text, /https:\/\/github\.com\/helisondias07\/brag-semanal/);
   assert.doesNotMatch(home.text, /Caderno de Talhão|Counter-Strike|Fazenda/i);
   assert.doesNotMatch(home.text, /127\.0\.0\.1:4721|OPENAI_API_KEY/);
 
@@ -212,11 +221,13 @@ try {
   }
 
   const gallery = await http("/projetos");
-  assert.equal(gallery.status, 200, "projetos index");
+  assert.ok(gallery.status >= 300 && gallery.status < 400, `projetos index should redirect, got ${gallery.status}`);
+  assert.match(gallery.location ?? "", /#projetos/);
+  assert.doesNotMatch(gallery.text, /Opções de layout|layout=a/);
   for (const layout of ["a", "b", "c", "d", "e"]) {
     const res = await http(`/projetos?layout=${layout}`);
-    assert.equal(res.status, 200, `layout ${layout}`);
-    assert.doesNotMatch(res.text, /Caderno de Talhão|Counter-Strike|Fazenda/i);
+    assert.ok(res.status >= 300 && res.status < 400, `layout ${layout} should redirect, got ${res.status}`);
+    assert.doesNotMatch(res.text, /Opções de layout|Editorial|Bento/);
   }
 
   const sitemap = await http("/sitemap.xml");
@@ -260,23 +271,51 @@ try {
   await page.waitForFunction(() => window.location.hash === "#projetos");
 
   await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
-  const pressed = await page.$$eval("#flt2 button", (btns) =>
-    btns.map((b) => ({ f: b.getAttribute("data-f"), pressed: b.getAttribute("aria-pressed"), on: b.classList.contains("on") })),
-  );
-  assert.equal(pressed.length, 4);
-  assert.equal(pressed.filter((row) => row.pressed === "true").length, 1);
-  const filterName = await page.$eval("#flt2-label", (el) => el.textContent);
-  const htmlLang = await page.$eval("html", (el) => el.getAttribute("data-lang"));
-  if (htmlLang === "en") assert.match(filterName, /Filter projects/);
-  else assert.match(filterName, /Filtrar projetos/);
+  await page.waitForFunction(() => document.querySelectorAll(".cfc img").length > 0);
+  const carousel = await page.evaluate(async () => {
+    const imgs = [...document.querySelectorAll(".cfc img")];
+    const loaded = await Promise.all(
+      imgs.map(
+        (img) =>
+          new Promise((resolve) => {
+            const probe = new Image();
+            probe.onload = () => resolve({ src: img.getAttribute("src"), alt: img.alt, w: probe.naturalWidth });
+            probe.onerror = () => resolve({ src: img.getAttribute("src"), alt: img.alt, w: 0 });
+            probe.src = img.getAttribute("src") || img.src;
+          }),
+      ),
+    );
+    return {
+      count: loaded.length,
+      broken: loaded.filter((img) => !img.w || !img.src || img.src.endsWith("/thumbnails/")).map((img) => img.src),
+      names: loaded.map((img) => img.alt).join(" | "),
+      switcher: Boolean(document.querySelector(".lo-switch")),
+    };
+  });
+  assert.equal(carousel.switcher, false, "preview layout switcher is visible");
+  assert.equal(carousel.broken.length, 0, `broken thumbnails: ${carousel.broken.join(", ")}`);
+  for (const name of [/Brag semanal|Weekly brag/, /Crítica de planos|Plan critique/, /Loop de agentes|Agent loop/, /Benchmark de serialização|Serialization benchmark/, /Timesheet inteligente|Smart timesheet/, /Supfy/, /Empório da Música/]) {
+    assert.match(carousel.names, name, `missing card ${name}`);
+  }
+  const before = await page.$eval("#cdn", (el) => el.textContent);
+  await page.click("#cfr");
+  await page.waitForFunction((prev) => document.getElementById("cdn")?.textContent !== prev, {}, before);
 
-  await page.click('#flt2 button[data-f="pessoais"]');
-  const after = await page.$$eval("#flt2 button", (btns) =>
-    btns.map((b) => ({ f: b.getAttribute("data-f"), pressed: b.getAttribute("aria-pressed"), on: b.classList.contains("on") })),
-  );
-  const on = after.find((row) => row.f === "pessoais");
-  assert.equal(on?.pressed, "true");
-  assert.equal(on?.on, true);
+  await page.evaluate(() => {
+    const cards = [...document.querySelectorAll(".cfc")];
+    const index = cards.findIndex((card) => card.dataset.id === "brag");
+    [...document.querySelectorAll("#dots button")][index].click();
+  });
+  await page.waitForFunction(() => document.querySelector(".cfc.on")?.dataset.id === "brag");
+  await page.waitForFunction(() => (document.querySelector("#csd .cz:not(.lv) a.czv")?.getAttribute("href") || "").includes("brag-semanal.vercel.app"));
+  const bragLinks = await page.$$eval("#csd .cz:not(.lv) a", (els) => els.map((a) => a.getAttribute("href")));
+  assert.ok(bragLinks.includes("https://brag-semanal.vercel.app"));
+  assert.ok(bragLinks.includes("https://github.com/helisondias07/brag-semanal"));
+  const langNow = await page.$eval("html", (el) => el.dataset.lang);
+  await page.click("#lang");
+  const expectedTitle = langNow === "en" ? "Brag semanal" : "Weekly brag";
+  await page.waitForFunction((text) => (document.querySelector("#csd .cz:not(.lv) h3")?.textContent || "").includes(text), {}, expectedTitle);
+  await page.click("#lang");
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
@@ -329,13 +368,10 @@ try {
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
   await page.screenshot({ path: `${shotDir}/after_desktop_home.png`, fullPage: false });
 
-  await shot("/projetos", "layout_current_1440.png", 1440, 900);
-  await shot("/projetos?layout=a", "layout_a_1440.png", 1440, 900);
-  await shot("/projetos?layout=b", "layout_b_1440.png", 1440, 900);
-  await shot("/projetos?layout=c", "layout_c_1440.png", 1440, 900);
-  await shot("/projetos?layout=d", "layout_d_1440.png", 1440, 900);
-  await shot("/projetos?layout=e", "layout_e_1440.png", 1440, 900);
+  await shot("/#projetos", "projects_carousel_1440.png", 1440, 900);
+  await shot("/projetos/brag", "case_brag_1440.png", 1440, 900);
   await shot("/projetos/timesheet", "after_desktop_case_timesheet.png", 1440, 900);
+  await shot("/projetos/supfy", "case_supfy_1440.png", 1440, 900);
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
@@ -345,13 +381,10 @@ try {
   await page.screenshot({ path: `${shotDir}/after_mobile_menu.png`, fullPage: false });
   await page.keyboard.press("Escape");
 
-  await shot("/projetos", "layout_current_390.png", 390, 844);
-  await shot("/projetos?layout=a", "layout_a_390.png", 390, 844);
-  await shot("/projetos?layout=b", "layout_b_390.png", 390, 844);
-  await shot("/projetos?layout=c", "layout_c_390.png", 390, 844);
-  await shot("/projetos?layout=d", "layout_d_390.png", 390, 844);
-  await shot("/projetos?layout=e", "layout_e_390.png", 390, 844);
+  await shot("/#projetos", "projects_carousel_390.png", 390, 844);
+  await shot("/projetos/brag", "case_brag_390.png", 390, 844);
   await shot("/projetos/timesheet", "after_mobile_case_timesheet.png", 390, 844);
+  await shot("/projetos/supfy", "case_supfy_390.png", 390, 844);
 
   await browser.close();
   console.log("e2e browser: ok (puppeteer-core +", CHROME, ")");
