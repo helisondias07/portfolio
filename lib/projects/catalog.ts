@@ -1,4 +1,4 @@
-import { experiments, publicExperiments } from "../../data/experiments";
+import { experiments, publicExperiments, type ExperimentRecord } from "../../data/experiments";
 import { projects, type Project } from "../../data/projects";
 import { isFilterId, type FilterId } from "./explore";
 
@@ -8,8 +8,42 @@ export function projectLane(project: Project): Lane {
   return project.tags.includes("pessoais") ? "authored" : "storefront";
 }
 
+function experimentToProject(item: ExperimentRecord): Project {
+  const copy = item.pt;
+  return {
+    id: item.id,
+    url: item.github ?? "",
+    img: item.img ?? "",
+    mimg: item.mimg ?? "",
+    name: copy.name,
+    cat: copy.cat,
+    eyebrow: copy.eyebrow,
+    title: copy.title,
+    association: copy.association,
+    overview: copy.overview,
+    contributionsTitle: copy.contributionsTitle,
+    contributions: copy.contributions,
+    stackTitle: "Stack",
+    stack: item.stack,
+    dw: item.dw ?? 1440,
+    dh: item.dh ?? 900,
+    mw: item.mw ?? 390,
+    mh: item.mh ?? 844,
+    tags: ["pessoais"],
+    resultado: "",
+    mvp: item.mvp,
+    limits: copy.limits,
+    inspiration: copy.inspiration.href ? copy.inspiration : undefined,
+    build: {
+      problem: copy.problem || undefined,
+      approach: copy.approach || undefined,
+      learnings: copy.learnings.length ? copy.learnings : undefined,
+    },
+  };
+}
+
 export function publishedProjects(): Project[] {
-  return projects;
+  return [...projects, ...publicExperiments().map(experimentToProject)];
 }
 
 export function publishedProjectIds(): string[] {

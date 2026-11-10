@@ -170,7 +170,11 @@ try {
   if (/EADDRINUSE/.test(stderr)) throw new Error("stale next start");
   assert.match(home.text, /id="pix"/);
   assert.doesNotMatch(home.text, /<nav class="pix"/);
-  assert.doesNotMatch(home.text, /Crítica de planos|Timesheet inteligente|Benchmark de serialização|Loop de agentes|Brag semanal|Caderno de Talhão|Counter-Strike|Fazenda/i);
+  assert.match(home.text, /Brag semanal/);
+  assert.match(home.text, /Crítica de planos/);
+  assert.match(home.text, /Loop de agentes/);
+  assert.match(home.text, /Benchmark de serialização/);
+  assert.doesNotMatch(home.text, /Timesheet inteligente|Caderno de Talhão|Counter-Strike|Fazenda/i);
   assert.doesNotMatch(home.text, /127\.0\.0\.1:4721|OPENAI_API_KEY/);
 
   const emporio = await http("/projetos/emporio");
@@ -186,7 +190,17 @@ try {
   const store = await http("/projetos/fiturban");
   assert.equal(store.status, 200, "storefront case");
 
-  for (const id of ["critica", "timesheet", "benchmark", "loop", "brag", "fazenda", "cs"]) {
+  for (const id of ["brag", "critica", "loop", "benchmark"]) {
+    const res = await http(`/projetos/${id}`);
+    assert.equal(res.status, 200, `${id} case`);
+    assert.match(res.text, /Limitações/);
+    assert.match(res.text, /github.com\/helisondias07/);
+  }
+  const brag = await http("/projetos/brag");
+  assert.match(brag.text, /joaoraul\.dev\/writing\/automated-brag-document/);
+  assert.match(brag.text, /Sem integrações live/);
+
+  for (const id of ["timesheet", "fazenda", "cs"]) {
     const res = await http(`/projetos/${id}`);
     assert.equal(res.status, 404, `${id} must 404, got ${res.status}`);
   }
@@ -194,7 +208,8 @@ try {
   const sitemap = await http("/sitemap.xml");
   assert.equal(sitemap.status, 200);
   assert.match(sitemap.text, /\/projetos\/emporio/);
-  assert.doesNotMatch(sitemap.text, /critica|timesheet|benchmark|loop|brag/);
+  assert.match(sitemap.text, /\/projetos\/brag/);
+  assert.doesNotMatch(sitemap.text, /timesheet|fazenda/);
 
   console.log("e2e http: ok");
 
@@ -294,6 +309,10 @@ try {
   await page.screenshot({ path: `${shotDir}/after_desktop_work.png`, fullPage: true });
   await page.goto(`${ORIGIN}/projetos/emporio`, { waitUntil: "networkidle0" });
   await page.screenshot({ path: `${shotDir}/after_desktop_case_emporio.png`, fullPage: true });
+  await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
+  await page.screenshot({ path: `${shotDir}/after_desktop_projetos.png`, fullPage: true });
+  await page.goto(`${ORIGIN}/projetos/brag`, { waitUntil: "networkidle0" });
+  await page.screenshot({ path: `${shotDir}/after_desktop_case_brag.png`, fullPage: true });
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
@@ -306,6 +325,10 @@ try {
   await page.screenshot({ path: `${shotDir}/after_mobile_work.png`, fullPage: true });
   await page.goto(`${ORIGIN}/projetos/emporio`, { waitUntil: "networkidle0" });
   await page.screenshot({ path: `${shotDir}/after_mobile_case_emporio.png`, fullPage: true });
+  await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
+  await page.screenshot({ path: `${shotDir}/after_mobile_projetos.png`, fullPage: true });
+  await page.goto(`${ORIGIN}/projetos/brag`, { waitUntil: "networkidle0" });
+  await page.screenshot({ path: `${shotDir}/after_mobile_case_brag.png`, fullPage: true });
 
   await browser.close();
   console.log("e2e browser: ok (puppeteer-core +", CHROME, ")");

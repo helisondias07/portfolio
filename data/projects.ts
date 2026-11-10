@@ -17,6 +17,9 @@ export type Project = {
   /** Optional measured result. Leave empty unless there is a real number. */
   resultado: string;
   build?: ProjectBuild;
+  mvp?: boolean;
+  limits?: string;
+  inspiration?: { text: string; href: string };
 };
 
 export const projects: Project[] = [

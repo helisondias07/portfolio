@@ -75,6 +75,8 @@ export type Dict = {
     laneStorefronts: string;
     backToWork: string;
     notFound: string;
+    buildLimits: string;
+    mvpBadge: string;
   };
   contact: {
     kicker: string;
@@ -219,7 +221,7 @@ export const dict: Record<Lang, Dict> = {
     projectsUi: {
       kicker: "Cases selecionados",
       title: "Projetos",
-      lede: "Storefronts em produção, mais o processo de construção nos projetos autorais — agente de atendimento e sala de cinema em tempo real.",
+      lede: "Storefronts em produção, mais o processo nos projetos autorais — agente de atendimento, sala de cinema e MVPs públicos no GitHub.",
       featured: "Case em destaque",
       carousel: "carrossel",
       carouselLabel: "Projetos",
@@ -253,6 +255,8 @@ export const dict: Record<Lang, Dict> = {
       laneStorefronts: "E-commerce",
       backToWork: "Todos os projetos",
       notFound: "Esta página não está no portfólio público.",
+      buildLimits: "Limitações",
+      mvpBadge: "MVP",
     },
     contact: {
       kicker: "Contato",
@@ -398,7 +402,7 @@ export const dict: Record<Lang, Dict> = {
     projectsUi: {
       kicker: "Selected work",
       title: "Projects",
-      lede: "Production storefronts, plus the build process on authored work — a store-attendant agent and a real-time cinema room.",
+      lede: "Production storefronts, plus the build process on authored work — a store-attendant agent, a real-time cinema room, and public GitHub MVPs.",
       featured: "Featured case",
       carousel: "carousel",
       carouselLabel: "Projects",
@@ -432,6 +436,8 @@ export const dict: Record<Lang, Dict> = {
       laneStorefronts: "E-commerce",
       backToWork: "All projects",
       notFound: "This page is not on the public portfolio.",
+      buildLimits: "Limits",
+      mvpBadge: "MVP",
     },
     contact: {
       kicker: "Contact",

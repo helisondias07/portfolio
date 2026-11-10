@@ -13,30 +13,41 @@ import {
   projectLane,
   publicExperimentCount,
   publishedProjectIds,
+  publishedProjects,
   unpublishedExperimentIds,
 } from "./catalog";
 import { FILTERS } from "./explore";
 
-test("five remaining experiments stay unpublished and never leak into public lists", () => {
-  assert.deepEqual(
-    unpublishedExperimentIds().slice().sort(),
-    ["benchmark", "brag", "critica", "loop", "timesheet"],
-  );
-  assert.equal(publicExperimentCount(), 0);
-  for (const id of unpublishedExperimentIds()) {
-    assert.equal(isPublishedProjectId(id), false);
-    assert.equal(projectById(id), undefined);
-    assert.equal(publishedProjectIds().includes(id), false);
+const publishedExperimentIds = ["benchmark", "brag", "critica", "loop"] as const;
+
+test("four GitHub experiments are published; timesheet stays unpublished", () => {
+  assert.deepEqual(unpublishedExperimentIds(), ["timesheet"]);
+  assert.equal(publicExperimentCount(), 4);
+  for (const id of publishedExperimentIds) {
+    const project = projectById(id);
+    assert.ok(project, id);
+    assert.equal(project.mvp, true);
+    assert.ok(project.limits);
+    assert.match(project.url, /^https:\/\/github\.com\/helisondias07\//);
+    assert.equal(isPublishedProjectId(id), true);
+    assert.equal(projectLane(project), "authored");
   }
-  for (const item of experiments) {
-    assert.equal(item.public, false);
-    assert.equal(item.github, null);
-    assert.equal(item.demo, null);
-  }
+  assert.equal(isPublishedProjectId("timesheet"), false);
+  assert.equal(projectById("timesheet"), undefined);
+  const timesheet = experiments.find((item) => item.id === "timesheet");
+  assert.equal(timesheet?.public, false);
+  assert.equal(timesheet?.github, null);
+});
+
+test("published experiment copy cites joaoraul.dev where the source already does", () => {
+  assert.match(projectById("brag")!.inspiration!.href, /joaoraul\.dev\/writing\/automated-brag-document/);
+  assert.match(projectById("loop")!.inspiration!.href, /joaoraul\.dev\/writing\/superpowered-ralph/);
+  assert.match(projectById("benchmark")!.inspiration!.href, /joaoraul\.dev\/writing\/protobuf-vs-json/);
+  assert.doesNotMatch(projectById("critica")!.inspiration!.href, /joaoraul\.dev/);
 });
 
 test("retired Fazenda and Counter-Strike scopes are absent from catalog source", () => {
-  const blob = catalogBlob() + JSON.stringify(experiments);
+  const blob = catalogBlob() + JSON.stringify(experiments) + JSON.stringify(publishedProjects());
   assert.equal(/fazenda|talh[aã]o|counter-?strike|\bcsgo\b/i.test(blob), false);
 });
 
@@ -48,18 +59,18 @@ test("published catalog keeps Empório and WebCine as authored work", () => {
   assert.equal(projectLane(emporio), "authored");
   assert.equal(projectLane(webcine), "authored");
   assert.equal(projectLane(projectById("fiturban")!), "storefront");
-  assert.equal(publishedProjectIds().length, projects.length);
+  assert.equal(publishedProjectIds().length, projects.length + 4);
 });
 
 test("filters only return published projects and empty lists stay empty", () => {
-  const authored = filterPublished(projects, "pessoais");
+  const authored = filterPublished(publishedProjects(), "pessoais");
   assert.deepEqual(
     authored.map((p) => p.id).sort(),
-    ["emporio", "webcine"],
+    ["benchmark", "brag", "critica", "emporio", "loop", "webcine"],
   );
   assert.equal(filterPublished([], "ecommerce").length, 0);
   for (const filter of FILTERS) {
-    const rows = filterPublished(projects, filter);
+    const rows = filterPublished(publishedProjects(), filter);
     assert.ok(rows.every((row) => filter === "*" || row.tags.includes(filter)));
   }
 });
@@ -80,6 +91,16 @@ test("Empório case copy stays a case, not a README", () => {
   assert.ok(words < 400, `Empório case is ${words} words`);
   assert.ok(emporio.overview.length <= 2);
   assert.match(emporio.resultado, /30/);
+});
+
+test("experiment pages do not invent benchmark multiples or live-agent claims", () => {
+  const blob = publishedExperimentIds.map((id) => JSON.stringify(projectById(id))).join(" ");
+  assert.doesNotMatch(blob, /OPENAI_API_KEY|127\.0\.0\.1:4314|python main\.py/);
+  assert.equal(projectById("benchmark")!.resultado, "");
+  assert.match(projectById("benchmark")!.limits!, /pré-construída/);
+  assert.match(projectById("loop")!.limits!, /Não é evidência de produtividade/);
+  assert.match(projectById("brag")!.limits!, /Sem integrações live/);
+  assert.match(projectById("critica")!.limits!, /Sem modelo hospedado real/);
 });
 
 test("case and gallery paths stay on the public site", () => {

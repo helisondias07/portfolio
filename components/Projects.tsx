@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { projects } from "@/data/projects";
 import { dict } from "@/lib/i18n/dict";
 import { useLang } from "@/lib/i18n/store";
-import { casePath, filterPublished, galleryPath, laneFromSearch, projectLane, publishedProjectIds } from "@/lib/projects/catalog";
+import { casePath, filterPublished, galleryPath, laneFromSearch, projectLane, publishedProjectIds, publishedProjects } from "@/lib/projects/catalog";
 import { FILTERS, type FilterId, projectIdFromHash } from "@/lib/projects/explore";
 import Tx from "./Tx";
 import WorkCard from "./WorkCard";
@@ -40,7 +39,7 @@ export default function Projects() {
     };
   }, []);
 
-  const visible = useMemo(() => filterPublished(projects, filter), [filter]);
+  const visible = useMemo(() => filterPublished(publishedProjects(), filter), [filter]);
   const authored = visible.filter((project) => projectLane(project) === "authored");
   const storefronts = visible.filter((project) => projectLane(project) === "storefront");
   const empty = visible.length === 0;

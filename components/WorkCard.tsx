@@ -10,7 +10,7 @@ import type { Project } from "@/data/projects";
 import Tx from "./Tx";
 
 function thumbSrc(file: string) {
-  return `/thumbnails/${file}`;
+  return file.startsWith("/") ? file : `/thumbnails/${file}`;
 }
 
 export default function WorkCard({ project }: { project: Project }) {
@@ -24,18 +24,28 @@ export default function WorkCard({ project }: { project: Project }) {
       ? { pt: dict.pt.projectsUi.visitRepo, en: dict.en.projectsUi.visitRepo }
       : { pt: dict.pt.projectsUi.visitSite, en: dict.en.projectsUi.visitSite }
     : null;
-  const avif = project.img.replace(/\.webp$/i, ".avif");
+  const webp = /\.webp$/i.test(project.img);
+  const avif = webp ? project.img.replace(/\.webp$/i, ".avif") : null;
 
   return (
     <article className={`wk-card${authored ? " wk-authored" : ""}`} id={`p-${project.id}`}>
-      <Link href={href} className="wk-media" tabIndex={-1} aria-hidden="true">
-        <picture>
-          <source srcSet={thumbSrc(avif)} type="image/avif" />
-          <img src={thumbSrc(project.img)} alt={`${preview}${project.name}`} width={project.dw} height={project.dh} />
-        </picture>
-      </Link>
+      {project.img ? (
+        <Link href={href} className="wk-media" tabIndex={-1} aria-hidden="true">
+          <picture>
+            {avif ? <source srcSet={thumbSrc(avif)} type="image/avif" /> : null}
+            <img src={thumbSrc(project.img)} alt={`${preview}${project.name}`} width={project.dw} height={project.dh} />
+          </picture>
+        </Link>
+      ) : (
+        <Link href={href} className="wk-media wk-cover" tabIndex={-1} aria-hidden="true">
+          <span><Tx pt={project.name} en={en.name} /></span>
+        </Link>
+      )}
       <div className="wk-body">
-        <p className="wk-eye"><Tx pt={project.eyebrow} en={en.eyebrow} /></p>
+        <p className="wk-eye">
+          {project.mvp ? <span className="wk-mvp"><Tx pt={dict.pt.projectsUi.mvpBadge} en={dict.en.projectsUi.mvpBadge} /></span> : null}
+          <Tx pt={project.eyebrow} en={en.eyebrow} />
+        </p>
         <h3>
           <Link href={href}><Tx pt={project.name} en={en.name} /></Link>
         </h3>
