@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { projects } from "@/data/projects";
 import { dict } from "@/lib/i18n/dict";
 import { localizeProject } from "@/lib/i18n/localize";
-import { getLang, subscribe } from "@/lib/i18n/store";
-import { FILTERS } from "@/lib/projects/explore";
+import { getLang, subscribe, useLang } from "@/lib/i18n/store";
+import { FILTERS, type FilterId, isFilterId } from "@/lib/projects/explore";
 import Tx from "./Tx";
 
 const FILTER_COPY: Record<(typeof FILTERS)[number], { pt: string; en: string }> = {
@@ -16,6 +16,8 @@ const FILTER_COPY: Record<(typeof FILTERS)[number], { pt: string; en: string }> 
 
 /** Coverflow + case detail, with filters and an index over the real project list. */
 export default function Projects() {
+  useLang();
+  const [filter, setFilter] = useState<FilterId>("*");
   useLayoutEffect(() => {
     const apply = () => {
       const ui = dict[getLang()].projectsUi;
@@ -35,7 +37,18 @@ export default function Projects() {
   }, []);
 
   useEffect(() => {
-    import("@/lib/engines/projects").then((m) => m.startProjects(projects));
+    let alive = true;
+    import("@/lib/engines/projects").then((m) => {
+      if (!alive) return;
+      m.startProjects(projects, {
+        onFilter(next: string) {
+          if (isFilterId(next)) setFilter(next);
+        },
+      });
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const ui = dict.pt.projectsUi;
@@ -50,7 +63,7 @@ export default function Projects() {
         </div>
         <div className="flt2" id="flt2" role="group" aria-label={ui.filters}>
           {FILTERS.map((id) => (
-            <button key={id} type="button" data-f={id} className={id === "*" ? "on" : undefined} aria-pressed={id === "*"}>
+            <button key={id} type="button" data-f={id} className={id === filter ? "on" : undefined} aria-pressed={id === filter}>
               <Tx pt={FILTER_COPY[id].pt} en={FILTER_COPY[id].en} />
             </button>
           ))}
