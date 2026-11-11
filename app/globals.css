@@ -265,7 +265,7 @@ section#projetos.pj4{display:block;padding:clamp(80px,12vh,150px) 0}
 .thm:active{transform:translateY(3px);box-shadow:inset 0 -1px 0 #0c0d0f}.thm:focus-visible{outline:2px solid var(--g);outline-offset:3px}
 .thm svg{width:18px;height:18px}.thm .mn{display:none}[data-theme=dark] .thm .sn{display:none}[data-theme=dark] .thm .mn{display:block}
 [data-theme=dark] .thm{background:#f2f1ec;color:#1f7a10;box-shadow:inset 0 -4px 0 #c9c7bf,0 6px 14px -8px rgba(0,0,0,.6)}
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal;pointer-events:none}
 .thx{position:fixed;inset:0;z-index:9999;pointer-events:none;clip-path:circle(0 at var(--x) var(--y));transition:clip-path .55s cubic-bezier(.4,0,.2,1)}
 /* dark palette: grafite quente + verde Razer */
 html[data-theme=dark]{color-scheme:dark;--bg:#0f1011;--ink:#ecebe6;--g:#44D62C;--gd:#5fe047;--mu:#9a9993;--ln:#2a2b2e;--card:#17181a}
@@ -392,7 +392,7 @@ nav.site .ls a:hover,.ls a:hover{background:rgba(17,17,17,.07);color:#000}
 @media(max-width:560px){nav.site .ls a,.ls a{display:none}.lsd{display:none}nav.site .ls,.ls{padding:3px}}
 /* hero copy: 2-line typed headline, layout reserved by the invisible remainder */
 .hero .hl .hlr{visibility:hidden;position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.hero .hl .hlrest{white-space:pre-wrap}
+.hero .hl .hlrest{white-space:pre-wrap;visibility:hidden}
 .hero .hl .hli{white-space:normal;width:min(92%,15.5em);text-align:center}
 .hero.g3 .hl{font-size:clamp(30px,3.7vw,68px);height:2.1em;line-height:1.02}
 .hero.g3 .tag{margin-bottom:10px}
@@ -529,10 +529,8 @@ nav.site a.lg:focus-visible,.hacts a:focus-visible,.pixi:focus-visible,.flt2 but
 .czlab-b li{display:flex;gap:12px}
 .czlab-b li::before{content:"";flex:none;width:7px;height:7px;border-radius:2px;background:var(--g);margin-top:.62em}
 @media(max-width:1023px){
-  .hero .hl,.hero.g3 .hl{display:block!important;visibility:visible;height:auto;min-height:0;position:relative}
+  .hero .hl,.hero.g3 .hl{display:block!important;visibility:visible;height:auto;min-height:2.2em;position:relative}
   .hero .hl .hli{position:static;transform:none;width:min(96%,22em);margin:0 auto;white-space:normal}
-  .hero .hl .hlr{visibility:visible!important;position:static;clip:auto;width:auto;height:auto;overflow:visible}
-  .hero .hl #hl,.hero .hl .car,.hero .hl #hlrest{display:none!important}
   .hero.g3{height:auto;min-height:100svh;justify-content:flex-start;padding-top:88px;padding-bottom:28px}
   .hero.g3 .hl{margin-bottom:12px;font-size:clamp(28px,7vw,48px);line-height:1.08}
   .hcta{margin-top:4px;margin-bottom:12px}

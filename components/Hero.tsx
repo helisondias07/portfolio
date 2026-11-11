@@ -29,7 +29,7 @@ export default function Hero() {
           <span id="hl" aria-hidden="true" />
           <span className="car" aria-hidden="true">{"\u2060"}</span>
           <span id="hlrest" className="hlrest" aria-hidden="true" />
-          <span id="hlr" className="hlr">
+          <span id="hlr" className="hlr" aria-hidden="true">
             <span className="i18n-pt">{dict.pt.hero.headline}</span>
             <span className="i18n-en">{dict.en.hero.headline}</span>
           </span>

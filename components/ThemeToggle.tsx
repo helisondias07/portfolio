@@ -44,15 +44,19 @@ export default function ThemeToggle({ tabIndex }: { tabIndex?: number }) {
     const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return applyTheme(next);
     if (document.startViewTransition) {
+      const root = document.documentElement;
+      if (root.classList.contains("vt-on")) return applyTheme(next);
+      root.classList.add("vt-on");
       const vt = document.startViewTransition(() => applyTheme(next));
       vt.ready
         .then(() =>
-          document.documentElement.animate(
+          root.animate(
             { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
             { duration: 560, easing: "cubic-bezier(.4,0,.2,1)", pseudoElement: "::view-transition-new(root)" },
           ),
         )
         .catch(() => {});
+      vt.finished.catch(() => {}).finally(() => root.classList.remove("vt-on"));
       return;
     }
     const o = document.createElement("div");

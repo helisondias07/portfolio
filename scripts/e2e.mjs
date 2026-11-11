@@ -6,14 +6,22 @@
  */
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { createConnection, createServer } from "node:net";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import puppeteer from "puppeteer-core";
 
 const CHROME =
   process.env.CHROME_PATH ||
-  ["/usr/bin/google-chrome", "/usr/bin/chromium", "/usr/bin/chromium-browser"].find((p) => existsSync(p));
+  [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+  ].find((p) => existsSync(p));
 
 function portOpen(port) {
   return new Promise((resolve) => {
@@ -92,7 +100,7 @@ async function assertFoldClear(page, width, height) {
     const h1box = h1?.getBoundingClientRect();
     const hlr = document.getElementById("hlr");
     const hlrcs = hlr ? getComputedStyle(hlr) : null;
-    const visibleCopy = h1?.innerText?.replace(/\s+/g, " ").trim() || "";
+    const visibleCopy = (h1?.getAttribute("aria-label") || h1?.textContent || "").replace(/\s+/g, " ").trim();
     return {
       pixPosition: pixCs?.position ?? "missing",
       pixFixed: pixCs?.position === "fixed",
@@ -150,7 +158,8 @@ if (process.env.E2E_PORT) {
 
 const ORIGIN = `http://127.0.0.1:${PORT}`;
 
-const server = spawn("npx", ["next", "start", "-H", "127.0.0.1", "-p", String(PORT)], {
+const nextCli = join(process.cwd(), "node_modules/next/dist/bin/next");
+const server = spawn(process.execPath, [nextCli, "start", "-H", "127.0.0.1", "-p", String(PORT)], {
   stdio: ["ignore", "pipe", "pipe"],
   env: { ...process.env, PORT: String(PORT) },
 });
@@ -185,6 +194,7 @@ try {
   assert.match(home.text, /https:\/\/timesheet-inteligente\.vercel\.app/);
   assert.match(home.text, /https:\/\/github\.com\/helisondias07\/brag-semanal/);
   assert.doesNotMatch(home.text, /Caderno de Talhão|Counter-Strike|Fazenda/i);
+  assert.doesNotMatch(home.text, /oasis-bot|Méliuz|Meliuz/i);
   assert.doesNotMatch(home.text, /127\.0\.0\.1:4721|OPENAI_API_KEY/);
 
   const emporio = await http("/projetos/emporio");
@@ -245,6 +255,31 @@ try {
     headless: true,
   });
   const page = await browser.newPage();
+
+  async function assertTitleTypes(width, height) {
+    await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "no-preference" }]);
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
+    await page.goto(`${ORIGIN}/`, { waitUntil: "domcontentloaded" });
+    const start = await page.evaluate(() => {
+      const rest = document.getElementById("hlrest");
+      const hlr = document.getElementById("hlr");
+      return {
+        n: (document.getElementById("hl")?.textContent || "").length,
+        rest: rest ? getComputedStyle(rest).visibility : "missing",
+        hlr: hlr ? getComputedStyle(hlr).visibility : "missing",
+      };
+    });
+    assert.equal(start.rest, "hidden", `${width}px remainder visible`);
+    assert.equal(start.hlr, "hidden", `${width}px static headline visible`);
+    assert.ok(start.n < 8, `${width}px title already written (${start.n} chars)`);
+    await delay(2000);
+    const mid = await page.evaluate(() => (document.getElementById("hl")?.textContent || "").length);
+    assert.ok(mid > start.n, `${width}px title did not type: ${start.n} → ${mid}`);
+  }
+
+  await assertTitleTypes(1440, 900);
+  await assertTitleTypes(390, 844);
+
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
 
   await assertFoldClear(page, 1440, 900);
@@ -352,7 +387,8 @@ try {
   await page.keyboard.press("Escape");
   assert.equal(await page.$eval(".nb", (el) => el.getAttribute("aria-expanded")), "false");
 
-  const shotDir = process.env.E2E_SHOTS || "/opt/cursor/artifacts";
+  const shotDir = process.env.E2E_SHOTS || (existsSync("/opt/cursor/artifacts") ? "/opt/cursor/artifacts" : join(tmpdir(), "portfolio-e2e"));
+  mkdirSync(shotDir, { recursive: true });
   async function shot(path, file, width, height) {
     await page.setViewport({ width, height, deviceScaleFactor: 1 });
     await page.goto(`${ORIGIN}${path}`, { waitUntil: "networkidle0" });

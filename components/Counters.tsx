@@ -16,9 +16,9 @@ export default function Counters() {
     }
     const r0 = el.getBoundingClientRect();
     if (r0.top < innerHeight && r0.bottom > 0) return;
-    nums.forEach((n) => (n.textContent = "0"));
     const run = () =>
       nums.forEach((n, i) => {
+        n.textContent = "0";
         const to = Number(n.dataset.to);
         const t0 = performance.now() + i * 120;
         const f = (t: number) => {
@@ -35,7 +35,7 @@ export default function Counters() {
           run();
         }
       },
-      { threshold: 0.6 },
+      { threshold: 0.15 },
     );
     io.observe(el);
     return () => io.disconnect();
