@@ -280,6 +280,63 @@ try {
   await assertTitleTypes(1440, 900);
   await assertTitleTypes(390, 844);
 
+  async function assertCaretFollows(width, height, lang) {
+    await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
+    await page.setCookie({ name: "lang", value: lang, url: ORIGIN });
+    await page.goto(`${ORIGIN}/`, { waitUntil: "domcontentloaded" });
+    await page.evaluate((value) => {
+      localStorage.setItem("lang", value);
+      document.cookie = `lang=${value};path=/`;
+    }, lang);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForFunction(() => (document.getElementById("hl")?.textContent || "").length > 20);
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const box = await page.evaluate(() => {
+      const hl = document.getElementById("hl");
+      const h1 = document.querySelector(".hero .hl");
+      const car = document.querySelector(".hero .hl .car");
+      const node = hl.firstChild;
+      const range = document.createRange();
+      range.setStart(node, node.length - 1);
+      range.setEnd(node, node.length);
+      const last = [...range.getClientRects()].filter((r) => r.width || r.height).at(-1);
+      range.selectNodeContents(hl);
+      const lines = [...range.getClientRects()].filter((r) => r.width > 1);
+      const tops = [];
+      for (const r of lines) if (!tops.some((t) => Math.abs(t - r.top) < 2)) tops.push(r.top);
+      const textBottom = Math.max(...lines.map((r) => r.bottom));
+      const hb = h1.getBoundingClientRect();
+      const cb = car.getBoundingClientRect();
+      return {
+        dx: Math.abs(cb.left - last.right),
+        dy: Math.abs(cb.top - last.top),
+        overflow: textBottom - hb.bottom,
+        lines: tops.length,
+        h1h: hb.height,
+        font: parseFloat(getComputedStyle(h1).fontSize),
+      };
+    });
+    assert.ok(box.dx < 6, `${lang} ${width}px caret is ${box.dx.toFixed(1)}px off the last glyph`);
+    assert.ok(box.dy < 8, `${lang} ${width}px caret is ${box.dy.toFixed(1)}px off the last line`);
+    assert.ok(box.overflow < 8, `${lang} ${width}px title overflows the headline box by ${box.overflow.toFixed(1)}px`);
+    assert.ok(box.h1h + 1 >= box.lines * box.font * 0.9, `${lang} ${width}px box ${box.h1h}px is shorter than ${box.lines} lines`);
+    if (width <= 430 && lang === "pt") assert.equal(box.lines, 3, `${lang} ${width}px expected 3 lines, got ${box.lines}`);
+    if (width >= 1280) assert.equal(box.lines, 2, `${lang} ${width}px desktop title should stay 2 lines, got ${box.lines}`);
+  }
+
+  for (const lang of ["pt", "en"]) {
+    for (const [width, height] of [[320, 700], [360, 740], [390, 844], [430, 932], [768, 1024], [1280, 800], [1440, 900]]) {
+      await assertCaretFollows(width, height, lang);
+    }
+  }
+  await page.evaluate(() => {
+    localStorage.removeItem("lang");
+    document.cookie = "lang=;path=/;max-age=0";
+  });
+  await page.deleteCookie({ name: "lang" });
+
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
 
   await assertFoldClear(page, 1440, 900);
