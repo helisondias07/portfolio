@@ -4,7 +4,7 @@ import { dict } from "@/lib/i18n/dict";
 import { getLang, subscribe } from "@/lib/i18n/store";
 import Tx from "./Tx";
 
-/** Animated counters — real numbers only (15+ projetos publicados, 2 anos e 6 meses). */
+/** Animated counters — 2 anos e 6 meses. */
 export default function Counters() {
   const ref = useRef<HTMLDListElement>(null);
   useEffect(() => {
@@ -50,13 +50,6 @@ export default function Counters() {
   const en = dict.en.about.counters;
   return (
     <dl className="stt" id="stt" ref={ref}>
-      <div>
-        <dt>
-          <span data-to="15">15</span>
-          <em>+</em>
-        </dt>
-        <dd><Tx pt={pt.projects} en={en.projects} /></dd>
-      </div>
       <div>
         <dt id="exp-yrs" aria-label={pt.yearsAria}>
           <span data-to="2">2</span>

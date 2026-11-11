@@ -28,14 +28,13 @@ export type Dict = {
     hintTabChat: string;
     hintPhChat: string;
     location: string;
-    published: string;
     cmds: readonly TermCmd[];
     messages: readonly string[];
   };
   about: {
     kicker: string;
     bio: readonly Segment[];
-    counters: { projects: string; years: string; months: string; yearsAria: string; experience: string };
+    counters: { years: string; months: string; yearsAria: string; experience: string };
     skills: readonly Skill[];
   };
   projectsUi: {
@@ -141,7 +140,6 @@ export const dict: Record<Lang, Dict> = {
       hintTabChat: "Tablet · conversa",
       hintPhChat: "Celular · conversa",
       location: "Nova Friburgo, RJ",
-      published: "15+ projetos publicados",
       cmds: [
         ["sobreMim", [
           ["", "Helison Dias"],
@@ -151,7 +149,6 @@ export const dict: Record<Lang, Dict> = {
         ["exp", [
           ["jan/2025 – atual", "Dev Frontend Júnior · Agência Oásis"],
           ["abr/2024 – jan/2025", "Estagiário Frontend · Agência Oásis"],
-          ["", "→ 15+ projetos publicados"],
         ]],
         ["stack", [
           ["frontend", "React · Next.js · Vue.js · TypeScript · Tailwind"],
@@ -203,7 +200,6 @@ export const dict: Record<Lang, Dict> = {
         ["e seus ecossistemas para automatizar tarefas e acelerar o desenvolvimento. Estou em Nova Friburgo, RJ, trabalhando remoto.", false],
       ],
       counters: {
-        projects: "projetos publicados",
         years: "anos e",
         months: "meses",
         yearsAria: "2 anos e 6 meses",
@@ -324,7 +320,6 @@ export const dict: Record<Lang, Dict> = {
       hintTabChat: "Tablet · chat",
       hintPhChat: "Phone · chat",
       location: "Nova Friburgo, Brazil",
-      published: "15+ shipped projects",
       cmds: [
         ["about", [
           ["", "Helison Dias"],
@@ -334,7 +329,6 @@ export const dict: Record<Lang, Dict> = {
         ["exp", [
           ["Jan 2025 – present", "Junior Frontend Developer · Agência Oásis"],
           ["Apr 2024 – Jan 2025", "Frontend Intern · Agência Oásis"],
-          ["", "→ 15+ shipped projects"],
         ]],
         ["stack", [
           ["frontend", "React · Next.js · Vue.js · TypeScript · Tailwind"],
@@ -386,7 +380,6 @@ export const dict: Record<Lang, Dict> = {
         ["and their ecosystems to automate tasks and speed up development. I'm based in Nova Friburgo, RJ, Brazil, working remotely.", false],
       ],
       counters: {
-        projects: "shipped projects",
         years: "years,",
         months: "months",
         yearsAria: "2 years and 6 months",
