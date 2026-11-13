@@ -28,7 +28,10 @@ export default function Hero() {
         <span className="hli">
           <span id="hl" aria-hidden="true" />
           <span className="car" aria-hidden="true">{"\u2060"}</span>
-          <span id="hlrest" className="hlrest" aria-hidden="true" />
+          <span id="hlrest" className="hlrest" aria-hidden="true">
+            <span className="i18n-pt">{dict.pt.hero.headline}</span>
+            <span className="i18n-en">{dict.en.hero.headline}</span>
+          </span>
           <span id="hlr" className="hlr" aria-hidden="true">
             <span className="i18n-pt">{dict.pt.hero.headline}</span>
             <span className="i18n-en">{dict.en.hero.headline}</span>
@@ -38,8 +41,6 @@ export default function Hero() {
       <div className="hcta">
         <p className="hmeta mo">
           <Tx pt={dict.pt.hero.location} en={dict.en.hero.location} />
-          <span aria-hidden="true"> · </span>
-          <Tx pt={dict.pt.hero.published} en={dict.en.hero.published} />
         </p>
         <div className="hacts">
           <a className="btn wa" href="#projetos"><Tx pt={dict.pt.hero.ctaProjects} en={dict.en.hero.ctaProjects} /></a>
@@ -63,7 +64,6 @@ export default function Hero() {
       <div className="foot mo" hidden style={{ display: "none" }}>
         <span><Tx pt={dict.pt.hero.location} en={dict.en.hero.location} /></span>
         <span id="hint"><Tx pt={dict.pt.hero.hintKb} en={dict.en.hero.hintKb} /></span>
-        <span><Tx pt={dict.pt.hero.published} en={dict.en.hero.published} /></span>
       </div>
     </header>
   );

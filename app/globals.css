@@ -390,18 +390,21 @@ nav.site .ls a:hover,.ls a:hover{background:rgba(17,17,17,.07);color:#000}
 [data-theme=dark] .lsd{background:#34353a}
 [data-theme=dark] .ls .thm{background:#ecebe6;color:#1f7a10;box-shadow:none}
 @media(max-width:560px){nav.site .ls a,.ls a{display:none}.lsd{display:none}nav.site .ls,.ls{padding:3px}}
-/* hero copy: 2-line typed headline, layout reserved by the invisible remainder */
+/* Typed headline. The invisible remainder stays in flow, so the block is as tall
+   as the wrapped title (2 lines on desktop, more when the column gets narrow).
+   .hli is positioned so the caret's containing block is the text column: a static
+   box made placeCaret's coordinates miss by the centering offset. */
 .hero .hl .hlr{visibility:hidden;position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 .hero .hl .hlrest{white-space:pre-wrap;visibility:hidden}
-.hero .hl .hli{white-space:normal;width:min(92%,15.5em);text-align:center}
-.hero.g3 .hl{font-size:clamp(30px,3.7vw,68px);height:2.1em;line-height:1.02}
+.hero .hl .hli{position:relative;display:block;left:auto;top:auto;transform:none;white-space:normal;width:min(96%,22em);margin-inline:auto;text-align:center}
+.hero.g3 .hl{font-size:clamp(30px,3.7vw,68px);height:auto;line-height:1.02}
 .hero.g3 .tag{margin-bottom:10px}
 @media(max-width:1023px){.hero.g3 .tag{margin-bottom:clamp(22px,4vh,40px)}}
 /* container: content box min(1280, 100% - 2*gutter), aligned with nav edges */
 :root{--cpad:max(var(--cp),calc((100% - var(--cw))/2))}
 .abw,#sobre .abw,#projetos .abw,#contato .abw{width:min(var(--cw),calc(100% - 2*var(--cp)));max-width:none;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}
 .hero .hl .hli{width:min(96%,22em)}
-.hero.g3 .hl{font-size:clamp(28px,3.3vw,60px);height:2.15em}
+.hero.g3 .hl{font-size:clamp(28px,3.3vw,60px);height:auto}
 
 /* Caret is taken out of the line. An inline-block here is an atomic inline, so it
    always offers a soft wrap; text-wrap:balance was breaking on that opportunity
@@ -431,11 +434,10 @@ nav.site .ls a,.ls a{padding:9px 16px}
 .kb3{-webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 99%),linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 72%,transparent 99%),linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);mask-composite:intersect}
 /* device shadow must end inside the hero (hero clips overflow) */
 .dev.chat{box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 18px 26px -16px rgba(0,0,0,.4),0 8px 14px -8px rgba(0,0,0,.25)}
-/* counters: centered 2-column row with a single divider */
-#sobre .stt,.stt{display:grid!important;grid-template-columns:1fr auto 1fr;align-items:center;justify-items:center;gap:0 clamp(24px,5vw,72px);max-width:760px;margin-left:auto!important;margin-right:auto!important;padding:clamp(24px,4vw,40px) 0;border:0;text-align:center}
-.stt::before{content:"";grid-column:2;grid-row:1;width:1px;height:clamp(56px,8vw,88px);background:var(--ln)}
-.stt>div{grid-row:1;display:flex;flex-direction:column;align-items:center;gap:10px;border:0!important;padding:0!important;min-width:0}
-.stt>div:first-child{grid-column:1}.stt>div:last-child{grid-column:3}
+/* counters: one centered stat */
+#sobre .stt,.stt{display:grid!important;grid-template-columns:1fr;align-items:center;justify-items:center;gap:0;max-width:760px;margin-left:auto!important;margin-right:auto!important;padding:clamp(24px,4vw,40px) 0;border:0;text-align:center}
+.stt::before{content:none}
+.stt>div{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;gap:10px;border:0!important;padding:0!important;margin:0;min-width:0}
 .stt dt{display:flex;align-items:baseline;justify-content:center;gap:.18em;font:600 clamp(40px,5.2vw,72px)/1 'General Sans',sans-serif;letter-spacing:-.04em;color:var(--ink);white-space:nowrap}
 .stt dt em{font-style:normal;color:var(--g)}
 .stt dt small{font:500 clamp(14px,1.4vw,20px)/1 'General Sans',sans-serif;letter-spacing:-.01em;color:var(--mu);margin:0 .15em}
@@ -529,8 +531,8 @@ nav.site a.lg:focus-visible,.hacts a:focus-visible,.pixi:focus-visible,.flt2 but
 .czlab-b li{display:flex;gap:12px}
 .czlab-b li::before{content:"";flex:none;width:7px;height:7px;border-radius:2px;background:var(--g);margin-top:.62em}
 @media(max-width:1023px){
-  .hero .hl,.hero.g3 .hl{display:block!important;visibility:visible;height:auto;min-height:2.2em;position:relative}
-  .hero .hl .hli{position:static;transform:none;width:min(96%,22em);margin:0 auto;white-space:normal}
+  .hero .hl,.hero.g3 .hl{display:block!important;visibility:visible;height:auto;min-height:0;position:relative}
+  .hero .hl .hli{position:relative;display:block;left:auto;top:auto;transform:none;width:min(96%,22em);margin:0 auto;white-space:normal}
   .hero.g3{height:auto;min-height:100svh;justify-content:flex-start;padding-top:88px;padding-bottom:28px}
   .hero.g3 .hl{margin-bottom:12px;font-size:clamp(28px,7vw,48px);line-height:1.08}
   .hcta{margin-top:4px;margin-bottom:12px}
