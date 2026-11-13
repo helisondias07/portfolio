@@ -74,6 +74,20 @@ const FEATURED: Feature[] = [
       { src: "/thumbnails/serralheria-screenshot-mobile.webp", alt: "Serralheria no celular", m: true },
     ],
   },
+  {
+    id: "supfy", world: "w-supfy", title: "Supfy",
+    meta: ["Projeto autoral · pedidos estruturados com n8n", "Personal project · structured orders with n8n"],
+    desc: [
+      "MVP que transforma pedidos em texto livre, no estilo WhatsApp, em pedidos estruturados e validados contra um catálogo central. Preço e estoque são decididos pela aplicação, sem LLM.",
+      "An MVP that turns free-text, WhatsApp-style requests into structured orders validated against a central catalog. Price and stock are decided by the application, without an LLM.",
+    ],
+    stack: "Next.js · React · TypeScript · n8n · Vitest",
+    links: [{ href: "https://supfy-mvp.vercel.app", pt: "Abrir demo ↗", en: "Open demo ↗" }, { href: "https://github.com/helisondias07/supfy-mvp", pt: "Código ↗", en: "Code ↗" }],
+    shots: [
+      { src: "/thumbnails/supfy-screenshot-card.webp", alt: "Supfy, demonstração" },
+      { src: "/thumbnails/supfy-screenshot-mobile.webp", alt: "Supfy no celular", m: true },
+    ],
+  },
 ];
 
 const OTHERS: { name: string; kind: [string, string]; img: string; href: string }[] = [

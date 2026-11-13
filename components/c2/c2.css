@@ -79,6 +79,10 @@ section.c2-sec{max-width:none}
 .w-serra .c2-t{font:700 clamp(52px,7.5vw,108px)/.9 'General Sans',sans-serif;letter-spacing:-.055em}
 .w-serra .c2-strip figure{background:#8EA5AD}
 .w-serra .c2-links a{color:#245467}
+.w-supfy{background:#E3E8E2;color:#172019}
+.w-supfy .c2-t{font:700 clamp(58px,8vw,118px)/.9 'General Sans',sans-serif;letter-spacing:-.065em}
+.w-supfy .c2-strip figure{background:#243B2B}
+.w-supfy .c2-links a{color:#2E6C3D}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
 .c2-more{background:var(--card);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1}
