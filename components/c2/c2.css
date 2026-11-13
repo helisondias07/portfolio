@@ -65,7 +65,7 @@ section.c2-sec{max-width:none}
 .w-shop .c2-links a{color:#1F3A4D}
 .w-sneak{background:#0E0E0E;color:#F5F5F5}
 .w-sneak .c2-t{font:italic 900 clamp(44px,9vw,128px)/.86 var(--f-archivo),'General Sans',sans-serif;text-transform:uppercase;letter-spacing:-.04em}
-.w-sneak .c2-t{color:#F5F5F5}
+.w-sneak .c2-t{color:var(--ch-ink,#17191B);transition:color .25s var(--ease)}
 .w-sneak .c2-strip figure{background:#fff}
 .w-emp{background:#2B1E15;color:#F3E9D8}
 .w-emp .c2-t{font:400 clamp(36px,7vw,100px)/1 var(--f-young),'Iowan Old Style',serif;letter-spacing:-.01em}
@@ -74,18 +74,18 @@ section.c2-sec{max-width:none}
 .w-cine .c2-t{font-family:var(--f-archivo),'General Sans',sans-serif;font-style:italic;font-weight:800;font-size:clamp(36px,7vw,100px);line-height:.95;font-stretch:expanded;letter-spacing:.04em;text-transform:uppercase}
 .w-cine .c2-strip figure{background:#F5F4F0}
 .w-cine .note{background:#F5F4F0;color:#15120D}
-.w-fit{background:#8B3F4D;color:#FFF1F2}
+.w-fit{background:#713D50;color:#FFF1F2}
 .w-fit .c2-t{font:650 clamp(40px,8vw,116px)/.9 'General Sans',sans-serif;letter-spacing:-.06em}
 .w-fit .c2-strip figure{background:#5A2732}
 .w-fit .c2-links a{color:#FFF1F2}
-.w-serra{background:#2D607D;color:#F2F8FB}
+.w-serra{background:#1F5E84;color:#F2F8FB}
 .w-serra .c2-t{font:700 clamp(40px,7.5vw,108px)/.9 'General Sans',sans-serif;letter-spacing:-.055em}
 .w-serra .c2-strip figure{background:#20465C}
 .w-serra .c2-links a{color:#F2F8FB}
 .w-supfy{background:#F7F6F2;color:#171A18}
 .w-supfy .c2-t{font:700 clamp(42px,8vw,118px)/.9 'General Sans',sans-serif;letter-spacing:-.065em}
 .w-supfy .c2-strip figure{background:#747773}
-.w-supfy .c2-links a{color:#31543A}
+.w-supfy .c2-links a{color:inherit}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
 .c2-more{background:linear-gradient(180deg,#F7F6F2 0%,var(--card) 180px,var(--card) 100%);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}

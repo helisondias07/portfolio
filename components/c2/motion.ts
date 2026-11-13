@@ -110,7 +110,8 @@ export function startC2() {
       const start = vh * 0.9;
       const end = vh * 0.1;
       const p = clamp((start - r.top) / Math.max(1, start - end));
-      const over = Math.max(0, inner.scrollWidth - s.clientWidth);
+      const naturalOver = Math.max(0, inner.scrollWidth - s.clientWidth);
+      const over = naturalOver || (inner.children.length > 1 ? Math.round(s.clientWidth * 0.18) : 0);
       inner.style.transform = `translate3d(${-p * over}px,0,0)`;
     });
     if (tl) {

@@ -2,8 +2,8 @@
 export const CHAPTER_WORLDS = {
   "w-shop": { bg: "#EEF0F2", fg: "#1A1C1F" },
   "w-sneak": { bg: "#0E0E0E", fg: "#F5F5F5" },
-  "w-fit": { bg: "#8B3F4D", fg: "#FFF1F2" },
-  "w-serra": { bg: "#2D607D", fg: "#F2F8FB" },
+  "w-fit": { bg: "#713D50", fg: "#FFF1F2" },
+  "w-serra": { bg: "#1F5E84", fg: "#F2F8FB" },
   "w-supfy": { bg: "#F7F6F2", fg: "#171A18" },
 } as const;
 
