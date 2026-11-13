@@ -43,7 +43,7 @@ section.c2-sec{max-width:none}
 .c2-links a:hover{opacity:.7}
 /* faixa: começa na margem do conteúdo e sangra pela direita */
 .c2-strip{margin-top:var(--s5);padding-left:max(var(--pad),calc((100% - var(--max))/2));overflow:hidden}
-.c2-strip-in{display:flex;gap:var(--s2);will-change:transform}
+.c2-strip-in{display:flex;width:max-content;min-width:100%;gap:var(--s2);will-change:transform}
 .c2-strip figure{flex:none;height:clamp(240px,34vw,460px);border-radius:10px;overflow:hidden;background:#0002;transition:transform .5s var(--ease)}
 .c2-strip figure img{height:100%;width:auto;display:block;transition:transform .7s var(--ease)}
 .c2-strip figure.m{width:auto;aspect-ratio:390/844}
@@ -80,13 +80,13 @@ section.c2-sec{max-width:none}
 .w-serra .c2-t{font:700 clamp(40px,7.5vw,108px)/.9 'General Sans',sans-serif;letter-spacing:-.055em}
 .w-serra .c2-strip figure{background:#20465C}
 .w-serra .c2-links a{color:#F2F8FB}
-.w-supfy{background:#D8D9D6;color:#171A18}
+.w-supfy{background:#F7F6F2;color:#171A18}
 .w-supfy .c2-t{font:700 clamp(42px,8vw,118px)/.9 'General Sans',sans-serif;letter-spacing:-.065em}
 .w-supfy .c2-strip figure{background:#747773}
 .w-supfy .c2-links a{color:#31543A}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
-.c2-more{background:linear-gradient(180deg,#D8D9D6 0%,var(--card) 180px,var(--card) 100%);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
+.c2-more{background:linear-gradient(180deg,#F7F6F2 0%,var(--card) 180px,var(--card) 100%);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
 .c2-rail-pin{padding:var(--sec) 0 var(--s6)}
 .c2-more-head{display:flex;justify-content:space-between;align-items:flex-end}
 .c2-more-head .c2-head{margin-bottom:var(--s4)}
