@@ -3,8 +3,10 @@ import { existsSync } from "node:fs";
 import test from "node:test";
 import { parseProjectLayout, resolvePublicLayout } from "../../components/projects/layout-types";
 import { experiments } from "../../data/experiments";
+import { dict } from "../i18n/dict";
 import { enProjects } from "../i18n/projects-en";
 import { projects } from "../../data/projects";
+import { FEATURED_ORDER, railItems } from "./rail";
 import {
   catalogBlob,
   casePath,
@@ -53,16 +55,17 @@ test("retired Fazenda and Counter-Strike scopes are absent from catalog source",
   assert.equal(/fazenda|talh[aã]o|counter-?strike|\bcsgo\b/i.test(blob), false);
 });
 
-test("english copy covers storefronts, Supfy, Empório and the experiments", () => {
+test("english copy covers storefronts, ShopMind, Sneakers New, Empório and the experiments", () => {
   for (const project of projects) {
     const copy = enProjects[project.id];
     assert.ok(copy, project.id);
     assert.ok(copy.overview[0]?.trim(), project.id);
     assert.ok(copy.title?.trim(), project.id);
   }
-  assert.match(enProjects.supfy.title, /Supfy/);
+  assert.match(enProjects.shopmind.title, /ShopMind/);
+  assert.match(enProjects.sneakers.title, /Sneakers New/);
   assert.match(enProjects.emporio.title, /Empório da Música/);
-  assert.match(projectById("supfy")!.url, /supfy-mvp\.vercel\.app/);
+  assert.equal(enProjects.supfy, undefined);
   const enName: Record<string, string> = {
     brag: "Weekly brag",
     critica: "Plan critique",
@@ -91,7 +94,7 @@ test("filters only return published projects and empty lists stay empty", () => 
   const authored = filterPublished(publishedProjects(), "pessoais");
   assert.deepEqual(
     authored.map((p) => p.id).sort(),
-    ["benchmark", "brag", "critica", "emporio", "loop", "supfy", "timesheet", "webcine"],
+    ["benchmark", "brag", "critica", "emporio", "loop", "shopmind", "timesheet", "webcine"],
   );
   assert.equal(filterPublished([], "ecommerce").length, 0);
   for (const filter of FILTERS) {
@@ -155,6 +158,64 @@ test("every published thumbnail file exists", () => {
       assert.ok(existsSync(`public/thumbnails/${project.mimg.replace(/\.webp$/i, ".avif")}`), `${project.id} mobile avif`);
     }
   }
+});
+
+test("ShopMind and Sneakers New are published cases and Supfy is gone", () => {
+  const shopmind = projectById("shopmind");
+  const sneakers = projectById("sneakers");
+  assert.ok(shopmind);
+  assert.ok(sneakers);
+  assert.equal(projectLane(shopmind), "authored");
+  assert.equal(shopmind.demo, "https://shopmind-agent.vercel.app");
+  assert.equal(shopmind.url, "https://github.com/helisondias07/shopmind-agent");
+  assert.equal(shopmind.association, "Projeto criado por Helison Dias");
+  assert.equal(enProjects.shopmind.association, "Created by Helison Dias");
+  assert.match(shopmind.resultado, /17/);
+  assert.equal(shopmind.overview.length, 2);
+  assert.equal(projectLane(sneakers), "storefront");
+  assert.equal(sneakers.url, "https://sneakersnew.com.br/");
+  assert.equal(sneakers.repo, undefined);
+  assert.equal(sneakers.demo, undefined);
+  assert.equal(sneakers.resultado, "");
+  assert.equal(sneakers.dw, 1440);
+  assert.equal(sneakers.mw, 390);
+  assert.equal(sneakers.tags.includes("ecommerce"), true);
+  assert.match(sneakers.association, /Grupo Oásis/);
+  assert.equal(enProjects.sneakers.association, "With Grupo Oásis (Agência Oásis)");
+  const shopBlob = [
+    shopmind.overview.join(" "),
+    shopmind.build?.problem,
+    shopmind.build?.approach,
+    ...(shopmind.build?.decisions ?? []),
+    ...(shopmind.build?.learnings ?? []),
+    ...shopmind.contributions,
+    enProjects.shopmind.overview.join(" "),
+  ].join(" ");
+  assert.doesNotMatch(shopBlob, /127\.0\.0\.1|OPENAI_API_KEY|python main\.py|Artefact|Oásis|Agência/i);
+  assert.match(shopBlob, /gesso|plaster/i);
+  assert.match(shopBlob, /azul-da-prússia|Prussian/i);
+  const sneakBlob = [
+    sneakers.overview.join(" "),
+    ...sneakers.contributions,
+    enProjects.sneakers.overview.join(" "),
+    ...enProjects.sneakers.contributions,
+  ].join(" ");
+  assert.match(sneakBlob, /Wake/);
+  assert.match(sneakBlob, /checkout/i);
+  assert.match(sneakBlob, /QA/);
+  assert.match(sneakBlob, /SNEAKERSNEW/);
+  assert.doesNotMatch(sneakBlob, /github\.com|depoimento|ROI|conversão|\d+\s*%|\b\d{2,}\b/i);
+  const site = JSON.stringify(dict) + JSON.stringify(publishedProjects()) + JSON.stringify(enProjects) + JSON.stringify(railItems());
+  assert.match(site, /Bom Jardim, RJ/);
+  assert.doesNotMatch(site, /Nova Friburgo|Supfy|supfy/i);
+  assert.deepEqual([...FEATURED_ORDER], ["shopmind", "sneakers", "emporio", "webcine"]);
+  const rail = railItems();
+  assert.deepEqual(rail.map((item) => item.id).filter((id) => FEATURED_ORDER.includes(id as (typeof FEATURED_ORDER)[number])), []);
+  assert.equal(rail.some((item) => /supfy/i.test(item.id + item.name + item.href)), false);
+  assert.ok(rail.some((item) => item.id === "kingimports"));
+  assert.ok(rail.some((item) => item.id === "benchmark"));
+  assert.ok(rail.some((item) => item.id === "hotrio"));
+  assert.equal(rail.length, publishedProjects().length - FEATURED_ORDER.length);
 });
 
 test("case and gallery paths stay on the public site", () => {
