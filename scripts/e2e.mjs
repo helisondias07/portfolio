@@ -480,7 +480,11 @@ try {
     assert.match(chapters.rail, name, `missing rail card ${name}`);
   }
   assert.doesNotMatch(chapters.rail, /Supfy|ShopMind|Sneakers New/);
-  assert.equal(await page.$$eval('[data-gallery="supfy"] figure', (els) => els.length), 3, "Supfy must have 3 gallery images");
+  assert.deepEqual(
+    await page.$$eval('[data-gallery="supfy"] figure img', (els) => els.map((el) => decodeURIComponent(new URL(el.currentSrc || el.src).searchParams.get("url") || ""))),
+    ["/thumbnails/supfy-screenshot-card.webp", "/thumbnails/supfy-screenshot-mobile.webp", "/c2/supfy-catalog.png"],
+    "Supfy gallery must be desktop, mobile, then catalog screenshot"
+  );
   const shopLinks = await page.$$eval("#p-shopmind a", (els) => els.map((a) => a.getAttribute("href")));
   assert.ok(shopLinks.includes("https://shopmind-agent.vercel.app"));
   assert.ok(shopLinks.includes("https://github.com/helisondias07/shopmind-agent"));
