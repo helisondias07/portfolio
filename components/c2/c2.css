@@ -71,6 +71,14 @@ section.c2-sec{max-width:none}
 .w-cine .c2-t{font-family:Archivo,sans-serif;font-style:italic;font-weight:800;font-size:clamp(48px,7vw,100px);line-height:.95;font-stretch:expanded;letter-spacing:.04em;text-transform:uppercase}
 .w-cine .c2-strip figure{background:#F5F4F0}
 .w-cine .note{background:#F5F4F0;color:#15120D}
+.w-fit{background:#E8E4DE;color:#1A1B1D}
+.w-fit .c2-t{font:650 clamp(56px,8vw,116px)/.9 'General Sans',sans-serif;letter-spacing:-.06em}
+.w-fit .c2-strip figure{background:#D7C7B6}
+.w-fit .c2-links a{color:#7B4B2A}
+.w-serra{background:#DCE4E7;color:#17262D}
+.w-serra .c2-t{font:700 clamp(52px,7.5vw,108px)/.9 'General Sans',sans-serif;letter-spacing:-.055em}
+.w-serra .c2-strip figure{background:#8EA5AD}
+.w-serra .c2-links a{color:#245467}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
 .c2-more{background:var(--card);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1}
