@@ -36,11 +36,23 @@ function channel(c: number): number {
   return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
 }
 
-function contrast(a: RGB, b: RGB): number {
+export function contrastRatio(a: RGB, b: RGB): number {
   const lum = (rgb: RGB) => 0.2126 * channel(rgb[0]) + 0.7152 * channel(rgb[1]) + 0.0722 * channel(rgb[2]);
   const hi = Math.max(lum(a), lum(b));
   const lo = Math.min(lum(a), lum(b));
   return (hi + 0.05) / (lo + 0.05);
+}
+
+const AA = 4.5;
+const FALLBACK_DARK: RGB = [0, 0, 0];
+const FALLBACK_LIGHT: RGB = [255, 255, 255];
+
+/** World inks when they still read; otherwise a dark/light pair that stays AA on mixed grey. */
+export function inkOn(bg: RGB, fromFg: RGB, toFg: RGB): RGB {
+  const a = contrastRatio(fromFg, bg);
+  const b = contrastRatio(toFg, bg);
+  if (a >= AA || b >= AA) return a >= b ? fromFg : toFg;
+  return contrastRatio(FALLBACK_DARK, bg) >= contrastRatio(FALLBACK_LIGHT, bg) ? FALLBACK_DARK : FALLBACK_LIGHT;
 }
 
 export function blendWorlds(t: number, fromKey: WorldKey, toKey: WorldKey): { bg: string; fg: string; live: boolean } {
@@ -48,10 +60,7 @@ export function blendWorlds(t: number, fromKey: WorldKey, toKey: WorldKey): { bg
   const to = CHAPTER_WORLDS[toKey];
   const clamped = Math.min(1, Math.max(0, t));
   const bg = lerp(parseHex(from.bg), parseHex(to.bg), smooth(clamped));
-  const fromFg = parseHex(from.fg);
-  const toFg = parseHex(to.fg);
-  /* Light and dark worlds cross. Lerping the ink makes it disappear on the mixed ground, so the text takes whichever world ink still reads. */
-  const fg = contrast(toFg, bg) > contrast(fromFg, bg) ? toFg : fromFg;
+  const fg = inkOn(bg, parseHex(from.fg), parseHex(to.fg));
   return {
     bg: formatRgb(bg),
     fg: formatRgb(fg),
