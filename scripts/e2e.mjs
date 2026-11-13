@@ -455,6 +455,25 @@ try {
   assert.equal(chapters.switcher, false, "preview layout switcher is visible");
   assert.equal(chapters.broken.length, 0, `broken thumbnails: ${chapters.broken.join(", ")}`);
   assert.deepEqual(chapters.titles, ["ShopMind", "Sneakers New", "Empório da Música", "WebCine TV"]);
+  const bar = await page.$eval(".scroll-progress", (el) => {
+    const cs = getComputedStyle(el);
+    return { h: cs.height, bg: cs.backgroundColor, top: cs.top, z: cs.zIndex };
+  });
+  assert.equal(bar.h, "3px", "progress bar thickness");
+  assert.equal(bar.bg, "rgb(68, 214, 44)", "progress bar color");
+  assert.equal(bar.top, "0px");
+  assert.ok(Number(bar.z) > 50, "progress bar sits above the nav");
+  const navTop = await page.$eval("nav.site", (el) => getComputedStyle(el).top);
+  assert.equal(navTop, "3px", "nav clears the progress bar");
+  const barBefore = await page.$eval(".scroll-progress", (el) => getComputedStyle(el).transform);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
+  await page.waitForFunction((start) => {
+    const el = document.querySelector(".scroll-progress");
+    const raw = el ? getComputedStyle(el).transform : "";
+    const m = raw.match(/matrix\(([^,]+)/);
+    return m ? Number(m[1]) > 0.2 && raw !== start : false;
+  }, {}, barBefore);
+  await page.evaluate(() => window.scrollTo(0, 0));
   for (const name of [/King Imports/, /Brag semanal/, /Crítica de planos/, /Loop de agentes/, /Benchmark de serialização/, /Timesheet inteligente/, /HotRio/, /Empório da Música/]) {
     if (name.source.startsWith("Empório")) assert.match(chapters.titles.join(" "), name);
     else assert.match(chapters.rail, name, `missing rail card ${name}`);

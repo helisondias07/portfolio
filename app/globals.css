@@ -639,3 +639,7 @@ nav.site .ls a[aria-current=location]{background:rgba(17,17,17,.08)}
 @media(prefers-reduced-motion:reduce){
   .who,.hero.g3 .hl,.k,.k i{transition:none;animation:none}
 }
+
+/* Scroll position, sitting above the fixed nav. No transition: reduced motion stays instant. */
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:#44D62C;transform:scaleX(0);transform-origin:left center;z-index:80;pointer-events:none}
+nav.site{top:3px}

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import LangMeta from "@/components/LangMeta";
+import ScrollProgress from "@/components/ScrollProgress";
 import VisitBeacon from "@/components/VisitBeacon";
 import { langBootScript } from "@/lib/i18n/boot";
 import { dict } from "@/lib/i18n/dict";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preload" href="/fonts/jb.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>
       <body>
+        <ScrollProgress />
         {children}
         <LangMeta />
         <VisitBeacon />

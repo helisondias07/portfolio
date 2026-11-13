@@ -3,6 +3,8 @@
      capítulos subindo como folhas, trilho horizontal fixado com contador, linha do tempo que se desenha.
    - Kenji: faixas de imagens que entram vindas de fora da tela e deslizam com a rolagem, zoom leve no hover.
    Sem dependências. Com prefers-reduced-motion (ou ?static) nada se move e tudo aparece no estado final. */
+import { washAt } from "./blend";
+
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
 function splitWords(el: HTMLElement) {
@@ -42,6 +44,8 @@ export function startC2() {
   }), { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
   root.querySelectorAll("[data-rise],[data-stagger],[data-lines],.c2-strip").forEach((el) => io.observe(el));
 
+  const chapters = [...root.querySelectorAll<HTMLElement>(".c2-ch")];
+  root.classList.add("c2-wash");
   const inks = [...root.querySelectorAll<HTMLElement>("[data-ink]")].map((el) => ({ el, ws: [...el.querySelectorAll<HTMLElement>(".w")], ems: [...el.querySelectorAll<HTMLElement>("em")] }));
   const sheets = [...root.querySelectorAll<HTMLElement>("[data-sheet]")];
   const strips = [...root.querySelectorAll<HTMLElement>("[data-strip]")].map((s) => ({ s, inner: s.firstElementChild as HTMLElement }));
@@ -70,6 +74,12 @@ export function startC2() {
 
   const frame = () => {
     const vh = innerHeight;
+    const wash = washAt(chapters.map((el) => el.getBoundingClientRect().top), vh);
+    if (wash) {
+      root.style.setProperty("--ch-bg", wash.bg);
+      root.style.setProperty("--ch-ink", wash.fg);
+      root.classList.toggle("c2-wash-live", wash.live);
+    }
     inks.forEach(({ el, ws, ems }) => {
       if (!el.offsetParent) return;
       const r = el.getBoundingClientRect();
@@ -109,5 +119,13 @@ export function startC2() {
   addEventListener("resize", onResize);
   // imagens carregadas mudam a largura do trilho
   addEventListener("load", onResize);
-  return () => { removeEventListener("scroll", onScroll); removeEventListener("resize", onResize); removeEventListener("load", onResize); io.disconnect(); };
+  return () => {
+    root.classList.remove("c2-wash", "c2-wash-live");
+    root.style.removeProperty("--ch-bg");
+    root.style.removeProperty("--ch-ink");
+    removeEventListener("scroll", onScroll);
+    removeEventListener("resize", onResize);
+    removeEventListener("load", onResize);
+    io.disconnect();
+  };
 }

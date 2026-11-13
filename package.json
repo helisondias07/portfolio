@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --import ./scripts/register-ts.mjs --test lib/i18n/detect.test.ts lib/projects/explore.test.ts lib/projects/catalog.test.ts",
+    "test": "node --experimental-strip-types --import ./scripts/register-ts.mjs --test lib/i18n/detect.test.ts lib/projects/explore.test.ts lib/projects/catalog.test.ts components/c2/blend.test.ts",
     "e2e": "node scripts/e2e.mjs"
   },
   "dependencies": {

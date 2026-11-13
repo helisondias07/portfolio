@@ -53,6 +53,10 @@ section.c2-sec{max-width:none}
 .c2-strip figure.note{width:clamp(220px,24vw,320px);display:flex;align-items:flex-end;padding:var(--s3)}
 .c2-strip figure.note p{font-size:var(--fs-lead);line-height:1.35}
 
+/* Com JS, os capítulos compartilham uma cor só, interpolada entre mundos. Sem JS ou com reduced-motion, cada folha fica na cor fixa. */
+.c2-wash .c2-ch{background:var(--ch-bg);color:var(--ch-ink)}
+.c2-wash.c2-wash-live .c2-ch .c2-links a{color:inherit}
+
 /* mundos de cada projeto (cores e letras de cada um) */
 .w-shop{background:#EEF0F2;color:#1A1C1F}
 .w-shop .c2-t{font:700 clamp(40px,8vw,116px)/.95 var(--f-syne),'General Sans',sans-serif;letter-spacing:-.03em}
