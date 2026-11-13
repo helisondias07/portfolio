@@ -26,6 +26,45 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    "id": "sneakers",
+    "url": "https://sneakersnew.com.br/",
+    "img": "sneakers-screenshot-card.webp",
+    "mimg": "sneakers-screenshot-mobile.webp",
+    "name": "Sneakers New",
+    "cat": "Sneaker E-commerce",
+    "eyebrow": "Case em destaque",
+    "title": "Sneakers New - Storefront de tênis na Wake",
+    "association": "Associado ao Grupo Oásis (Agência Oásis)",
+    "overview": [
+      "Desenvolvimento frontend do storefront da Sneakers New, loja de tênis no ar em sneakersnew.com.br, na plataforma Wake. A home abre com a faixa preta, o nome SNEAKERSNEW e a foto grande do produto.",
+      "O trabalho no storefront é HTML, CSS e JavaScript: layout mobile-first, fluxos de checkout e de endereço, e correções que saem dos cenários de QA. É trabalho de cliente, sem repositório público."
+    ],
+    "contributionsTitle": "Minha atuação",
+    "contributions": [
+      "HTML, CSS e JavaScript do storefront na plataforma Wake.",
+      "Layout mobile-first da loja.",
+      "Fluxos de checkout e de endereço.",
+      "Correções de bugs a partir dos cenários de QA."
+    ],
+    "stackTitle": "Stack",
+    "stack": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "Wake Platform",
+      "Responsive Web Design"
+    ],
+    "dw": 1440,
+    "dh": 1080,
+    "mw": 390,
+    "mh": 1190,
+    "tags": [
+      "ecommerce",
+      "front"
+    ],
+    "resultado": ""
+  },
+  {
     "id": "fiturban",
     "url": "https://www.fiturban.com.br/",
     "img": "fiturban-screenshot.webp",

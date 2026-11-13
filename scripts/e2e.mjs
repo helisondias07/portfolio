@@ -187,6 +187,10 @@ try {
   assert.match(home.text, /Timesheet inteligente/);
   assert.match(home.text, /Supfy/);
   assert.match(home.text, /Empório da Música/);
+  assert.match(home.text, /Sneakers New/);
+  assert.match(home.text, /https:\/\/sneakersnew\.com\.br\//);
+  assert.match(home.text, /01 \/ <!-- -->20/);
+  assert.doesNotMatch(home.text, /github\.com\/helisondias07\/sneakers/);
   assert.match(home.text, /https:\/\/brag-semanal\.vercel\.app/);
   assert.match(home.text, /https:\/\/critica-de-planos\.vercel\.app/);
   assert.match(home.text, /https:\/\/loop-de-agentes\.vercel\.app/);
@@ -243,6 +247,14 @@ try {
   const sitemap = await http("/sitemap.xml");
   assert.equal(sitemap.status, 200);
   assert.match(sitemap.text, /\/projetos\/emporio/);
+  assert.match(sitemap.text, /\/projetos\/sneakers/);
+
+  const sneakers = await http("/projetos/sneakers");
+  assert.equal(sneakers.status, 200, "sneakers case");
+  assert.match(sneakers.text, /Visitar site/);
+  assert.match(sneakers.text, /href="https:\/\/sneakersnew\.com\.br\/"/);
+  assert.doesNotMatch(sneakers.text, /github\.com\/helisondias07\/sneakers/);
+  assert.match(sneakers.text, /checkout/);
   assert.match(sitemap.text, /\/projetos\/brag/);
   assert.match(sitemap.text, /\/projetos\/timesheet/);
   assert.doesNotMatch(sitemap.text, /fazenda/);

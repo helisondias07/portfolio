@@ -144,6 +144,38 @@ test("visitors never receive a preview layout unless the lab flag is on", () => 
   assert.equal(resolvePublicLayout(undefined), "current");
 });
 
+test("Sneakers New leads the carousel and links only to the live store", () => {
+  const published = publishedProjects();
+  const sneakers = published[0];
+  assert.equal(sneakers?.id, "sneakers");
+  assert.equal(published.some((project) => project.id === "shopmind"), false);
+  assert.equal(sneakers?.url, "https://sneakersnew.com.br/");
+  assert.equal(sneakers?.repo, undefined);
+  assert.equal(sneakers?.demo, undefined);
+  assert.equal(sneakers?.resultado, "");
+  assert.equal(sneakers?.dw, 1440);
+  assert.equal(sneakers?.mw, 390);
+  assert.equal(projectLane(sneakers!), "storefront");
+  assert.equal(sneakers?.tags.includes("ecommerce"), true);
+  assert.match(sneakers?.association ?? "", /Grupo Oásis/);
+  assert.equal(enProjects.sneakers.association, "With Grupo Oásis (Agência Oásis)");
+  assert.match(enProjects.sneakers.title, /Sneakers New/);
+  assert.equal(sneakers?.overview.length, 2);
+  const blob = [
+    sneakers?.overview.join(" "),
+    ...(sneakers?.contributions ?? []),
+    enProjects.sneakers.overview.join(" "),
+    ...enProjects.sneakers.contributions,
+  ].join(" ");
+  assert.match(blob, /Wake/);
+  assert.match(blob, /checkout/i);
+  assert.match(blob, /QA/);
+  assert.match(blob, /SNEAKERSNEW/);
+  assert.doesNotMatch(blob, /github\.com|depoimento|ROI|conversão|\d+\s*%|\b\d{2,}\b/i);
+  assert.equal(`01 / ${String(published.length).padStart(2, "0")}`, "01 / 20");
+  assert.equal(published.length, projects.length + 5);
+});
+
 test("every published thumbnail file exists", () => {
   for (const project of publishedProjects()) {
     assert.ok(existsSync(`public/thumbnails/${project.img}`), `${project.id} ${project.img}`);

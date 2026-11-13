@@ -8,6 +8,23 @@ const featured = "Featured case";
 const role = "What I did";
 
 export const enProjects: Record<string, ProjectCopy> = {
+  sneakers: {
+    cat: "Sneaker E-commerce",
+    eyebrow: featured,
+    title: "Sneakers New — Sneaker storefront on Wake",
+    association: withOasis,
+    overview: [
+      "Frontend work on the Sneakers New storefront, a sneaker shop live at sneakersnew.com.br, on the Wake commerce platform. The home page opens with a black bar, the SNEAKERSNEW name, and a large product photo.",
+      "The storefront work is HTML, CSS, and JavaScript: a mobile-first layout, the checkout and address flows, and fixes that come out of QA scenarios. It is client work, with no public repository.",
+    ],
+    contributionsTitle: role,
+    contributions: [
+      "Storefront HTML, CSS, and JavaScript on the Wake platform.",
+      "Mobile-first layout for the shop.",
+      "Checkout and address flows.",
+      "Bug fixes from QA scenarios.",
+    ],
+  },
   fiturban: {
     cat: "Fashion E-commerce",
     eyebrow: featured,
