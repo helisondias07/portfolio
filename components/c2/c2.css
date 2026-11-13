@@ -72,18 +72,18 @@ section.c2-sec{max-width:none}
 .w-cine .c2-t{font-family:var(--f-archivo),'General Sans',sans-serif;font-style:italic;font-weight:800;font-size:clamp(36px,7vw,100px);line-height:.95;font-stretch:expanded;letter-spacing:.04em;text-transform:uppercase}
 .w-cine .c2-strip figure{background:#F5F4F0}
 .w-cine .note{background:#F5F4F0;color:#15120D}
-.w-fit{background:#E8E4DE;color:#1A1B1D}
+.w-fit{background:#8B3F4D;color:#FFF1F2}
 .w-fit .c2-t{font:650 clamp(40px,8vw,116px)/.9 'General Sans',sans-serif;letter-spacing:-.06em}
-.w-fit .c2-strip figure{background:#D7C7B6}
-.w-fit .c2-links a{color:#7B4B2A}
-.w-serra{background:#DCE4E7;color:#17262D}
+.w-fit .c2-strip figure{background:#5A2732}
+.w-fit .c2-links a{color:#FFF1F2}
+.w-serra{background:#2D607D;color:#F2F8FB}
 .w-serra .c2-t{font:700 clamp(40px,7.5vw,108px)/.9 'General Sans',sans-serif;letter-spacing:-.055em}
-.w-serra .c2-strip figure{background:#8EA5AD}
-.w-serra .c2-links a{color:#245467}
-.w-supfy{background:#E3E8E2;color:#172019}
+.w-serra .c2-strip figure{background:#20465C}
+.w-serra .c2-links a{color:#F2F8FB}
+.w-supfy{background:#D8D9D6;color:#171A18}
 .w-supfy .c2-t{font:700 clamp(42px,8vw,118px)/.9 'General Sans',sans-serif;letter-spacing:-.065em}
-.w-supfy .c2-strip figure{background:#243B2B}
-.w-supfy .c2-links a{color:#2E6C3D}
+.w-supfy .c2-strip figure{background:#747773}
+.w-supfy .c2-links a{color:#31543A}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
 .c2-more{background:var(--card);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
@@ -127,7 +127,7 @@ section.c2-sec{max-width:none}
 .c2-js [data-rise]{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
 .c2-js [data-stagger] > *{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0) * 90ms + .1s)}
 .c2-js [data-rise].in,.c2-js [data-stagger].in > *{opacity:1;transform:none}
-.c2-js [data-lines] .lw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.c2-js [data-lines] .lw{display:inline-block;overflow:visible;vertical-align:top;padding-bottom:.1em;padding-right:.08em;margin-bottom:-.1em}
 .c2-js [data-lines] .lw > span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease);transition-delay:calc(var(--i,0) * 60ms)}
 .c2-js [data-lines].in .lw > span{transform:none}
 .c2-js [data-sheet]{transform:translateY(var(--sy,0px))}

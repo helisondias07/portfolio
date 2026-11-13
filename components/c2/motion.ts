@@ -102,9 +102,11 @@ export function startC2() {
     });
     if (wide) strips.forEach(({ s, inner }) => {
       const r = s.getBoundingClientRect();
-      const p = clamp((vh - r.top) / (vh + r.height));
+      const start = vh * 0.85;
+      const end = -r.height * 0.3;
+      const p = clamp((start - r.top) / Math.max(1, start - end));
       const over = Math.max(0, inner.scrollWidth - s.clientWidth);
-      inner.style.transform = `translate3d(${(0.12 - p) * over}px,0,0)`;
+      inner.style.transform = `translate3d(${-p * over}px,0,0)`;
     });
     if (tl) {
       const r = tl.getBoundingClientRect();
