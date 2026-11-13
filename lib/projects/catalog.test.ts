@@ -208,14 +208,14 @@ test("ShopMind and Sneakers New are published cases and Supfy is gone", () => {
   const site = JSON.stringify(dict) + JSON.stringify(publishedProjects()) + JSON.stringify(enProjects) + JSON.stringify(railItems());
   assert.match(site, /Bom Jardim, RJ/);
   assert.doesNotMatch(site, /Nova Friburgo|Supfy|supfy/i);
-  assert.deepEqual([...FEATURED_ORDER], ["shopmind", "sneakers", "emporio", "webcine"]);
+  assert.deepEqual([...FEATURED_ORDER], ["shopmind", "sneakers", "supfy"]);
   const rail = railItems();
   assert.deepEqual(rail.map((item) => item.id).filter((id) => FEATURED_ORDER.includes(id as (typeof FEATURED_ORDER)[number])), []);
   assert.equal(rail.some((item) => /supfy/i.test(item.id + item.name + item.href)), false);
   assert.ok(rail.some((item) => item.id === "kingimports"));
   assert.ok(rail.some((item) => item.id === "benchmark"));
   assert.ok(rail.some((item) => item.id === "hotrio"));
-  assert.equal(rail.length, publishedProjects().length - FEATURED_ORDER.length);
+  assert.equal(rail.length, publishedProjects().filter((project) => !FEATURED_ORDER.includes(project.id as (typeof FEATURED_ORDER)[number])).length);
 });
 
 test("case and gallery paths stay on the public site", () => {

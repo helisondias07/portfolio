@@ -2,7 +2,7 @@ import { experiments } from "../../data/experiments";
 import { publishedProjects } from "./catalog";
 
 /** Homepage chapters, in the approved order. Everything else goes on the rail. */
-export const FEATURED_ORDER = ["shopmind", "sneakers", "emporio", "webcine"] as const;
+export const FEATURED_ORDER = ["shopmind", "sneakers", "supfy"] as const;
 
 const RAIL_ORDER = [
   "kingimports",

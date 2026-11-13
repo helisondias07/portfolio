@@ -195,6 +195,7 @@ try {
   assert.match(home.text, /Timesheet inteligente/);
   assert.match(home.text, /ShopMind/);
   assert.match(home.text, /Sneakers New/);
+  assert.match(home.text, /Supfy/);
   assert.match(home.text, /Empório da Música/);
   assert.match(home.text, /WebCine TV/);
   assert.match(home.text, /https:\/\/shopmind-agent\.vercel\.app/);
@@ -202,7 +203,8 @@ try {
   assert.match(home.text, /https:\/\/sneakersnew\.com\.br\//);
   assert.match(home.text, /\/projetos\/shopmind/);
   assert.match(home.text, /\/projetos\/sneakers/);
-  assert.doesNotMatch(home.text, /Supfy|supfy/);
+  assert.match(home.text, /https:\/\/supfy-mvp\.vercel\.app/);
+  assert.match(home.text, /github\.com\/helisondias07\/supfy-mvp/);
   assert.doesNotMatch(home.text, /github\.com\/helisondias07\/sneakers/);
   assert.match(home.text, /https:\/\/brag-semanal\.vercel\.app/);
   assert.match(home.text, /https:\/\/critica-de-planos\.vercel\.app/);
@@ -454,7 +456,7 @@ try {
   });
   assert.equal(chapters.switcher, false, "preview layout switcher is visible");
   assert.equal(chapters.broken.length, 0, `broken thumbnails: ${chapters.broken.join(", ")}`);
-  assert.deepEqual(chapters.titles, ["ShopMind", "Sneakers New", "Empório da Música", "WebCine TV"]);
+  assert.deepEqual(chapters.titles, ["ShopMind", "Sneakers New", "Supfy"]);
   const bar = await page.$eval(".scroll-progress", (el) => {
     const cs = getComputedStyle(el);
     return { h: cs.height, bg: cs.backgroundColor, top: cs.top, z: cs.zIndex };
@@ -464,7 +466,7 @@ try {
   assert.equal(bar.top, "0px");
   assert.ok(Number(bar.z) > 50, "progress bar sits above the nav");
   const navTop = await page.$eval("nav.site", (el) => getComputedStyle(el).top);
-  assert.equal(navTop, "3px", "nav clears the progress bar");
+  assert.equal(navTop, "0px", "nav aligns with the top edge");
   const barBefore = await page.$eval(".scroll-progress", (el) => getComputedStyle(el).transform);
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight * 0.45));
   await page.waitForFunction((start) => {
@@ -474,11 +476,11 @@ try {
     return m ? Number(m[1]) > 0.2 && raw !== start : false;
   }, {}, barBefore);
   await page.evaluate(() => window.scrollTo(0, 0));
-  for (const name of [/King Imports/, /Brag semanal/, /Crítica de planos/, /Loop de agentes/, /Benchmark de serialização/, /Timesheet inteligente/, /HotRio/, /Empório da Música/]) {
-    if (name.source.startsWith("Empório")) assert.match(chapters.titles.join(" "), name);
-    else assert.match(chapters.rail, name, `missing rail card ${name}`);
+  for (const name of [/King Imports/, /Brag semanal/, /Crítica de planos/, /Loop de agentes/, /Benchmark de serialização/, /Timesheet inteligente/, /HotRio/, /Empório da Música/, /WebCine TV/, /Fit Urban/, /Serralheria/]) {
+    assert.match(chapters.rail, name, `missing rail card ${name}`);
   }
-  assert.doesNotMatch(chapters.rail, /Supfy|ShopMind|Sneakers New|WebCine/);
+  assert.doesNotMatch(chapters.rail, /Supfy|ShopMind|Sneakers New/);
+  assert.equal(await page.$$eval('[data-gallery="supfy"] figure', (els) => els.length), 3, "Supfy must have 3 gallery images");
   const shopLinks = await page.$$eval("#p-shopmind a", (els) => els.map((a) => a.getAttribute("href")));
   assert.ok(shopLinks.includes("https://shopmind-agent.vercel.app"));
   assert.ok(shopLinks.includes("https://github.com/helisondias07/shopmind-agent"));

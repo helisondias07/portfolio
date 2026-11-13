@@ -42,6 +42,7 @@ section.c2-sec{max-width:none}
 .c2-links{display:flex;gap:var(--s3);margin-top:var(--s3);font-weight:600;font-size:var(--fs-sm)}
 .c2-links a{border-bottom:1.5px solid currentColor;padding-bottom:2px;transition:opacity .2s}
 .c2-links a:hover{opacity:.7}
+.c2-links a:focus-visible,.c2-card:focus-visible{outline:2px solid var(--g);outline-offset:4px;border-radius:3px}
 /* faixa: começa na margem do conteúdo e sangra pela direita */
 .c2-strip{margin-top:var(--s5);padding-left:max(var(--pad),calc((100% - var(--max))/2));overflow:hidden}
 .c2-strip-in{display:flex;width:max-content;min-width:100%;gap:var(--s2);will-change:transform}

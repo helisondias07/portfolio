@@ -1,8 +1,9 @@
 "use client";
 import { Fragment, useEffect, useLayoutEffect } from "react";
+import Image from "next/image";
 import { dict, type Segment } from "@/lib/i18n/dict";
 import { getLang, subscribe } from "@/lib/i18n/store";
-import { railItems } from "@/lib/projects/rail";
+import { FEATURED_ORDER, railItems } from "@/lib/projects/rail";
 import Tx from "../Tx";
 import { startC2 } from "./motion";
 import "./c2.css";
@@ -13,8 +14,8 @@ type Feature = {
   stack: string; links: { href: string; pt: string; en: string }[]; shots: Shot[]; note?: [string, string];
 };
 
-const FEATURED: Feature[] = [
-  {
+const FEATURED_BY_ID: Record<(typeof FEATURED_ORDER)[number], Feature> = {
+  shopmind: {
     id: "shopmind", world: "w-shop", title: "ShopMind",
     meta: ["Projeto autoral · agente de atendimento para e-commerce", "Personal project · e-commerce support agent"],
     desc: [
@@ -33,7 +34,7 @@ const FEATURED: Feature[] = [
       { src: "/c2/showroom-handoff.png", alt: ["ShopMind, handoff para atendente", "ShopMind, handoff to an agent"] },
     ],
   },
-  {
+  sneakers: {
     id: "sneakers", world: "w-sneak", title: <>Sneakers<br /> New</>,
     meta: ["Agência Oásis · storefront de tênis na Wake", "Agência Oásis · sneaker storefront on Wake"],
     desc: [
@@ -52,7 +53,7 @@ const FEATURED: Feature[] = [
       { src: "/c2/sneakers-home3.jpg", alt: ["Sneakers New, categorias", "Sneakers New, categories"] },
     ],
   },
-  {
+  supfy: {
     id: "supfy", world: "w-supfy", title: "Supfy",
     meta: ["Projeto autoral · pedidos estruturados com n8n", "Personal project · structured orders with n8n"],
     desc: [
@@ -70,7 +71,9 @@ const FEATURED: Feature[] = [
       { src: "/thumbnails/supfy-screenshot-mobile.webp", alt: ["Supfy no celular", "Supfy on a phone"], m: true },
     ],
   },
-];
+};
+
+const FEATURED = FEATURED_ORDER.map((id) => FEATURED_BY_ID[id]);
 
 const OTHERS = railItems();
 
@@ -152,11 +155,11 @@ export default function C2Sections() {
                 ))}</p>
               </div>
             </div>
-            <div className="c2-strip" data-strip>
+            <div className="c2-strip" data-strip data-gallery={f.id} role="region" aria-label={`${f.id} project gallery`}>
               <div className="c2-strip-in">
-                {f.shots.map((s) => (
+                {f.shots.map((s, i) => (
                   <figure key={s.src} className={s.m ? "m" : ""}>
-                    <img src={s.src} alt={s.alt[0]} data-alt-pt={s.alt[0]} data-alt-en={s.alt[1]} width={s.m ? 390 : 1440} height={s.m ? 844 : 900} loading="eager" decoding="async" />
+                    <Image src={s.src} alt={s.alt[0]} data-alt-pt={s.alt[0]} data-alt-en={s.alt[1]} width={s.m ? 390 : 1440} height={s.m ? 844 : 900} sizes={s.m ? "390px" : "(max-width: 900px) 88vw, 70vw"} loading={i === 0 ? "eager" : "lazy"} fetchPriority={i === 0 ? "high" : "auto"} />
                   </figure>
                 ))}
                 {f.note && <figure className="note"><p><Tx pt={f.note[0]} en={f.note[1]} /></p></figure>}
@@ -176,7 +179,7 @@ export default function C2Sections() {
             {OTHERS.map((o) => (
               <a key={o.id} className="c2-card" href={o.href} target="_blank" rel="noopener">
                 <span className="c2-card-img">
-                  <img src={`/thumbnails/${o.img}`} alt={o.name} data-alt-pt={o.name} data-alt-en={o.nameEn} width={640} height={480} loading="lazy" decoding="async" />
+                  <Image src={`/thumbnails/${o.img}`} alt={o.name} data-alt-pt={o.name} data-alt-en={o.nameEn} width={640} height={480} sizes="(max-width: 900px) 80vw, 320px" loading="lazy" />
                 </span>
                 <strong><Tx pt={o.name} en={o.nameEn} /></strong>
                 <span><Tx pt={o.kind[0]} en={o.kind[1]} /></span>
