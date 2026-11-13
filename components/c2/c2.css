@@ -43,9 +43,9 @@ section.c2-sec{max-width:none}
 .c2-links a:hover{opacity:.7}
 /* faixa: começa na margem do conteúdo e sangra pela direita */
 .c2-strip{margin-top:var(--s5);padding-left:max(var(--pad),calc((100% - var(--max))/2));overflow:hidden}
-.c2-strip-in{display:flex;width:max-content;min-width:100%;gap:var(--s2);will-change:transform}
-.c2-strip figure{flex:none;width:clamp(520px,58vw,900px);height:clamp(240px,34vw,460px);border-radius:10px;overflow:hidden;background:#0002;transition:transform .5s var(--ease)}
-.c2-strip figure img{height:100%;width:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
+.c2-strip-in{display:flex;gap:var(--s2);will-change:transform}
+.c2-strip figure{flex:none;height:clamp(240px,34vw,460px);border-radius:10px;overflow:hidden;background:#0002;transition:transform .5s var(--ease)}
+.c2-strip figure img{height:100%;width:auto;display:block;transition:transform .7s var(--ease)}
 .c2-strip figure.m{width:auto;aspect-ratio:390/844}
 .c2-strip figure.m img{width:100%;object-fit:cover;object-position:top}
 .c2-strip figure:hover{transform:translateY(-4px)}
@@ -53,15 +53,16 @@ section.c2-sec{max-width:none}
 .c2-strip figure.note{width:clamp(220px,24vw,320px);display:flex;align-items:flex-end;padding:var(--s3)}
 .c2-strip figure.note p{font-size:var(--fs-lead);line-height:1.35}
 
-/* Cada capítulo mantém sua própria cor. O degradê fica restrito à borda de entrada, sem tingir o capítulo inteiro. */
-.c2-wash .c2-ch{color:inherit}
+/* Com JS, os capítulos compartilham uma cor só, interpolada entre mundos. Sem JS ou com reduced-motion, cada folha fica na cor fixa. */
+.c2-wash .c2-ch{background:var(--ch-bg);color:var(--ch-ink)}
+.c2-wash.c2-wash-live .c2-ch .c2-links a{color:inherit}
 
 /* mundos de cada projeto (cores e letras de cada um) */
 .w-shop{background:#EEF0F2;color:#1A1C1F}
 .w-shop .c2-t{font:700 clamp(40px,8vw,116px)/.95 var(--f-syne),'General Sans',sans-serif;letter-spacing:-.03em}
 .w-shop .c2-strip figure{background:#1F3A4D}
 .w-shop .c2-links a{color:#1F3A4D}
-.w-sneak{background:linear-gradient(180deg,#EEF0F2 0%,#0E0E0E 15%,#0E0E0E 100%);color:#F5F5F5}
+.w-sneak{background:#0E0E0E;color:#F5F5F5}
 .w-sneak .c2-t{font:italic 900 clamp(44px,9vw,128px)/.86 var(--f-archivo),'General Sans',sans-serif;text-transform:uppercase;letter-spacing:-.04em}
 .w-sneak .c2-strip figure{background:#fff}
 .w-emp{background:#2B1E15;color:#F3E9D8}
@@ -71,21 +72,21 @@ section.c2-sec{max-width:none}
 .w-cine .c2-t{font-family:var(--f-archivo),'General Sans',sans-serif;font-style:italic;font-weight:800;font-size:clamp(36px,7vw,100px);line-height:.95;font-stretch:expanded;letter-spacing:.04em;text-transform:uppercase}
 .w-cine .c2-strip figure{background:#F5F4F0}
 .w-cine .note{background:#F5F4F0;color:#15120D}
-.w-fit{background:linear-gradient(180deg,#0E0E0E 0%,#8B3F4D 15%,#8B3F4D 100%);color:#FFF1F2}
+.w-fit{background:#8B3F4D;color:#FFF1F2}
 .w-fit .c2-t{font:650 clamp(40px,8vw,116px)/.9 'General Sans',sans-serif;letter-spacing:-.06em}
 .w-fit .c2-strip figure{background:#5A2732}
 .w-fit .c2-links a{color:#FFF1F2}
-.w-serra{background:linear-gradient(180deg,#8B3F4D 0%,#2D607D 15%,#2D607D 100%);color:#F2F8FB}
+.w-serra{background:#2D607D;color:#F2F8FB}
 .w-serra .c2-t{font:700 clamp(40px,7.5vw,108px)/.9 'General Sans',sans-serif;letter-spacing:-.055em}
 .w-serra .c2-strip figure{background:#20465C}
 .w-serra .c2-links a{color:#F2F8FB}
-.w-supfy{background:linear-gradient(180deg,#2D607D 0%,#F7F6F2 15%,#F7F6F2 100%);color:#171A18}
+.w-supfy{background:#D8D9D6;color:#171A18}
 .w-supfy .c2-t{font:700 clamp(42px,8vw,118px)/.9 'General Sans',sans-serif;letter-spacing:-.065em}
 .w-supfy .c2-strip figure{background:#747773}
 .w-supfy .c2-links a{color:#31543A}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
-.c2-more{background:linear-gradient(180deg,#F7F6F2 0%,var(--card) 180px,var(--card) 100%);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
+.c2-more{background:linear-gradient(180deg,#D8D9D6 0%,var(--card) 180px,var(--card) 100%);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
 .c2-rail-pin{padding:var(--sec) 0 var(--s6)}
 .c2-more-head{display:flex;justify-content:space-between;align-items:flex-end}
 .c2-more-head .c2-head{margin-bottom:var(--s4)}
@@ -143,7 +144,7 @@ section.c2-sec{max-width:none}
   .c2-ch-top{grid-template-columns:1fr;gap:var(--s3)}
   .c2-strip{margin-top:var(--s4)}
   .c2-strip-in{overflow-x:auto;scroll-snap-type:x mandatory;padding-right:var(--pad);scrollbar-width:none}
-  .c2-strip figure{width:auto;height:min(62vw,280px);scroll-snap-align:start}
+  .c2-strip figure{height:min(62vw,280px);scroll-snap-align:start}
   .c2-strip figure.note{width:70vw}
   .c2-exp-grid{grid-template-columns:1fr;gap:var(--s4)}
   .c2-tl{padding-left:32px}

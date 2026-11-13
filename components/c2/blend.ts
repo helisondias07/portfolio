@@ -4,7 +4,7 @@ export const CHAPTER_WORLDS = {
   "w-sneak": { bg: "#0E0E0E", fg: "#F5F5F5" },
   "w-fit": { bg: "#8B3F4D", fg: "#FFF1F2" },
   "w-serra": { bg: "#2D607D", fg: "#F2F8FB" },
-  "w-supfy": { bg: "#F7F6F2", fg: "#171A18" },
+  "w-supfy": { bg: "#D8D9D6", fg: "#171A18" },
 } as const;
 
 export type WorldKey = keyof typeof CHAPTER_WORLDS;
