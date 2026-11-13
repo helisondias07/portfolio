@@ -131,7 +131,8 @@ async function assertFoldClear(page, width, height) {
   assert.ok(layout.h1Height > 24, `${width}px H1 height ${layout.h1Height}`);
   assert.ok(layout.h1Width > 80, `${width}px H1 width ${layout.h1Width}`);
   assert.ok(layout.h1Top >= 0 && layout.h1Bottom <= layout.fold + 1, `${width}px H1 not in first fold: top=${layout.h1Top} bottom=${layout.h1Bottom} fold=${layout.fold}`);
-  assert.match(layout.copy, /interfaces/i, `${width}px H1 text missing: ${layout.copy}`);
+  assert.match(layout.copy, /Helison Dias/i, `${width}px H1 text missing: ${layout.copy}`);
+  assert.match(layout.copy, /full stack|full-stack/i, `${width}px role missing: ${layout.copy}`);
   const mid = await hitAt(page, layout.midX, layout.heroY);
   assert.equal(mid.pix, false, `${width}px elementFromPoint hero is a project chip`);
 }
@@ -175,8 +176,15 @@ try {
   const home = await http("/");
   assert.equal(home.status, 200, "home 200");
   assert.match(home.text, /id="projetos"/);
-  assert.match(home.text, /id="cf"/);
+  assert.match(home.text, /c2-ch /);
   assert.match(home.text, /class="site"/);
+  assert.match(home.text, /Helison Dias/);
+  assert.match(home.text, /dev full stack com foco em IA/);
+  assert.match(home.text, /full-stack developer focused on AI/);
+  assert.match(home.text, /Bom Jardim, RJ/);
+  assert.match(home.text, /LangGraph, Wake, Next\.js, React, TypeScript/);
+  assert.match(home.text, /data-cv/);
+  assert.doesNotMatch(home.text, /Nova Friburgo/);
   if (/EADDRINUSE/.test(stderr)) throw new Error("stale next start");
   assert.doesNotMatch(home.text, /id="pix"/);
   assert.doesNotMatch(home.text, /Opções de layout|Layout options \(preview\)/);
@@ -185,14 +193,22 @@ try {
   assert.match(home.text, /Loop de agentes/);
   assert.match(home.text, /Benchmark de serialização/);
   assert.match(home.text, /Timesheet inteligente/);
-  assert.match(home.text, /Supfy/);
+  assert.match(home.text, /ShopMind/);
+  assert.match(home.text, /Sneakers New/);
   assert.match(home.text, /Empório da Música/);
+  assert.match(home.text, /WebCine TV/);
+  assert.match(home.text, /https:\/\/shopmind-agent\.vercel\.app/);
+  assert.match(home.text, /https:\/\/github\.com\/helisondias07\/shopmind-agent/);
+  assert.match(home.text, /https:\/\/sneakersnew\.com\.br\//);
+  assert.match(home.text, /\/projetos\/shopmind/);
+  assert.match(home.text, /\/projetos\/sneakers/);
+  assert.doesNotMatch(home.text, /Supfy|supfy/);
+  assert.doesNotMatch(home.text, /github\.com\/helisondias07\/sneakers/);
   assert.match(home.text, /https:\/\/brag-semanal\.vercel\.app/);
   assert.match(home.text, /https:\/\/critica-de-planos\.vercel\.app/);
   assert.match(home.text, /https:\/\/loop-de-agentes\.vercel\.app/);
   assert.match(home.text, /https:\/\/benchmark-serializacao\.vercel\.app/);
   assert.match(home.text, /https:\/\/timesheet-inteligente\.vercel\.app/);
-  assert.match(home.text, /https:\/\/github\.com\/helisondias07\/brag-semanal/);
   assert.doesNotMatch(home.text, /Caderno de Talhão|Counter-Strike|Fazenda/i);
   assert.doesNotMatch(home.text, /oasis-bot|Méliuz|Meliuz/i);
   assert.doesNotMatch(home.text, /127\.0\.0\.1:4721|OPENAI_API_KEY/);
@@ -243,9 +259,28 @@ try {
   const sitemap = await http("/sitemap.xml");
   assert.equal(sitemap.status, 200);
   assert.match(sitemap.text, /\/projetos\/emporio/);
+  assert.match(sitemap.text, /\/projetos\/shopmind/);
+  assert.match(sitemap.text, /\/projetos\/sneakers/);
   assert.match(sitemap.text, /\/projetos\/brag/);
   assert.match(sitemap.text, /\/projetos\/timesheet/);
-  assert.doesNotMatch(sitemap.text, /fazenda/);
+  assert.doesNotMatch(sitemap.text, /fazenda|supfy/);
+
+  const shopmind = await http("/projetos/shopmind");
+  assert.equal(shopmind.status, 200, "shopmind case");
+  assert.match(shopmind.text, /shopmind-agent\.vercel\.app/);
+  assert.match(shopmind.text, /github\.com\/helisondias07\/shopmind-agent/);
+  assert.match(shopmind.text, /17/);
+  assert.doesNotMatch(shopmind.text, /Supfy|Nova Friburgo/);
+
+  const sneakers = await http("/projetos/sneakers");
+  assert.equal(sneakers.status, 200, "sneakers case");
+  assert.match(sneakers.text, /Visitar site/);
+  assert.match(sneakers.text, /href="https:\/\/sneakersnew\.com\.br\/"/);
+  assert.match(sneakers.text, /checkout/);
+  assert.doesNotMatch(sneakers.text, /github\.com\/helisondias07\/sneakers/);
+
+  const supfy = await http("/projetos/supfy");
+  assert.equal(supfy.status, 404, "supfy must 404");
 
   console.log("e2e http: ok");
 
@@ -322,8 +357,8 @@ try {
     assert.ok(box.dy < 8, `${lang} ${width}px caret is ${box.dy.toFixed(1)}px off the last line`);
     assert.ok(box.overflow < 8, `${lang} ${width}px title overflows the headline box by ${box.overflow.toFixed(1)}px`);
     assert.ok(box.h1h + 1 >= box.lines * box.font * 0.9, `${lang} ${width}px box ${box.h1h}px is shorter than ${box.lines} lines`);
-    if (width <= 430 && lang === "pt") assert.equal(box.lines, 3, `${lang} ${width}px expected 3 lines, got ${box.lines}`);
-    if (width >= 1280) assert.equal(box.lines, 2, `${lang} ${width}px desktop title should stay 2 lines, got ${box.lines}`);
+    assert.ok(box.lines >= 1 && box.lines <= 3, `${lang} ${width}px stack line count ${box.lines}`);
+    if (width >= 1280) assert.equal(box.lines, 1, `${lang} ${width}px stack terms should stay on one line, got ${box.lines}`);
   }
 
   for (const lang of ["pt", "en"]) {
@@ -342,6 +377,37 @@ try {
   await assertFoldClear(page, 1440, 900);
   await assertFoldClear(page, 768, 1024);
   await assertFoldClear(page, 390, 844);
+
+  async function assertHeroFits(width, height) {
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
+    await page.goto(`${ORIGIN}/`, { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+    const fit = await page.evaluate(() => {
+      const box = (sel) => document.querySelector(sel)?.getBoundingClientRect();
+      const name = box(".who-name");
+      const cv = box("[data-cv]");
+      const keys = box(".hrow");
+      const fold = window.innerHeight;
+      return {
+        nameTop: name?.top ?? -1,
+        nameBottom: name?.bottom ?? -1,
+        cvTop: cv?.top ?? -1,
+        cvBottom: cv?.bottom ?? -1,
+        keysBottom: keys?.bottom ?? -1,
+        fold,
+        scroll: document.documentElement.scrollWidth - window.innerWidth,
+        role: document.querySelector(".who-role")?.textContent || "",
+      };
+    });
+    assert.ok(fit.nameTop >= 0 && fit.nameBottom <= fit.fold, `${width}x${height} name outside the fold`);
+    assert.ok(fit.cvTop >= 0 && fit.cvBottom <= fit.fold + 1, `${width}x${height} Baixar CV outside the fold (${fit.cvBottom} > ${fit.fold})`);
+    assert.ok(fit.keysBottom <= fit.fold + 1, `${width}x${height} keyboard outside the fold (${fit.keysBottom} > ${fit.fold})`);
+    assert.ok(fit.scroll <= 1, `${width}x${height} horizontal overflow ${fit.scroll}px`);
+    assert.match(fit.role, /full stack|full-stack/i);
+  }
+
+  await assertHeroFits(1366, 768);
+  await assertHeroFits(390, 844);
 
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
@@ -363,50 +429,51 @@ try {
   await page.waitForFunction(() => window.location.hash === "#projetos");
 
   await page.goto(`${ORIGIN}/#projetos`, { waitUntil: "networkidle0" });
-  await page.waitForFunction(() => document.querySelectorAll(".cfc img").length > 0);
-  const carousel = await page.evaluate(async () => {
-    const imgs = [...document.querySelectorAll(".cfc img")];
+  await page.waitForFunction(() => document.querySelectorAll(".c2-ch img, .c2-card img").length > 0);
+  const chapters = await page.evaluate(async () => {
+    const titles = [...document.querySelectorAll(".c2-ch h3")].map((el) => (el.textContent || "").replace(/\s+/g, " ").trim());
+    const rail = [...document.querySelectorAll(".c2-card")].map((el) => (el.textContent || "").replace(/\s+/g, " ").trim());
+    const imgs = [...document.querySelectorAll(".c2-ch img, .c2-card img")];
     const loaded = await Promise.all(
       imgs.map(
         (img) =>
           new Promise((resolve) => {
             const probe = new Image();
-            probe.onload = () => resolve({ src: img.getAttribute("src"), alt: img.alt, w: probe.naturalWidth });
-            probe.onerror = () => resolve({ src: img.getAttribute("src"), alt: img.alt, w: 0 });
-            probe.src = img.getAttribute("src") || img.src;
+            probe.onload = () => resolve({ src: img.getAttribute("src"), w: probe.naturalWidth });
+            probe.onerror = () => resolve({ src: img.getAttribute("src"), w: 0 });
+            probe.src = img.currentSrc || img.src;
           }),
       ),
     );
     return {
-      count: loaded.length,
-      broken: loaded.filter((img) => !img.w || !img.src || img.src.endsWith("/thumbnails/")).map((img) => img.src),
-      names: loaded.map((img) => img.alt).join(" | "),
+      titles,
+      rail: rail.join(" | "),
+      broken: loaded.filter((img) => !img.w || !img.src).map((img) => img.src),
       switcher: Boolean(document.querySelector(".lo-switch")),
     };
   });
-  assert.equal(carousel.switcher, false, "preview layout switcher is visible");
-  assert.equal(carousel.broken.length, 0, `broken thumbnails: ${carousel.broken.join(", ")}`);
-  for (const name of [/Brag semanal|Weekly brag/, /Crítica de planos|Plan critique/, /Loop de agentes|Agent loop/, /Benchmark de serialização|Serialization benchmark/, /Timesheet inteligente|Smart timesheet/, /Supfy/, /Empório da Música/]) {
-    assert.match(carousel.names, name, `missing card ${name}`);
+  assert.equal(chapters.switcher, false, "preview layout switcher is visible");
+  assert.equal(chapters.broken.length, 0, `broken thumbnails: ${chapters.broken.join(", ")}`);
+  assert.deepEqual(chapters.titles, ["ShopMind", "Sneakers New", "Empório da Música", "WebCine TV"]);
+  for (const name of [/King Imports/, /Brag semanal/, /Crítica de planos/, /Loop de agentes/, /Benchmark de serialização/, /Timesheet inteligente/, /HotRio/, /Empório da Música/]) {
+    if (name.source.startsWith("Empório")) assert.match(chapters.titles.join(" "), name);
+    else assert.match(chapters.rail, name, `missing rail card ${name}`);
   }
-  const before = await page.$eval("#cdn", (el) => el.textContent);
-  await page.click("#cfr");
-  await page.waitForFunction((prev) => document.getElementById("cdn")?.textContent !== prev, {}, before);
-
-  await page.evaluate(() => {
-    const cards = [...document.querySelectorAll(".cfc")];
-    const index = cards.findIndex((card) => card.dataset.id === "brag");
-    [...document.querySelectorAll("#dots button")][index].click();
-  });
-  await page.waitForFunction(() => document.querySelector(".cfc.on")?.dataset.id === "brag");
-  await page.waitForFunction(() => (document.querySelector("#csd .cz:not(.lv) a.czv")?.getAttribute("href") || "").includes("brag-semanal.vercel.app"));
-  const bragLinks = await page.$$eval("#csd .cz:not(.lv) a", (els) => els.map((a) => a.getAttribute("href")));
-  assert.ok(bragLinks.includes("https://brag-semanal.vercel.app"));
-  assert.ok(bragLinks.includes("https://github.com/helisondias07/brag-semanal"));
-  const langNow = await page.$eval("html", (el) => el.dataset.lang);
+  assert.doesNotMatch(chapters.rail, /Supfy|ShopMind|Sneakers New|WebCine/);
+  const shopLinks = await page.$$eval("#p-shopmind a", (els) => els.map((a) => a.getAttribute("href")));
+  assert.ok(shopLinks.includes("https://shopmind-agent.vercel.app"));
+  assert.ok(shopLinks.includes("https://github.com/helisondias07/shopmind-agent"));
+  assert.ok(shopLinks.includes("/projetos/shopmind"));
+  const sneakLinks = await page.$$eval("#p-sneakers a", (els) => els.map((a) => a.getAttribute("href")));
+  assert.ok(sneakLinks.includes("https://sneakersnew.com.br/"));
+  assert.ok(sneakLinks.includes("/projetos/sneakers"));
+  assert.equal(sneakLinks.some((href) => (href || "").includes("github.com")), false);
   await page.click("#lang");
-  const expectedTitle = langNow === "en" ? "Brag semanal" : "Weekly brag";
-  await page.waitForFunction((text) => (document.querySelector("#csd .cz:not(.lv) h3")?.textContent || "").includes(text), {}, expectedTitle);
+  await page.waitForFunction(() => (document.querySelector(".who-role")?.textContent || "").includes("full-stack developer focused on AI"));
+  await page.waitForFunction(() => (document.querySelector("#c2-more-h")?.textContent || "").includes("Other projects"));
+  const enRail = await page.$eval(".c2-rail", (el) => el.textContent || "");
+  assert.match(enRail, /Weekly brag/);
+  assert.match(enRail, /Serialization benchmark/);
   await page.click("#lang");
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
@@ -464,7 +531,7 @@ try {
   await shot("/#projetos", "projects_carousel_1440.png", 1440, 900);
   await shot("/projetos/brag", "case_brag_1440.png", 1440, 900);
   await shot("/projetos/timesheet", "after_desktop_case_timesheet.png", 1440, 900);
-  await shot("/projetos/supfy", "case_supfy_1440.png", 1440, 900);
+  await shot("/projetos/shopmind", "case_shopmind_1440.png", 1440, 900);
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
   await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle0" });
@@ -477,7 +544,7 @@ try {
   await shot("/#projetos", "projects_carousel_390.png", 390, 844);
   await shot("/projetos/brag", "case_brag_390.png", 390, 844);
   await shot("/projetos/timesheet", "after_mobile_case_timesheet.png", 390, 844);
-  await shot("/projetos/supfy", "case_supfy_390.png", 390, 844);
+  await shot("/projetos/shopmind", "case_shopmind_390.png", 390, 844);
 
   await browser.close();
   console.log("e2e browser: ok (puppeteer-core +", CHROME, ")");

@@ -8,6 +8,52 @@ const featured = "Featured case";
 const role = "What I did";
 
 export const enProjects: Record<string, ProjectCopy> = {
+  shopmind: {
+    cat: "E-commerce support agent",
+    eyebrow: "Personal project",
+    title: "ShopMind — an e-commerce support agent",
+    association: "Created by Helison Dias",
+    overview: [
+      "Support agent for Lume, a fictional home-and-desk shop. The shopper asks about price, stock, an order, or shipping, and the counter answers only with what the store data confirms, citing the source.",
+      "The demo is the showroom: a plaster ground, a brass price tag, and a Prussian-blue service panel. If the shopper asks for a person, the conversation closes with a handoff protocol. With no model key the path stays deterministic. Code and evals are in the public repository.",
+    ],
+    build: {
+      problem: "The counter has to answer with price, stock, order, and shipping grounded in store data — and hand the conversation to a person when asked — instead of letting the model invent a figure.",
+      approach: "A LangGraph workflow with conditional routing and per-session memory serves the FastAPI chat and the Next.js showroom. Catalog and policies go through RAG. Price and stock are read again at answer time.",
+      decisions: [
+        "Explicit nodes, from the input guard through handoff, instead of an open tool-calling loop.",
+        "The index stores the passage and the id. A guard replaces the draft when a price or a stock count is not in the tool payload.",
+        "A request for a person, or a message that cannot be classified, ends with a handoff protocol.",
+      ],
+      learnings: [
+        "With no model key the demo stays on the deterministic path. The output guard still applies when the wording uses a model.",
+      ],
+    },
+    contributionsTitle: role,
+    contributions: [
+      "A stateful graph, intent routing, and per-session memory.",
+      "Catalog, stock, order, and shipping tools, with RAG over the catalog and the policies.",
+      "A Next.js showroom, a deterministic pytest eval suite, and the demo flow in Playwright.",
+    ],
+    resultado: "17 deterministic eval cases. None of them call a model API.",
+  },
+  sneakers: {
+    cat: "Sneaker E-commerce",
+    eyebrow: featured,
+    title: "Sneakers New — Sneaker storefront on Wake",
+    association: withOasis,
+    overview: [
+      "Frontend work on the Sneakers New storefront, a sneaker shop live at sneakersnew.com.br, on the Wake commerce platform. The home page opens with a black bar, the SNEAKERSNEW name, and a large product photo.",
+      "The storefront work is HTML, CSS, and JavaScript: a mobile-first layout, the checkout and address flows, and fixes that come out of QA scenarios. It is client work, with no public repository.",
+    ],
+    contributionsTitle: role,
+    contributions: [
+      "Storefront HTML, CSS, and JavaScript on the Wake platform.",
+      "Mobile-first layout for the shop.",
+      "Checkout and address flows.",
+      "Bug fixes from QA scenarios.",
+    ],
+  },
   fiturban: {
     cat: "Fashion E-commerce",
     eyebrow: featured,
@@ -244,23 +290,5 @@ export const enProjects: Record<string, ProjectCopy> = {
       "A suite of 30 offline pytest tests: they load the real CSVs and PDF and never call a model API.",
     ],
     resultado: "30 offline pytest tests. None of them call a model API.",
-  },
-  supfy: {
-    cat: "Structured orders · n8n",
-    eyebrow: "Personal project",
-    title: "Supfy — from free text to validated orders",
-    association: "Created by Helison Dias",
-    overview: [
-      "An MVP that turns free-text orders (WhatsApp-style) into structured orders, validated against a central catalog. Price and stock are decided by the application, not by the message. The parser is deterministic — regex and rules, no LLM. Demo data is synthetic and does not represent a real operation.",
-      "The demo is published and the code lives in the public repository (github.com/helisondias07/supfy-mvp). The entry endpoint uses a synthetic WhatsApp Cloud API envelope, with no real send. Ambiguous items go to a human review queue. There are 35 automated tests, and the demo is reproducible with npm run demo.",
-    ],
-    contributionsTitle: role,
-    contributions: [
-      "POST /api/orders integrates an n8n webhook authenticated by a secret, with a 15s timeout, type guards, an X-Idempotency-Key header, and a visible local fallback when n8n does not respond.",
-      "A versioned, importable n8n workflow with validation and non-retryable 4xx errors (no throw).",
-      "An entry endpoint that accepts the synthetic WhatsApp Cloud API envelope without sending a real message.",
-      "A human review queue for ambiguous items, a suite of 35 automated tests, and a reproducible demo via npm run demo.",
-    ],
-    resultado: "35 automated tests. Reproducible demo with npm run demo.",
   },
 };

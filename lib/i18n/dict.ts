@@ -13,6 +13,8 @@ export type Dict = {
   theme: { label: string };
   hero: {
     tag: string;
+    name: string;
+    role: string;
     headline: string;
     ctaProjects: string;
     ctaContact: string;
@@ -109,7 +111,7 @@ export const dict: Record<Lang, Dict> = {
     meta: {
       title: "Helison Dias — Frontend Developer & IA Engineer",
       description:
-        "Helison Dias — desenvolvedor frontend em e-commerce (Wake, Nuvemshop) e automação com IA. React, Next.js, Vue.js e TypeScript. Nova Friburgo, RJ.",
+        "Helison Dias — dev full stack com foco em IA. E-commerce (Wake, Nuvemshop), React, Next.js e TypeScript. Bom Jardim, RJ (remoto).",
       htmlLang: "pt-BR",
       locale: "pt_BR",
     },
@@ -124,8 +126,10 @@ export const dict: Record<Lang, Dict> = {
     langToggle: { label: "Idioma: português. Mudar para inglês" },
     theme: { label: "Alternar tema claro/escuro" },
     hero: {
-      tag: "Desenvolvedor Frontend & IA Engineer",
-      headline: "interfaces que vendem, automações que trabalham por você.",
+      tag: "dev full stack com foco em IA",
+      name: "Helison Dias",
+      role: "dev full stack com foco em IA",
+      headline: "LangGraph, Wake, Next.js, React, TypeScript",
       ctaProjects: "Ver projetos",
       ctaContact: "Falar comigo",
       terminal: "Terminal",
@@ -139,21 +143,21 @@ export const dict: Record<Lang, Dict> = {
       hintPh: "Celular · teclado aberto",
       hintTabChat: "Tablet · conversa",
       hintPhChat: "Celular · conversa",
-      location: "Nova Friburgo, RJ",
+      location: "Bom Jardim, RJ (remoto)",
       cmds: [
         ["sobreMim", [
           ["", "Helison Dias"],
-          ["", "Desenvolvedor Frontend e Automação com IA"],
-          ["", "Nova Friburgo, RJ"],
+          ["", "dev full stack com foco em IA"],
+          ["", "Bom Jardim, RJ (remoto)"],
         ]],
         ["exp", [
           ["jan/2025 – atual", "Dev Frontend Júnior · Agência Oásis"],
           ["abr/2024 – jan/2025", "Estagiário Frontend · Agência Oásis"],
         ]],
         ["stack", [
-          ["frontend", "React · Next.js · Vue.js · TypeScript · Tailwind"],
+          ["frontend", "React · Next.js · Vue.js · TypeScript"],
           ["e-commerce", "Wake · Scriban · Nuvemshop"],
-          ["ia", "Claude Code · Codex CLI · N8N"],
+          ["ia", "LangGraph · Claude Code · N8N"],
           ["testes", "Jest · RTL · Vitest · Playwright"],
         ]],
         ["contato", [
@@ -162,21 +166,7 @@ export const dict: Record<Lang, Dict> = {
           ["github", "github.com/helisondias07"],
         ]],
       ],
-      messages: [
-        "Helison Dias",
-        "Desenvolvedor Frontend & Automação com IA",
-        "2 anos e 6 meses de experiência, desde abr/2024 na Agência Oásis",
-        "React",
-        "Next.js",
-        "Vue.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "Wake Platform",
-        "Nuvemshop",
-        "N8N",
-        "Claude Code",
-        "Codex CLI",
-      ],
+      messages: ["LangGraph", "Wake", "Next.js", "React", "TypeScript"],
     },
     about: {
       kicker: "Sobre",
@@ -197,7 +187,7 @@ export const dict: Record<Lang, Dict> = {
         ["Nuvemshop", true],
         [". No dia a dia, trabalho com", false],
         ["agentes de IA", true],
-        ["e seus ecossistemas para automatizar tarefas e acelerar o desenvolvimento. Estou em Nova Friburgo, RJ, trabalhando remoto.", false],
+        ["e seus ecossistemas para automatizar tarefas e acelerar o desenvolvimento. Estou em Bom Jardim, RJ, trabalhando remoto.", false],
       ],
       counters: {
         years: "anos e",
@@ -265,7 +255,7 @@ export const dict: Record<Lang, Dict> = {
       lede: "Frontend Developer, e-commerce e automação com IA. Aberto a oportunidades remotas. Fale comigo por onde preferir.",
       email: "E-mail",
       cv: "Baixar CV",
-      location: "Nova Friburgo, RJ",
+      location: "Bom Jardim, RJ (remoto)",
     },
     newsletter: {
       blurb: "Novidades sobre projetos e o que ando construindo. Sem spam.",
@@ -289,7 +279,7 @@ export const dict: Record<Lang, Dict> = {
     meta: {
       title: "Helison Dias — Frontend Developer & AI Engineer",
       description:
-        "Helison Dias — frontend developer building e-commerce (Wake, Nuvemshop) and AI automation. React, Next.js, Vue.js, and TypeScript. Based in Nova Friburgo, Brazil.",
+        "Helison Dias — full-stack developer focused on AI. E-commerce (Wake, Nuvemshop), React, Next.js, and TypeScript. Bom Jardim, RJ (remote).",
       htmlLang: "en",
       locale: "en_US",
     },
@@ -304,8 +294,10 @@ export const dict: Record<Lang, Dict> = {
     langToggle: { label: "Language: English. Switch to Portuguese" },
     theme: { label: "Toggle light and dark theme" },
     hero: {
-      tag: "Frontend Developer & AI Engineer",
-      headline: "interfaces that sell, automation that works for you.",
+      tag: "full-stack developer focused on AI",
+      name: "Helison Dias",
+      role: "full-stack developer focused on AI",
+      headline: "LangGraph, Wake, Next.js, React, TypeScript",
       ctaProjects: "See work",
       ctaContact: "Get in touch",
       terminal: "Terminal",
@@ -319,21 +311,21 @@ export const dict: Record<Lang, Dict> = {
       hintPh: "Phone · keyboard open",
       hintTabChat: "Tablet · chat",
       hintPhChat: "Phone · chat",
-      location: "Nova Friburgo, Brazil",
+      location: "Bom Jardim, RJ (remote)",
       cmds: [
         ["about", [
           ["", "Helison Dias"],
-          ["", "Frontend Developer and AI Automation"],
-          ["", "Nova Friburgo, Brazil"],
+          ["", "full-stack developer focused on AI"],
+          ["", "Bom Jardim, RJ (remote)"],
         ]],
         ["exp", [
           ["Jan 2025 – present", "Junior Frontend Developer · Agência Oásis"],
           ["Apr 2024 – Jan 2025", "Frontend Intern · Agência Oásis"],
         ]],
         ["stack", [
-          ["frontend", "React · Next.js · Vue.js · TypeScript · Tailwind"],
+          ["frontend", "React · Next.js · Vue.js · TypeScript"],
           ["e-commerce", "Wake · Scriban · Nuvemshop"],
-          ["ai", "Claude Code · Codex CLI · N8N"],
+          ["ai", "LangGraph · Claude Code · N8N"],
           ["testing", "Jest · RTL · Vitest · Playwright"],
         ]],
         ["contact", [
@@ -342,21 +334,7 @@ export const dict: Record<Lang, Dict> = {
           ["github", "github.com/helisondias07"],
         ]],
       ],
-      messages: [
-        "Helison Dias",
-        "Frontend Developer & AI Automation",
-        "2 years and 6 months of experience, at Agência Oásis since Apr 2024",
-        "React",
-        "Next.js",
-        "Vue.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "Wake Platform",
-        "Nuvemshop",
-        "N8N",
-        "Claude Code",
-        "Codex CLI",
-      ],
+      messages: ["LangGraph", "Wake", "Next.js", "React", "TypeScript"],
     },
     about: {
       kicker: "About",
@@ -377,7 +355,7 @@ export const dict: Record<Lang, Dict> = {
         ["Nuvemshop", true],
         [". Day to day, I work with", false],
         ["AI agents", true],
-        ["and their ecosystems to automate tasks and speed up development. I'm based in Nova Friburgo, RJ, Brazil, working remotely.", false],
+        ["and their ecosystems to automate tasks and speed up development. I'm based in Bom Jardim, RJ, working remotely.", false],
       ],
       counters: {
         years: "years,",
@@ -445,7 +423,7 @@ export const dict: Record<Lang, Dict> = {
       lede: "Frontend developer working across e-commerce and AI automation. Open to remote roles. Get in touch however you prefer.",
       email: "Email",
       cv: "Download CV",
-      location: "Nova Friburgo, Brazil",
+      location: "Bom Jardim, RJ (remote)",
     },
     newsletter: {
       blurb: "Updates on projects and what I'm building. No spam.",

@@ -608,3 +608,34 @@ nav.site .ls a[aria-current=location]{background:rgba(17,17,17,.08)}
 @media(prefers-reduced-motion:reduce){
   .wk-card:hover,.wk-card:hover .wk-media img,.wk-case{transform:none}
 }
+
+/* One spacing scale, shared with the chapter sections. */
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:64px;--s6:104px}
+
+/* Name and role paint first. The keyboard slot is about 20% shorter than the
+   space under the headline so the name, keys and CTAs share one laptop screen. */
+.who{display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 0 var(--s1);text-align:center;width:min(100%,var(--cw));z-index:2}
+.who-name{font:700 clamp(40px,4.6vw,68px)/.95 'General Sans',sans-serif;letter-spacing:-.045em}
+.who-role{font:600 clamp(16px,1.5vw,22px)/1.25 'General Sans',sans-serif;letter-spacing:-.02em;max-width:24em}
+.hero.g3{height:100svh;max-height:100svh;min-height:0;overflow:hidden;justify-content:flex-start;padding:104px var(--cp) 16px}
+.hero.g3 .hl{font-size:clamp(15px,1.35vw,22px);font-weight:600;letter-spacing:-.03em;color:var(--mu);margin:0;width:min(96%,40rem);height:auto;line-height:1.25}
+.hero.g3 .hl .hli{width:min(100%,48rem)}
+.hero.g3 .hrow{flex:1 1 auto;min-height:0;max-height:calc((100svh - 280px) * .8);width:min(100%,1680px);align-self:center}
+.hero.g3 .hcta{margin-top:var(--s1);margin-bottom:0;flex:none}
+.k.on::before{background:#44D62C;opacity:.95}
+.k.on i{color:#44D62C;text-shadow:0 0 6px #44D62C,0 0 14px rgba(68,214,44,.65)}
+.osk .k.on i,.chat .osk .k.on i{background:#44D62C;color:#0b1a07;text-shadow:none;box-shadow:0 1px 0 #2a9a17}
+.cyc .k.on::before,.cyc .k.on i{animation:none}
+@media(max-width:1023px){
+  .hero.g3{height:100svh;max-height:100svh;min-height:0;overflow:hidden;padding:96px 16px 12px;justify-content:flex-start}
+  .hero.g3 .hl{font-size:clamp(14px,3.6vw,18px);line-height:1.3}
+  .who-name{font-size:clamp(32px,8.4vw,42px)}
+  .hero.g3 .hrow{max-height:none;width:100%}
+  .hero.g3 .stage{height:100%;min-height:0;align-items:center;justify-content:center}
+  .hero.g3 .stage>.chat{align-self:center;flex:none;height:100%;max-height:min(100%,62svh);width:auto;max-width:78vw;aspect-ratio:9/19.3}
+  .hcta{gap:8px}
+  .hacts .btn{padding:10px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .who,.hero.g3 .hl,.k,.k i{transition:none;animation:none}
+}
