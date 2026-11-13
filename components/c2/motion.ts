@@ -48,7 +48,11 @@ export function startC2() {
   root.classList.add("c2-wash");
   const inks = [...root.querySelectorAll<HTMLElement>("[data-ink]")].map((el) => ({ el, ws: [...el.querySelectorAll<HTMLElement>(".w")], ems: [...el.querySelectorAll<HTMLElement>("em")] }));
   const sheets = [...root.querySelectorAll<HTMLElement>("[data-sheet]")];
-  const strips = [...root.querySelectorAll<HTMLElement>("[data-strip]")].map((s) => ({ s, inner: s.firstElementChild as HTMLElement }));
+  const strips = [...root.querySelectorAll<HTMLElement>("[data-strip]")].map((s) => ({
+    s,
+    inner: s.firstElementChild as HTMLElement,
+    chapter: s.closest<HTMLElement>(".c2-ch"),
+  }));
   const stripObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => {
     measure();
     frame();
@@ -87,6 +91,7 @@ export function startC2() {
     if (wash) {
       root.style.setProperty("--ch-bg", wash.bg);
       root.style.setProperty("--ch-ink", wash.fg);
+      document.documentElement.style.setProperty("--nav-world-bg", wash.bg);
       root.classList.toggle("c2-wash-live", wash.live);
     }
     inks.forEach(({ el, ws, ems }) => {
@@ -100,10 +105,11 @@ export function startC2() {
       const r = s.getBoundingClientRect();
       s.style.setProperty("--sy", `${(1 - clamp((vh - r.top) / (vh * 0.6))) * 96}px`);
     });
-    if (wide) strips.forEach(({ s, inner }) => {
-      const r = s.getBoundingClientRect();
-      const start = vh * 0.85;
-      const end = -r.height * 0.3;
+    if (wide) strips.forEach(({ s, inner, chapter }) => {
+      const subject = chapter || s;
+      const r = subject.getBoundingClientRect();
+      const start = vh * 0.9;
+      const end = -r.height + vh * 0.1;
       const p = clamp((start - r.top) / Math.max(1, start - end));
       const over = Math.max(0, inner.scrollWidth - s.clientWidth);
       inner.style.transform = `translate3d(${-p * over}px,0,0)`;
@@ -134,6 +140,7 @@ export function startC2() {
     root.classList.remove("c2-wash", "c2-wash-live");
     root.style.removeProperty("--ch-bg");
     root.style.removeProperty("--ch-ink");
+    document.documentElement.style.removeProperty("--nav-world-bg");
     removeEventListener("scroll", onScroll);
     removeEventListener("resize", onResize);
     removeEventListener("load", onResize);

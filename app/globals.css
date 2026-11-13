@@ -8,7 +8,7 @@ h1,h2,h3,.nums b{font-family:'General Sans',sans-serif}
 .mo{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
 .se{font-family:'Instrument Serif',serif;font-weight:400;font-style:italic}
 a{color:inherit;text-decoration:none}
-nav.site{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;backdrop-filter:blur(10px);background:rgba(233,232,227,.7)}
+nav.site{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--nav-world-bg,var(--bg)) 74%,transparent)}
 nav.site .ls{display:flex;gap:2px;background:var(--ink);border-radius:99px;padding:4px}nav.site .ls a{color:#eee;padding:8px 14px;border-radius:99px;font-size:14px;font-weight:500}nav.site .ls a:hover{background:var(--g)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--g);margin-right:8px;box-shadow:0 0 0 4px rgba(0,168,98,.18)}
 .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:96px 20px 28px;overflow:hidden;

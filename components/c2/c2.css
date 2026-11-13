@@ -29,7 +29,7 @@ section.c2-sec{max-width:none}
 .c2-facts dd{font-size:var(--fs-sm);line-height:1.5}
 
 /* ---- Projetos em destaque: capítulos que sobem como folhas (Eduardo) + linhas com faixa de imagens (Kenji) ---- */
-.c2-work{padding-bottom:0;background:var(--bg)}
+.c2-work{padding-bottom:0;background:linear-gradient(180deg,var(--bg) 0%,#EEF0F2 18%,#EEF0F2 100%)}
 .c2-ch{position:relative;border-radius:var(--rad) var(--rad) 0 0;padding:var(--s6) 0 calc(var(--s6) + 104px);overflow:hidden;margin-top:calc((var(--rad) + 104px) * -1)}
 .c2-work .c2-head + .c2-ch,.c2-work > .c2-wrap + .c2-ch{margin-top:0}
 .c2-ch-top{display:grid;grid-template-columns:7fr 5fr;gap:var(--s5);align-items:end}
@@ -86,7 +86,7 @@ section.c2-sec{max-width:none}
 .w-supfy .c2-links a{color:#31543A}
 
 /* ---- Outros projetos: trilho horizontal fixado com contador (Eduardo) ---- */
-.c2-more{background:var(--card);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
+.c2-more{background:linear-gradient(180deg,#D8D9D6 0%,var(--card) 180px,var(--card) 100%);padding:0;border-radius:var(--rad) var(--rad) 0 0;margin-top:calc((var(--rad) + 104px) * -1);position:relative;z-index:1;overflow-x:clip}
 .c2-rail-pin{padding:var(--sec) 0 var(--s6)}
 .c2-more-head{display:flex;justify-content:space-between;align-items:flex-end}
 .c2-more-head .c2-head{margin-bottom:var(--s4)}
