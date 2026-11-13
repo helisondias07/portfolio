@@ -105,13 +105,12 @@ export function startC2() {
       const r = s.getBoundingClientRect();
       s.style.setProperty("--sy", `${(1 - clamp((vh - r.top) / (vh * 0.6))) * 96}px`);
     });
-    if (wide) strips.forEach(({ s, inner, chapter }) => {
-      const subject = chapter || s;
-      const r = subject.getBoundingClientRect();
+    if (wide) strips.forEach(({ s, inner }) => {
+      const r = s.getBoundingClientRect();
       const start = vh * 0.9;
-      const end = -r.height + vh * 0.1;
+      const end = vh * 0.1;
       const p = clamp((start - r.top) / Math.max(1, start - end));
-      const over = Math.max(0, inner.getBoundingClientRect().width - s.clientWidth);
+      const over = Math.max(0, inner.scrollWidth - s.clientWidth);
       inner.style.transform = `translate3d(${-p * over}px,0,0)`;
     });
     if (tl) {

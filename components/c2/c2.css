@@ -35,6 +35,7 @@ section.c2-sec{max-width:none}
 .c2-ch-top{display:grid;grid-template-columns:7fr 5fr;gap:var(--s5);align-items:end}
 .c2-n{display:block;font:500 var(--fs-sm) 'General Sans';opacity:.7;margin-bottom:var(--s2);font-variant-numeric:tabular-nums}
 .c2-t{line-height:.92;max-width:100%;text-wrap:balance}
+.c2-t{color:#17191B}
 .c2-meta{font-size:var(--fs-sm);opacity:.75;margin-bottom:var(--s2)}
 .c2-desc{font-size:var(--fs-body);line-height:var(--lh-body);max-width:46ch}
 .c2-stack{font-size:var(--fs-sm);opacity:.7;margin-top:var(--s2)}
@@ -64,6 +65,7 @@ section.c2-sec{max-width:none}
 .w-shop .c2-links a{color:#1F3A4D}
 .w-sneak{background:#0E0E0E;color:#F5F5F5}
 .w-sneak .c2-t{font:italic 900 clamp(44px,9vw,128px)/.86 var(--f-archivo),'General Sans',sans-serif;text-transform:uppercase;letter-spacing:-.04em}
+.w-sneak .c2-t{color:#F5F5F5}
 .w-sneak .c2-strip figure{background:#fff}
 .w-emp{background:#2B1E15;color:#F3E9D8}
 .w-emp .c2-t{font:400 clamp(36px,7vw,100px)/1 var(--f-young),'Iowan Old Style',serif;letter-spacing:-.01em}
