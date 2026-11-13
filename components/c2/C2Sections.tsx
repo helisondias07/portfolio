@@ -183,7 +183,7 @@ export default function C2Sections() {
               <div className="c2-strip-in">
                 {f.shots.map((s) => (
                   <figure key={s.src} className={s.m ? "m" : ""}>
-                    <img src={s.src} alt={s.alt[0]} data-alt-pt={s.alt[0]} data-alt-en={s.alt[1]} width={s.m ? 390 : 1440} height={s.m ? 844 : 900} loading="lazy" decoding="async" />
+                    <img src={s.src} alt={s.alt[0]} data-alt-pt={s.alt[0]} data-alt-en={s.alt[1]} width={s.m ? 390 : 1440} height={s.m ? 844 : 900} loading="eager" decoding="async" />
                   </figure>
                 ))}
                 {f.note && <figure className="note"><p><Tx pt={f.note[0]} en={f.note[1]} /></p></figure>}

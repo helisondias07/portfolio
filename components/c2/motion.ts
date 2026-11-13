@@ -111,7 +111,7 @@ export function startC2() {
       const start = vh * 0.9;
       const end = -r.height + vh * 0.1;
       const p = clamp((start - r.top) / Math.max(1, start - end));
-      const over = Math.max(0, inner.scrollWidth - s.clientWidth);
+      const over = Math.max(0, inner.getBoundingClientRect().width - s.clientWidth);
       inner.style.transform = `translate3d(${-p * over}px,0,0)`;
     });
     if (tl) {
