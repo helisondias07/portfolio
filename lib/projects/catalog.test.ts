@@ -62,6 +62,7 @@ test("english copy covers storefronts, Supfy, Empório and the experiments", () 
   }
   assert.match(enProjects.supfy.title, /Supfy/);
   assert.match(enProjects.emporio.title, /Empório da Música/);
+  assert.match(enProjects.shopmind.title, /ShopMind/);
   assert.match(projectById("supfy")!.url, /supfy-mvp\.vercel\.app/);
   const enName: Record<string, string> = {
     brag: "Weekly brag",
@@ -91,7 +92,7 @@ test("filters only return published projects and empty lists stay empty", () => 
   const authored = filterPublished(publishedProjects(), "pessoais");
   assert.deepEqual(
     authored.map((p) => p.id).sort(),
-    ["benchmark", "brag", "critica", "emporio", "loop", "supfy", "timesheet", "webcine"],
+    ["benchmark", "brag", "critica", "emporio", "loop", "shopmind", "supfy", "timesheet", "webcine"],
   );
   assert.equal(filterPublished([], "ecommerce").length, 0);
   for (const filter of FILTERS) {
@@ -155,6 +156,33 @@ test("every published thumbnail file exists", () => {
       assert.ok(existsSync(`public/thumbnails/${project.mimg.replace(/\.webp$/i, ".avif")}`), `${project.id} mobile avif`);
     }
   }
+});
+
+test("ShopMind leads the carousel and opens as the featured case", () => {
+  const published = publishedProjects();
+  const shopmind = published[0];
+  assert.equal(shopmind?.id, "shopmind");
+  assert.equal(published.length, 20);
+  assert.equal(projectLane(shopmind!), "authored");
+  assert.equal(shopmind?.demo, "https://shopmind-agent.vercel.app");
+  assert.equal(shopmind?.url, "https://github.com/helisondias07/shopmind-agent");
+  assert.equal(shopmind?.association, "Projeto criado por Helison Dias");
+  assert.equal(enProjects.shopmind.association, "Created by Helison Dias");
+  assert.match(shopmind?.resultado ?? "", /17/);
+  assert.equal(shopmind?.overview.length, 2);
+  const blob = [
+    shopmind?.overview.join(" "),
+    shopmind?.build?.problem,
+    shopmind?.build?.approach,
+    ...(shopmind?.build?.decisions ?? []),
+    ...(shopmind?.build?.learnings ?? []),
+    ...(shopmind?.contributions ?? []),
+    enProjects.shopmind.overview.join(" "),
+    enProjects.shopmind.association,
+  ].join(" ");
+  assert.doesNotMatch(blob, /127\.0\.0\.1|OPENAI_API_KEY|python main\.py|Artefact|Oásis|Agência/i);
+  assert.match(blob, /gesso|plaster/i);
+  assert.match(blob, /azul-da-prússia|Prussian/i);
 });
 
 test("case and gallery paths stay on the public site", () => {

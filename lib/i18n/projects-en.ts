@@ -8,6 +8,35 @@ const featured = "Featured case";
 const role = "What I did";
 
 export const enProjects: Record<string, ProjectCopy> = {
+  shopmind: {
+    cat: "E-commerce support agent",
+    eyebrow: "Personal project",
+    title: "ShopMind — an e-commerce support agent",
+    association: "Created by Helison Dias",
+    overview: [
+      "Support agent for Lume, a fictional home-and-desk shop. The shopper asks about price, stock, an order, or shipping, and the counter answers only with what the store data confirms, citing the source.",
+      "The demo is the showroom: a plaster ground, a brass price tag, and a Prussian-blue service panel. If the shopper asks for a person, the conversation closes with a handoff protocol. With no model key the path stays deterministic. Code and evals are in the public repository.",
+    ],
+    build: {
+      problem: "The counter has to answer with price, stock, order, and shipping grounded in store data — and hand the conversation to a person when asked — instead of letting the model invent a figure.",
+      approach: "A LangGraph workflow with conditional routing and per-session memory serves the FastAPI chat and the Next.js showroom. Catalog and policies go through RAG. Price and stock are read again at answer time.",
+      decisions: [
+        "Explicit nodes, from the input guard through handoff, instead of an open tool-calling loop.",
+        "The index stores the passage and the id. A guard replaces the draft when a price or a stock count is not in the tool payload.",
+        "A request for a person, or a message that cannot be classified, ends with a handoff protocol.",
+      ],
+      learnings: [
+        "With no model key the demo stays on the deterministic path. The output guard still applies when the wording uses a model.",
+      ],
+    },
+    contributionsTitle: role,
+    contributions: [
+      "A stateful graph, intent routing, and per-session memory.",
+      "Catalog, stock, order, and shipping tools, with RAG over the catalog and the policies.",
+      "A Next.js showroom, a deterministic pytest eval suite, and the demo flow in Playwright.",
+    ],
+    resultado: "17 deterministic eval cases. None of them call a model API.",
+  },
   fiturban: {
     cat: "Fashion E-commerce",
     eyebrow: featured,

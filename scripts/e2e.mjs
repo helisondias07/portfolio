@@ -187,6 +187,10 @@ try {
   assert.match(home.text, /Timesheet inteligente/);
   assert.match(home.text, /Supfy/);
   assert.match(home.text, /Empório da Música/);
+  assert.match(home.text, /ShopMind/);
+  assert.match(home.text, /01 \/ 20/);
+  assert.match(home.text, /https:\/\/shopmind-agent\.vercel\.app/);
+  assert.match(home.text, /https:\/\/github\.com\/helisondias07\/shopmind-agent/);
   assert.match(home.text, /https:\/\/brag-semanal\.vercel\.app/);
   assert.match(home.text, /https:\/\/critica-de-planos\.vercel\.app/);
   assert.match(home.text, /https:\/\/loop-de-agentes\.vercel\.app/);
@@ -386,9 +390,14 @@ try {
   });
   assert.equal(carousel.switcher, false, "preview layout switcher is visible");
   assert.equal(carousel.broken.length, 0, `broken thumbnails: ${carousel.broken.join(", ")}`);
-  for (const name of [/Brag semanal|Weekly brag/, /Crítica de planos|Plan critique/, /Loop de agentes|Agent loop/, /Benchmark de serialização|Serialization benchmark/, /Timesheet inteligente|Smart timesheet/, /Supfy/, /Empório da Música/]) {
+  assert.equal(carousel.count, 20, `carousel has ${carousel.count} cards`);
+  for (const name of [/ShopMind/, /Brag semanal|Weekly brag/, /Crítica de planos|Plan critique/, /Loop de agentes|Agent loop/, /Benchmark de serialização|Serialization benchmark/, /Timesheet inteligente|Smart timesheet/, /Supfy/, /Empório da Música/]) {
     assert.match(carousel.names, name, `missing card ${name}`);
   }
+  await page.waitForFunction(() => (document.querySelector("#csd .cz:not(.lv) h3")?.textContent || "").includes("ShopMind"));
+  const featured = await page.$eval("#cdn", (el) => el.textContent || "");
+  assert.match(featured, /01 \/ 20/);
+  assert.match(featured, /ShopMind/);
   const before = await page.$eval("#cdn", (el) => el.textContent);
   await page.click("#cfr");
   await page.waitForFunction((prev) => document.getElementById("cdn")?.textContent !== prev, {}, before);

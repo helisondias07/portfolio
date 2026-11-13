@@ -26,6 +26,63 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    "id": "shopmind",
+    "url": "https://github.com/helisondias07/shopmind-agent",
+    "demo": "https://shopmind-agent.vercel.app",
+    "img": "shopmind-screenshot-card.webp",
+    "mimg": "shopmind-screenshot-mobile.webp",
+    "name": "ShopMind",
+    "cat": "Agente de atendimento · e-commerce",
+    "eyebrow": "Projeto autoral",
+    "title": "ShopMind — agente de atendimento para e-commerce",
+    "association": "Projeto criado por Helison Dias",
+    "overview": [
+      "Agente de atendimento da Lume, loja fictícia de mesa e casa. O cliente pergunta preço, estoque, pedido ou frete e o balcão responde só com o que a base confirma, citando a fonte.",
+      "A demo é a vitrine: fundo de gesso, etiqueta de latão e o painel de atendimento em azul-da-prússia. Se a pessoa pede um atendente, a conversa fecha com um protocolo. Sem chave de modelo o caminho é determinístico. Código e evals estão no repositório público."
+    ],
+    "build": {
+      "problem": "O balcão precisa responder com preço, estoque, pedido e frete ancorados na base — e passar para uma pessoa quando pedem isso — em vez de o modelo inventar um valor.",
+      "approach": "Um grafo LangGraph com roteamento condicional e memória por sessão serve o chat em FastAPI e a vitrine em Next.js. Catálogo e políticas passam por RAG. Preço e estoque são lidos de novo na hora da resposta.",
+      "decisions": [
+        "O grafo tem nós explícitos, da entrada ao handoff, em vez de um loop livre de ferramentas.",
+        "O índice guarda o texto e o identificador. Um guard troca o rascunho quando o preço ou o estoque não está no retorno das tools.",
+        "Pedido de pessoa, ou mensagem que não dá para classificar, encerra com um protocolo de handoff."
+      ],
+      "learnings": [
+        "Sem chave de modelo a demo segue no caminho determinístico. O guard de saída continua valendo quando a redação usa um modelo."
+      ]
+    },
+    "contributionsTitle": "Minha atuação",
+    "contributions": [
+      "Grafo com estado, roteamento por intenção e memória por sessão.",
+      "Tools de catálogo, estoque, pedido e frete, com RAG sobre o catálogo e as políticas.",
+      "Vitrine em Next.js, suíte de evals determinísticas no pytest e o fluxo da demo no Playwright."
+    ],
+    "stackTitle": "Stack",
+    "stack": [
+      "Python",
+      "LangGraph",
+      "LangChain",
+      "RAG",
+      "FastAPI",
+      "Next.js",
+      "TypeScript",
+      "pytest",
+      "Playwright",
+      "GitHub Actions",
+      "Docker",
+      "Vercel"
+    ],
+    "dw": 1440,
+    "dh": 900,
+    "mw": 780,
+    "mh": 1792,
+    "tags": [
+      "pessoais"
+    ],
+    "resultado": "17 casos de eval determinísticos. Nenhum chama API de modelo."
+  },
+  {
     "id": "fiturban",
     "url": "https://www.fiturban.com.br/",
     "img": "fiturban-screenshot.webp",
