@@ -49,6 +49,15 @@ export function startC2() {
   const inks = [...root.querySelectorAll<HTMLElement>("[data-ink]")].map((el) => ({ el, ws: [...el.querySelectorAll<HTMLElement>(".w")], ems: [...el.querySelectorAll<HTMLElement>("em")] }));
   const sheets = [...root.querySelectorAll<HTMLElement>("[data-sheet]")];
   const strips = [...root.querySelectorAll<HTMLElement>("[data-strip]")].map((s) => ({ s, inner: s.firstElementChild as HTMLElement }));
+  const stripObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => {
+    measure();
+    frame();
+  }) : null;
+  strips.forEach(({ s, inner }) => {
+    stripObserver?.observe(s);
+    stripObserver?.observe(inner);
+    [...inner.children].forEach((child) => stripObserver?.observe(child));
+  });
   const tl = root.querySelector<HTMLElement>("[data-tl]");
   const tlItems = tl ? [...tl.children] as HTMLElement[] : [];
   const rail = root.querySelector<HTMLElement>("[data-rail]");
@@ -94,8 +103,8 @@ export function startC2() {
     if (wide) strips.forEach(({ s, inner }) => {
       const r = s.getBoundingClientRect();
       const p = clamp((vh - r.top) / (vh + r.height));
-      const over = Math.max(120, inner.scrollWidth - s.clientWidth + 160);
-      inner.style.transform = `translate3d(${(0.25 - p) * over}px,0,0)`;
+      const over = Math.max(0, inner.scrollWidth - s.clientWidth);
+      inner.style.transform = `translate3d(${(0.12 - p) * over}px,0,0)`;
     });
     if (tl) {
       const r = tl.getBoundingClientRect();
@@ -126,6 +135,7 @@ export function startC2() {
     removeEventListener("scroll", onScroll);
     removeEventListener("resize", onResize);
     removeEventListener("load", onResize);
+    stripObserver?.disconnect();
     io.disconnect();
   };
 }

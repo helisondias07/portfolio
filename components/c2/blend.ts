@@ -2,8 +2,9 @@
 export const CHAPTER_WORLDS = {
   "w-shop": { bg: "#EEF0F2", fg: "#1A1C1F" },
   "w-sneak": { bg: "#0E0E0E", fg: "#F5F5F5" },
-  "w-emp": { bg: "#2B1E15", fg: "#F3E9D8" },
-  "w-cine": { bg: "#B97F0B", fg: "#15120D" },
+  "w-fit": { bg: "#E8E4DE", fg: "#1A1B1D" },
+  "w-serra": { bg: "#DCE4E7", fg: "#17262D" },
+  "w-supfy": { bg: "#E3E8E2", fg: "#172019" },
 } as const;
 
 export type WorldKey = keyof typeof CHAPTER_WORLDS;
