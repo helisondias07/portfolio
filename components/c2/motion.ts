@@ -7,6 +7,14 @@ import { washAt } from "./blend";
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
+function sneakInk(bg: string): string {
+  const rgb = bg.match(/\d+/g)?.map(Number) || [238, 240, 242];
+  const brightness = (rgb[0] + rgb[1] + rgb[2]) / 3;
+  const t = clamp((210 - brightness) / 170);
+  const c = Math.round(23 + (245 - 23) * t);
+  return `rgb(${c} ${c} ${c})`;
+}
+
 function splitWords(el: HTMLElement) {
   let i = 0;
   const walk = (node: Node) => {
@@ -91,6 +99,7 @@ export function startC2() {
     if (wash) {
       root.style.setProperty("--ch-bg", wash.bg);
       root.style.setProperty("--ch-ink", wash.fg);
+      root.style.setProperty("--sneak-ink", sneakInk(wash.bg));
       document.documentElement.style.setProperty("--nav-world-bg", wash.bg);
       root.classList.toggle("c2-wash-live", wash.live);
     }

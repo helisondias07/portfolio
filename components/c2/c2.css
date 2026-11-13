@@ -65,7 +65,7 @@ section.c2-sec{max-width:none}
 .w-shop .c2-links a{color:#1F3A4D}
 .w-sneak{background:#0E0E0E;color:#F5F5F5}
 .w-sneak .c2-t{font:italic 900 clamp(44px,9vw,128px)/.86 var(--f-archivo),'General Sans',sans-serif;text-transform:uppercase;letter-spacing:-.04em}
-.w-sneak .c2-t{color:var(--ch-ink,#17191B);transition:color .25s var(--ease)}
+.w-sneak .c2-t{color:var(--sneak-ink,#17191B);transition:color .6s var(--ease)}
 .w-sneak .c2-strip figure{background:#fff}
 .w-emp{background:#2B1E15;color:#F3E9D8}
 .w-emp .c2-t{font:400 clamp(36px,7vw,100px)/1 var(--f-young),'Iowan Old Style',serif;letter-spacing:-.01em}

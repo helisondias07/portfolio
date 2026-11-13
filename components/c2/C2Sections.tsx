@@ -53,34 +53,6 @@ const FEATURED: Feature[] = [
     ],
   },
   {
-    id: "fiturban", world: "w-fit", title: "Fit Urban",
-    meta: ["Agência Oásis · e-commerce de moda fitness", "Agência Oásis · fitness fashion e-commerce"],
-    desc: [
-      "Desenvolvimento frontend do storefront da Fit Urban na Wake Platform, com foco em responsividade, navegação por coleções e uma experiência de compra clara para moda fitness feminina.",
-      "Frontend development for Fit Urban's Wake Platform storefront, focused on responsiveness, collection browsing and a clear shopping experience for women's fitness fashion.",
-    ],
-    stack: "HTML5 · CSS3 · JavaScript · Wake Platform",
-    links: [{ href: "https://www.fiturban.com.br/", pt: "Visitar site ↗", en: "Visit site ↗" }],
-    shots: [
-      { src: "/thumbnails/fiturban-screenshot.webp", alt: ["Fit Urban, home", "Fit Urban, home"] },
-      { src: "/thumbnails/fiturban-screenshot-mobile.webp", alt: ["Fit Urban no celular", "Fit Urban on a phone"], m: true },
-    ],
-  },
-  {
-    id: "serralheria", world: "w-serra", title: "Serralheria",
-    meta: ["Agência Oásis · e-commerce de ferragens e ferramentas", "Agência Oásis · hardware and tools e-commerce"],
-    desc: [
-      "Desenvolvimento frontend da Loja Serralheria na Wake Platform, com interfaces responsivas, navegação clara e refinamentos de usabilidade para um catálogo técnico de ferragens e ferramentas.",
-      "Frontend development for Loja Serralheria on Wake Platform, with responsive interfaces, clear navigation and usability refinements for a technical hardware and tools catalog.",
-    ],
-    stack: "HTML5 · CSS3 · JavaScript · Wake Platform",
-    links: [{ href: "https://www.serralheria.com.br/", pt: "Visitar site ↗", en: "Visit site ↗" }],
-    shots: [
-      { src: "/thumbnails/serralheria-screenshot-card.webp", alt: ["Serralheria, home", "Serralheria, home"] },
-      { src: "/thumbnails/serralheria-screenshot-mobile.webp", alt: ["Serralheria no celular", "Serralheria on a phone"], m: true },
-    ],
-  },
-  {
     id: "supfy", world: "w-supfy", title: "Supfy",
     meta: ["Projeto autoral · pedidos estruturados com n8n", "Personal project · structured orders with n8n"],
     desc: [

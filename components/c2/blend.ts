@@ -59,7 +59,7 @@ export function blendWorlds(t: number, fromKey: WorldKey, toKey: WorldKey): { bg
   };
 }
 
-const ORDER = Object.keys(CHAPTER_WORLDS) as WorldKey[];
+const ORDER: WorldKey[] = ["w-shop", "w-sneak", "w-supfy"];
 
 /** One wash for every chapter on screen, so the seam between sheets is a blend, not a cut. */
 export function washAt(chapterTops: readonly number[], viewportHeight: number): { bg: string; fg: string; live: boolean } | null {
