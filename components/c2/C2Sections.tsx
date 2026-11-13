@@ -66,6 +66,7 @@ const FEATURED: Feature[] = [
     ],
     shots: [
       { src: "/thumbnails/supfy-screenshot-card.webp", alt: ["Supfy, demonstração", "Supfy, demo"] },
+      { src: "/c2/supfy-catalog.png", alt: ["Supfy, catálogo central de produtos", "Supfy, central product catalog"] },
       { src: "/thumbnails/supfy-screenshot-mobile.webp", alt: ["Supfy no celular", "Supfy on a phone"], m: true },
     ],
   },
