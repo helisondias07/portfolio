@@ -1,4 +1,5 @@
 import { dict } from "@/lib/i18n/dict";
+import CvDownload from "./CvDownload";
 import Newsletter from "./Newsletter";
 import PerfBadge from "./PerfBadge";
 import Tx from "./Tx";
@@ -32,15 +33,7 @@ export default function Footer() {
           </div>
           <div className="fside">
             <Newsletter />
-            <a className="cvx" href="/cv/helison-dias-cv.pdf" download>
-              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
-                <path d="M14 3v5h5" />
-                <path d="M12 11v6" />
-                <path d="m9 14.5 3 3 3-3" />
-              </svg>
-              <span><Tx pt={dict.pt.contact.cv} en={dict.en.contact.cv} /> <small>PDF</small></span>
-            </a>
+            <CvDownload variant="footer" />
           </div>
         </div>
         <div className="fbot mo">

@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect } from "react";
 import { dict } from "@/lib/i18n/dict";
 import { getLang, subscribe } from "@/lib/i18n/store";
+import CvDownload from "./CvDownload";
 import Tx from "./Tx";
 
 /**
@@ -71,9 +72,7 @@ export default function Hero() {
         <div className="hacts">
           <a className="btn wa" href="#projetos"><Tx pt={pt.ctaProjects} en={en.ctaProjects} /></a>
           <a className="btn ghost" href="#contato"><Tx pt={pt.ctaContact} en={en.ctaContact} /></a>
-          <a className="btn" href="/cv/helison-dias-cv.pdf" download data-cv>
-            <Tx pt={dict.pt.contact.cv} en={dict.en.contact.cv} />
-          </a>
+          <CvDownload variant="hero" />
         </div>
       </div>
       <div className="foot mo" hidden style={{ display: "none" }}>

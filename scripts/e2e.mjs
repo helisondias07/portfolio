@@ -184,6 +184,9 @@ try {
   assert.match(home.text, /Bom Jardim, RJ/);
   assert.match(home.text, /LangGraph, Wake, Next\.js, React, TypeScript/);
   assert.match(home.text, /data-cv/);
+  assert.match(home.text, /\/cv\/curriculo-helison-dias-pt\.pdf/);
+  assert.match(home.text, /\/cv\/resume-helison-dias-en\.pdf/);
+  assert.doesNotMatch(home.text, /helison-dias-cv\.pdf/);
   assert.doesNotMatch(home.text, /Nova Friburgo/);
   if (/EADDRINUSE/.test(stderr)) throw new Error("stale next start");
   assert.doesNotMatch(home.text, /id="pix"/);
@@ -387,7 +390,7 @@ try {
     const fit = await page.evaluate(() => {
       const box = (sel) => document.querySelector(sel)?.getBoundingClientRect();
       const name = box(".who-name");
-      const cv = box("[data-cv]");
+      const cv = [...document.querySelectorAll("[data-cv]")].map((el) => el.getBoundingClientRect()).find((r) => r.width > 0 && r.height > 0);
       const keys = box(".hrow");
       const fold = window.innerHeight;
       return {
