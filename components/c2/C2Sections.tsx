@@ -77,6 +77,43 @@ const FEATURED = FEATURED_ORDER.map((id) => FEATURED_BY_ID[id]);
 
 const OTHERS = railItems();
 
+const TAPE_ROLES = {
+  pt: ["Dev Full Stack", "Frontend Júnior", "E-commerce", "Automação com IA", "Desenvolvedor Web"],
+  en: ["Full-Stack Dev", "Junior Frontend", "E-commerce", "AI Automation", "Web Developer"],
+} as const;
+
+function TapeSet({ lang }: { lang: "pt" | "en" }) {
+  return (
+    <span className={`c2-tape-set i18n-${lang}`}>
+      {TAPE_ROLES[lang].map((role) => (
+        <Fragment key={`${lang}-${role}`}>
+          <b>{role}</b>
+          <i />
+        </Fragment>
+      ))}
+    </span>
+  );
+}
+
+function Tapes() {
+  return (
+    <div className="c2-tapes" aria-hidden="true">
+      <div className="c2-tape c2-tape--ink" data-dir="-1">
+        <div className="c2-tape-track">
+          <TapeSet lang="pt" />
+          <TapeSet lang="en" />
+        </div>
+      </div>
+      <div className="c2-tape c2-tape--green" data-dir="1">
+        <div className="c2-tape-track">
+          <TapeSet lang="pt" />
+          <TapeSet lang="en" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const words = (t: string) =>
   t.split(/\s+/).filter(Boolean).map((w, i) => <span key={i} className="w">{w}</span>)
     .reduce<React.ReactNode[]>((a, w, i) => (i ? [...a, " ", w] : [w]), []);
@@ -121,6 +158,7 @@ export default function C2Sections() {
   }, []);
   return (
     <div className="c2">
+      <Tapes />
       <section id="sobre" className="c2-sec c2-about">
         <div className="c2-wrap">
           <span className="mo abk" data-rise><Tx pt="Sobre" en="About" /></span>

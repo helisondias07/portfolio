@@ -9,13 +9,30 @@
   --rad:28px;
   --ch-bg:#EEF0F2;--ch-ink:#1A1C1F;
 }
-.c2{overflow-x:clip}
+.c2{position:relative;z-index:2;overflow:visible;background:var(--bg)}
 .c2-wrap{max-width:calc(var(--max) + var(--pad)*2);margin:0 auto;padding:0 var(--pad);width:100%}
 .c2-sec{padding:var(--sec) 0;border-top:0}
 section.c2-sec{max-width:none}
 .c2 .abk{margin-bottom:var(--s3)}
 .c2-head{margin-bottom:var(--s5)}
 .c2-h2{font:600 var(--fs-display)/var(--lh-tight) 'General Sans',sans-serif;letter-spacing:-.04em}
+
+/* ---- Fitas cruzadas no primeiro scroll (papéis do Helison, verde da marca) ---- */
+.c2-tapes{position:absolute;top:0;left:0;right:0;height:0;z-index:6;pointer-events:none;overflow:visible}
+.c2-tape{
+  position:absolute;left:-8%;width:116%;overflow:hidden;
+  padding:.16em 0;
+  font:700 clamp(22px,4.6vw,60px)/1 'General Sans',sans-serif;
+  letter-spacing:-.03em;text-transform:uppercase;white-space:nowrap;
+  transform:rotate(var(--rot));
+}
+.c2-tape--ink{--rot:-2.2deg;top:clamp(18px,2.6vh,36px);background:#111;color:var(--g);box-shadow:0 0 0 1.5px var(--g),0 16px 28px -20px rgba(0,0,0,.55)}
+.c2-tape--green{--rot:2.15deg;top:clamp(52px,7.2vh,102px);background:var(--g);color:#111;box-shadow:0 0 0 1.5px #111,0 16px 28px -20px rgba(0,0,0,.4)}
+.c2-tape-track{display:flex;width:max-content;will-change:transform}
+.c2-tape-set{display:flex;align-items:center;flex:none}
+.c2-tape-set b{padding:0 .42em;font-weight:inherit}
+.c2-tape-set i{flex:none;width:.28em;height:.28em;margin:0 .05em;border-radius:50%;background:currentColor}
+.c2-static .c2-tape-track{will-change:auto}
 
 /* ---- Sobre: parágrafo que tinge palavra por palavra (Eduardo) ---- */
 .c2-about{background:var(--bg)}
@@ -58,7 +75,7 @@ section.c2-sec{max-width:none}
 }
 
 /* Com JS, os capítulos compartilham uma cor só, interpolada entre mundos. Sem JS ou com reduced-motion, cada folha fica na cor fixa. */
-.c2-wash .c2-ch{background:var(--ch-bg);color:var(--ch-ink)}
+.c2-wash .c2-ch{background:var(--ch-bg);color:var(--ch-ink);transition:color .28s linear}
 .c2-wash .c2-t{color:var(--ch-ink)}
 .c2-wash.c2-wash-live .c2-ch .c2-links a{color:inherit}
 .c2-static .c2-strip,.c2-static .c2-rail{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
@@ -150,11 +167,10 @@ section.c2-sec{max-width:none}
   .c2-facts{grid-template-columns:1fr 1fr}
   .c2-ch{padding:var(--s5) 0 calc(var(--s5) + 104px)}
   .c2-ch-top{grid-template-columns:1fr;gap:var(--s3)}
-  .c2-js [data-sheet]{transform:none}
+  .c2-js .c2-strip figure{transform:translateY(16px)}
   .c2-strip{margin-top:var(--s4);overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y}
   .c2-strip-in{overflow:visible;width:max-content;min-width:100%;padding-right:var(--pad)}
   .c2-strip figure{height:min(62vw,280px);scroll-snap-align:start}
-  .c2-js .c2-strip figure,.c2-js .c2-strip.in figure{opacity:1;transform:none;transition:none}
   .c2-strip figure.note{width:70vw}
   .c2-exp-grid{grid-template-columns:1fr;gap:var(--s4)}
   .c2-tl{padding-left:32px}
@@ -169,5 +185,5 @@ section.c2-sec{max-width:none}
 @media (max-width:560px){ .c2-facts{grid-template-columns:1fr} }
 
 /* globals.css tem regras com #sobre/#projetos do layout antigo: neutraliza aqui */
-.c2 section#sobre{padding:var(--sec) 0}
+.c2 section#sobre{padding:clamp(168px,22vh,248px) 0 var(--sec)}
 .c2 section#projetos{padding:var(--sec) 0 0}

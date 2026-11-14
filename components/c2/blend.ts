@@ -70,17 +70,37 @@ export function blendWorlds(t: number, fromKey: WorldKey, toKey: WorldKey): { bg
 
 const ORDER: WorldKey[] = ["w-shop", "w-sneak", "w-supfy"];
 
-/** One wash for every chapter on screen, so the seam between sheets is a blend, not a cut. */
-export function washAt(chapterTops: readonly number[], viewportHeight: number): { bg: string; fg: string; live: boolean } | null {
+export type Wash = { bg: string; fg: string; live: boolean; from: WorldKey; to: WorldKey };
+
+/** One wash for every chapter on screen, so the seam between sheets is a blend, not a cut.
+ *  The blend runs for most of a viewport so a fast scroll still has room to ease. */
+export function washAt(chapterTops: readonly number[], viewportHeight: number): Wash | null {
   if (!chapterTops.length || viewportHeight <= 0) return null;
-  const span = viewportHeight * 0.72;
+  const span = viewportHeight * 1.08;
   let key: WorldKey = ORDER[0];
   for (let i = 0; i < chapterTops.length - 1; i++) {
     const t = Math.min(1, Math.max(0, (viewportHeight - chapterTops[i + 1]) / span));
     if (t <= 0) break;
-    key = ORDER[Math.min(i + 1, ORDER.length - 1)];
-    if (t < 1) return blendWorlds(t, ORDER[i], ORDER[i + 1]);
+    const from = ORDER[Math.min(i, ORDER.length - 1)];
+    const to = ORDER[Math.min(i + 1, ORDER.length - 1)];
+    key = to;
+    if (t < 1) return { ...blendWorlds(t, from, to), from, to };
   }
   const world = CHAPTER_WORLDS[key];
-  return { bg: formatRgb(parseHex(world.bg)), fg: formatRgb(parseHex(world.fg)), live: false };
+  return { bg: formatRgb(parseHex(world.bg)), fg: formatRgb(parseHex(world.fg)), live: false, from: key, to: key };
+}
+
+/** Frame-rate independent ease. tau and dt are milliseconds. No overshoot. */
+export function damp(current: number, target: number, tauMs: number, dtMs: number): number {
+  if (!(tauMs > 0) || !(dtMs > 0)) return target;
+  const t = 1 - Math.exp(-dtMs / tauMs);
+  return current + (target - current) * t;
+}
+
+export function dampRgb(current: RGB, target: RGB, tauMs: number, dtMs: number): RGB {
+  return [
+    damp(current[0], target[0], tauMs, dtMs),
+    damp(current[1], target[1], tauMs, dtMs),
+    damp(current[2], target[2], tauMs, dtMs),
+  ];
 }

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { blendWorlds, contrastRatio, parseHex, washAt, type RGB, type WorldKey } from "./blend";
+import { blendWorlds, contrastRatio, dampRgb, inkOn, parseHex, washAt, type RGB, type WorldKey } from "./blend";
 
 function rgbOf(s: string): RGB {
   const n = s.match(/\d+/g)!.map(Number);
@@ -54,6 +54,24 @@ test("title ink stays AA on every step of shop→sneakers and sneakers→supfy",
       assert.ok(ratio >= 4.5, `${from}→${to} t=${i / 20} ${wash.bg} / ${wash.fg} contrast ${ratio.toFixed(2)}`);
     }
   }
+});
+
+test("damped background approaches the next world without overshooting", () => {
+  const start = parseHex("#EEF0F2");
+  const end = parseHex("#0E0E0E");
+  const mid = dampRgb(start, end, 150, 150);
+  assert.ok(mid[0] < start[0] && mid[0] > end[0]);
+  assert.ok(mid[1] < start[1] && mid[1] > end[1]);
+  const held = dampRgb(end, end, 150, 32);
+  assert.deepEqual([held[0], held[1], held[2]], [end[0], end[1], end[2]]);
+});
+
+test("ink for a lagged background stays AA while the wash is still catching up", () => {
+  const raw = dampRgb(parseHex("#EEF0F2"), parseHex("#0E0E0E"), 160, 90);
+  const lagged: RGB = [Math.round(raw[0]), Math.round(raw[1]), Math.round(raw[2])];
+  const fg = inkOn(lagged, parseHex("#1A1C1F"), parseHex("#F5F5F5"));
+  const ratio = contrastRatio(fg, lagged);
+  assert.ok(ratio >= 4.5, `${lagged.join(" ")} / ${fg.join(" ")} contrast ${ratio.toFixed(2)}`);
 });
 
 test("the 0.64vh ShopMind→Sneakers seam keeps readable ink", () => {
