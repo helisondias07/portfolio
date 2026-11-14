@@ -2,7 +2,7 @@
 @font-face{font-family:'General Sans';src:url(/fonts/gs1.woff2) format('woff2');font-weight:400;font-display:swap}@font-face{font-family:'General Sans';src:url(/fonts/gs2.woff2) format('woff2');font-weight:500;font-display:swap}@font-face{font-family:'General Sans';src:url(/fonts/gs3.woff2) format('woff2');font-weight:600;font-display:swap}@font-face{font-family:'General Sans';src:url(/fonts/gs4.woff2) format('woff2');font-weight:700;font-display:swap}@font-face{font-family:'JetBrains Mono';src:url(/fonts/jb.woff2) format('woff2');font-weight:100 800;font-display:swap}@font-face{font-family:'Instrument Serif';src:url(/fonts/is.woff2) format('woff2');font-style:italic;font-weight:400;font-display:swap}
 
 :root{--bg:#e9e8e3;--ink:#121212;--g:#00a862;--mu:#6c6b66;--ln:#d2d0c9}
-*{box-sizing:border-box;margin:0;padding:0}html,body{overflow-x:hidden}
+*{box-sizing:border-box;margin:0;padding:0}html,body{overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font-family:'General Sans',sans-serif;-webkit-font-smoothing:antialiased}
 h1,h2,h3,.nums b{font-family:'General Sans',sans-serif}
 .mo{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
@@ -494,7 +494,7 @@ html{scroll-padding-top:5.75rem;scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .skip{position:absolute;left:12px;top:-80px;z-index:80;padding:10px 16px;border-radius:10px;background:var(--ink);color:var(--bg);font:600 14px 'General Sans',sans-serif}
 .skip:focus{top:12px;outline:2px solid var(--g);outline-offset:3px}
-nav.site a.lg{color:inherit;text-decoration:none}
+nav.site a.lg{color:var(--nav-world-fg,var(--ink));text-decoration:none}
 nav.site a.lg:focus-visible,.hacts a:focus-visible,.pixi:focus-visible,.flt2 button:focus-visible,.cvx:focus-visible,.czv:focus-visible,.fpair .btn:focus-visible{outline:2px solid var(--g);outline-offset:3px}
 .nvr{position:relative;z-index:60;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid rgba(17,17,17,.1);backdrop-filter:blur(10px)}
 [data-theme=dark] .nvr{background:rgba(28,29,32,.78);border-color:#2f3034}
@@ -642,3 +642,10 @@ nav.site .ls a[aria-current=location]{background:rgba(17,17,17,.08)}
 
 /* Scroll position, sitting above the fixed nav. No transition: reduced motion stays instant. */
 .scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:#44D62C;transform:scaleX(0);transform-origin:left center;z-index:80;pointer-events:none}
+
+/* The next sheet covers a stuck hero, the same way the reference lets "Sobre" slide over the opening. */
+@media (prefers-reduced-motion:no-preference){
+  .hero.g3{position:sticky;top:0;z-index:1}
+}
+html.hero-covered .hero .stage{visibility:hidden}
+.ft2{position:relative;z-index:3}
